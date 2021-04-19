@@ -9,27 +9,25 @@ import (
 
 const createMapping = `-- name: CreateMapping :one
 INSERT INTO mappings (
-  transaction_hash,
-  transaction_text,
+  transaction_details,
   category_id
 ) VALUES (
-  $1, $2, $3
-) RETURNING id, transaction_hash, transaction_text, category_id, created_at, updated_at
+  $1, $2
+)  ON CONFLICT (transaction_details) DO UPDATE SET category_id = $2
+RETURNING id, transaction_details, category_id, created_at, updated_at
 `
 
 type CreateMappingParams struct {
-	TransactionHash string `json:"transaction_hash"`
-	TransactionText string `json:"transaction_text"`
-	CategoryID      int32  `json:"category_id"`
+	TransactionDetails string `json:"transaction_details"`
+	CategoryID         int32  `json:"category_id"`
 }
 
 func (q *Queries) CreateMapping(ctx context.Context, arg CreateMappingParams) (Mapping, error) {
-	row := q.queryRow(ctx, q.createMappingStmt, createMapping, arg.TransactionHash, arg.TransactionText, arg.CategoryID)
+	row := q.queryRow(ctx, q.createMappingStmt, createMapping, arg.TransactionDetails, arg.CategoryID)
 	var i Mapping
 	err := row.Scan(
 		&i.ID,
-		&i.TransactionHash,
-		&i.TransactionText,
+		&i.TransactionDetails,
 		&i.CategoryID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
@@ -37,19 +35,18 @@ func (q *Queries) CreateMapping(ctx context.Context, arg CreateMappingParams) (M
 	return i, err
 }
 
-const getMappingByTransactionHash = `-- name: GetMappingByTransactionHash :one
-SELECT id, transaction_hash, transaction_text, category_id, created_at, updated_at FROM mappings
-WHERE transaction_hash = $1
+const getMappingByTransactionDetails = `-- name: GetMappingByTransactionDetails :one
+SELECT id, transaction_details, category_id, created_at, updated_at FROM mappings
+WHERE transaction_details = $1
 LIMIT 1
 `
 
-func (q *Queries) GetMappingByTransactionHash(ctx context.Context, transactionHash string) (Mapping, error) {
-	row := q.queryRow(ctx, q.getMappingByTransactionHashStmt, getMappingByTransactionHash, transactionHash)
+func (q *Queries) GetMappingByTransactionDetails(ctx context.Context, transactionDetails string) (Mapping, error) {
+	row := q.queryRow(ctx, q.getMappingByTransactionDetailsStmt, getMappingByTransactionDetails, transactionDetails)
 	var i Mapping
 	err := row.Scan(
 		&i.ID,
-		&i.TransactionHash,
-		&i.TransactionText,
+		&i.TransactionDetails,
 		&i.CategoryID,
 		&i.CreatedAt,
 		&i.UpdatedAt,

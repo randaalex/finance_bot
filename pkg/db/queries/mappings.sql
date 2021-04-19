@@ -1,13 +1,13 @@
 -- name: CreateMapping :one
 INSERT INTO mappings (
-  transaction_hash,
-  transaction_text,
+  transaction_details,
   category_id
 ) VALUES (
-  $1, $2, $3
-) RETURNING *;
+  $1, $2
+)  ON CONFLICT (transaction_details) DO UPDATE SET category_id = $2
+RETURNING *;
 
--- name: GetMappingByTransactionHash :one
+-- name: GetMappingByTransactionDetails :one
 SELECT * FROM mappings
-WHERE transaction_hash = $1
+WHERE transaction_details = $1
 LIMIT 1;

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
-
-	"github.com/randaalex/finance_bot/cmd/cli"
 )
 
 var cfgFile string
@@ -16,20 +16,23 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "finance_bot",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
 }
-
-var cliHander = cli.NewHandler()
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
+	SetupCloseHandler()
 	cobra.CheckErr(rootCmd.Execute())
+}
+
+func SetupCloseHandler() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\r- Ctrl+C pressed in Terminal")
+		os.Exit(0)
+	}()
 }
 
 func init() {

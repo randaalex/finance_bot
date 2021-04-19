@@ -25,14 +25,17 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.createMappingStmt, err = db.PrepareContext(ctx, createMapping); err != nil {
 		return nil, fmt.Errorf("error preparing query CreateMapping: %w", err)
 	}
-	if q.createTransactionStmt, err = db.PrepareContext(ctx, createTransaction); err != nil {
-		return nil, fmt.Errorf("error preparing query CreateTransaction: %w", err)
+	if q.createProcessedTransactionStmt, err = db.PrepareContext(ctx, createProcessedTransaction); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateProcessedTransaction: %w", err)
 	}
-	if q.getMappingByIdStmt, err = db.PrepareContext(ctx, getMappingById); err != nil {
-		return nil, fmt.Errorf("error preparing query GetMappingById: %w", err)
+	if q.getMappingByTransactionDetailsStmt, err = db.PrepareContext(ctx, getMappingByTransactionDetails); err != nil {
+		return nil, fmt.Errorf("error preparing query GetMappingByTransactionDetails: %w", err)
 	}
-	if q.getMappingByTransactionHashStmt, err = db.PrepareContext(ctx, getMappingByTransactionHash); err != nil {
-		return nil, fmt.Errorf("error preparing query GetMappingByTransactionHash: %w", err)
+	if q.getProcessedTransactionByFireflyIDStmt, err = db.PrepareContext(ctx, getProcessedTransactionByFireflyID); err != nil {
+		return nil, fmt.Errorf("error preparing query GetProcessedTransactionByFireflyID: %w", err)
+	}
+	if q.getProcessedTransactionByHashStmt, err = db.PrepareContext(ctx, getProcessedTransactionByHash); err != nil {
+		return nil, fmt.Errorf("error preparing query GetProcessedTransactionByHash: %w", err)
 	}
 	return &q, nil
 }
@@ -44,19 +47,24 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing createMappingStmt: %w", cerr)
 		}
 	}
-	if q.createTransactionStmt != nil {
-		if cerr := q.createTransactionStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing createTransactionStmt: %w", cerr)
+	if q.createProcessedTransactionStmt != nil {
+		if cerr := q.createProcessedTransactionStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createProcessedTransactionStmt: %w", cerr)
 		}
 	}
-	if q.getMappingByIdStmt != nil {
-		if cerr := q.getMappingByIdStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getMappingByIdStmt: %w", cerr)
+	if q.getMappingByTransactionDetailsStmt != nil {
+		if cerr := q.getMappingByTransactionDetailsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getMappingByTransactionDetailsStmt: %w", cerr)
 		}
 	}
-	if q.getMappingByTransactionHashStmt != nil {
-		if cerr := q.getMappingByTransactionHashStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getMappingByTransactionHashStmt: %w", cerr)
+	if q.getProcessedTransactionByFireflyIDStmt != nil {
+		if cerr := q.getProcessedTransactionByFireflyIDStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getProcessedTransactionByFireflyIDStmt: %w", cerr)
+		}
+	}
+	if q.getProcessedTransactionByHashStmt != nil {
+		if cerr := q.getProcessedTransactionByHashStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getProcessedTransactionByHashStmt: %w", cerr)
 		}
 	}
 	return err
@@ -96,21 +104,23 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                              DBTX
-	tx                              *sql.Tx
-	createMappingStmt               *sql.Stmt
-	createTransactionStmt           *sql.Stmt
-	getMappingByIdStmt              *sql.Stmt
-	getMappingByTransactionHashStmt *sql.Stmt
+	db                                     DBTX
+	tx                                     *sql.Tx
+	createMappingStmt                      *sql.Stmt
+	createProcessedTransactionStmt         *sql.Stmt
+	getMappingByTransactionDetailsStmt     *sql.Stmt
+	getProcessedTransactionByFireflyIDStmt *sql.Stmt
+	getProcessedTransactionByHashStmt      *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                              tx,
-		tx:                              tx,
-		createMappingStmt:               q.createMappingStmt,
-		createTransactionStmt:           q.createTransactionStmt,
-		getMappingByIdStmt:              q.getMappingByIdStmt,
-		getMappingByTransactionHashStmt: q.getMappingByTransactionHashStmt,
+		db:                                     tx,
+		tx:                                     tx,
+		createMappingStmt:                      q.createMappingStmt,
+		createProcessedTransactionStmt:         q.createProcessedTransactionStmt,
+		getMappingByTransactionDetailsStmt:     q.getMappingByTransactionDetailsStmt,
+		getProcessedTransactionByFireflyIDStmt: q.getProcessedTransactionByFireflyIDStmt,
+		getProcessedTransactionByHashStmt:      q.getProcessedTransactionByHashStmt,
 	}
 }

@@ -1,11 +1,17 @@
--- name: CreateTransaction :one
+-- name: CreateProcessedTransaction :one
 INSERT INTO processed_transactions (
-  id
+  hash,
+  firefly_id
 ) VALUES (
-  $1
+  $1, $2
 ) RETURNING *;
 
--- name: GetProcessedById :one
+-- name: GetProcessedTransactionByHash :one
 SELECT * FROM processed_transactions
-WHERE id = $1
+WHERE hash = $1
+LIMIT 1;
+
+-- name: GetProcessedTransactionByFireflyID :one
+SELECT * FROM processed_transactions
+WHERE firefly_id = $1
 LIMIT 1;

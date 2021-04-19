@@ -7,15 +7,15 @@ import (
 )
 
 type Mapping struct {
-	ID              int32        `json:"id"`
-	TransactionHash string       `json:"transaction_hash"`
-	TransactionText string       `json:"transaction_text"`
-	CategoryID      int32        `json:"category_id"`
-	CreatedAt       sql.NullTime `json:"created_at"`
-	UpdatedAt       sql.NullTime `json:"updated_at"`
+	ID                 int32        `json:"id"`
+	TransactionDetails string       `json:"transaction_details"`
+	CategoryID         int32        `json:"category_id"`
+	CreatedAt          sql.NullTime `json:"created_at"`
+	UpdatedAt          sql.NullTime `json:"updated_at"`
 }
 
-type Transaction struct {
-	ID        string       `json:"id"`
-	CreatedAt sql.NullTime `json:"created_at"`
+type ProcessedTransaction struct {
+	Hash      string        `json:"hash"`
+	FireflyID sql.NullInt32 `json:"firefly_id"`
+	CreatedAt sql.NullTime  `json:"created_at"`
 }
