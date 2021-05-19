@@ -25,8 +25,9 @@ func ParseFileHandler(cmd *cobra.Command, args []string) {
 
 	storage, _ := newDBClient()
 	fireflyClient, _ := newFireflyClient()
+	categorySelector, _ := newCategorySelector()
 
-	processor := fileprocessor.NewProcessor(storage, fireflyClient)
+	processor := fileprocessor.NewProcessor(storage, fireflyClient, categorySelector)
 	processor.Process(parseResult)
 }
 

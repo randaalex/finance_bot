@@ -15,7 +15,7 @@ type TransactionsServiceInterface struct {
 }
 
 // CreateTransaction provides a mock function with given fields: ctx, request
-func (_m *TransactionsServiceInterface) CreateTransaction(ctx context.Context, request firefly.CreateTransactionReq) (*firefly.Transaction, *firefly.Response, error) {
+func (_m *TransactionsServiceInterface) CreateTransaction(ctx context.Context, request firefly.CreateTransactionReq) (*firefly.Transaction, error) {
 	ret := _m.Called(ctx, request)
 
 	var r0 *firefly.Transaction
@@ -27,21 +27,12 @@ func (_m *TransactionsServiceInterface) CreateTransaction(ctx context.Context, r
 		}
 	}
 
-	var r1 *firefly.Response
-	if rf, ok := ret.Get(1).(func(context.Context, firefly.CreateTransactionReq) *firefly.Response); ok {
+	var r1 error
+	if rf, ok := ret.Get(1).(func(context.Context, firefly.CreateTransactionReq) error); ok {
 		r1 = rf(ctx, request)
 	} else {
-		if ret.Get(1) != nil {
-			r1 = ret.Get(1).(*firefly.Response)
-		}
+		r1 = ret.Error(1)
 	}
 
-	var r2 error
-	if rf, ok := ret.Get(2).(func(context.Context, firefly.CreateTransactionReq) error); ok {
-		r2 = rf(ctx, request)
-	} else {
-		r2 = ret.Error(2)
-	}
-
-	return r0, r1, r2
+	return r0, r1
 }

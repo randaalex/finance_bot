@@ -16,7 +16,6 @@ import (
 )
 
 const (
-	timezone   = "Europe/Minsk"
 	separator  = ";"
 	timeFormat = "02.01.2006 15:04:05"
 	rowFormat  = `^\d{14}`
@@ -65,12 +64,10 @@ func (a *AlfaParser) parseRow(row string) (*entities.ParsedTransaction, error) {
 
 	parsedRow := strings.Split(row, separator)
 
-	tz, _ := time.LoadLocation(timezone)
-
 	transactionID := parsedRow[0]
 
 	cardNumber := transactionID[len(transactionID)-4:]
-	parsedTime, _ := time.ParseInLocation(timeFormat, parsedRow[1], tz)
+	parsedTime, _ := time.ParseInLocation(timeFormat, parsedRow[1], entities.DefaultTZ())
 	parsedAmount, _ := strconv.ParseFloat(parsedRow[4], 64)
 
 	return &entities.ParsedTransaction{

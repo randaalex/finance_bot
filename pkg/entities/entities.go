@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+func DefaultTZ() *time.Location {
+	tz, _ := time.LoadLocation("Europe/Minsk")
+
+	return tz
+}
+
 type ParsedTransaction struct {
 	CardNumber          string
 	Time                time.Time

@@ -6,6 +6,7 @@ import (
 	context "context"
 
 	db "github.com/randaalex/finance_bot/pkg/db"
+
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -35,20 +36,20 @@ func (_m *Storage) CreateMapping(ctx context.Context, arg db.CreateMappingParams
 	return r0, r1
 }
 
-// GetMappingByTransactionHash provides a mock function with given fields: ctx, transactionHash
-func (_m *Storage) GetMappingByTransactionHash(ctx context.Context, transactionHash string) (db.Mapping, error) {
-	ret := _m.Called(ctx, transactionHash)
+// GetMappingByTransactionDetails provides a mock function with given fields: ctx, transactionDetails
+func (_m *Storage) GetMappingByTransactionDetails(ctx context.Context, transactionDetails string) (db.Mapping, error) {
+	ret := _m.Called(ctx, transactionDetails)
 
 	var r0 db.Mapping
 	if rf, ok := ret.Get(0).(func(context.Context, string) db.Mapping); ok {
-		r0 = rf(ctx, transactionHash)
+		r0 = rf(ctx, transactionDetails)
 	} else {
 		r0 = ret.Get(0).(db.Mapping)
 	}
 
 	var r1 error
 	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
-		r1 = rf(ctx, transactionHash)
+		r1 = rf(ctx, transactionDetails)
 	} else {
 		r1 = ret.Error(1)
 	}

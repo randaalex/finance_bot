@@ -59,8 +59,7 @@ func TestAlfacsv_Parse(t *testing.T) {
 		t.Run("returns valid parsed transaction", func(t *testing.T) {
 			result := parser.Parse(&reader)
 
-			tz, _ := time.LoadLocation("Europe/Minsk")
-			expectedTime, _ := time.ParseInLocation("02.01.2006 15:04:05", "15.04.2021 17:36:25", tz)
+			expectedTime, _ := time.ParseInLocation("02.01.2006 15:04:05", "15.04.2021 17:36:25", entities.DefaultTZ())
 
 			expectedResult := []entities.ParsedTransaction{
 				{

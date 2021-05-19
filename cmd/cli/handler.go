@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
 
 	_ "github.com/lib/pq"
 	"golang.org/x/oauth2"
@@ -55,6 +56,32 @@ func newFireflyClient() (*firefly.Client, error) {
 	tc := oauth2.NewClient(ctx, ts)
 
 	return firefly.NewClient(tc, baseUrl), nil
+}
+
+func newCategorySelector() (fileprocessor.CategorySelectorInterface, error) {
+	categories := []fileprocessor.Category{
+		{ID: 3, Name: "Work"},
+		{ID: 4, Name: "Food Grocering"},
+		{ID: 5, Name: "Food Restaurants"},
+		{ID: 1, Name: "House Bills"},
+		{ID: 6, Name: "House Purchases"},
+		{ID: 7, Name: "House Pets"},
+		{ID: 8, Name: "House Credit"},
+		{ID: 9, Name: "Leisure General"},
+		{ID: 2, Name: "Leisure Tourism"},
+		{ID: 10, Name: "Leisure Hobby"},
+		{ID: 11, Name: "Leisure Presents"},
+		{ID: 12, Name: "Leisure Entertainment"},
+		{ID: 13, Name: "Personal"},
+		{ID: 19, Name: "Health"},
+		{ID: 14, Name: "Car Fuel"},
+		{ID: 15, Name: "Car Maintenance"},
+		{ID: 16, Name: "Clothing"},
+		{ID: 17, Name: "Other"},
+		{ID: 18, Name: "Corrections"},
+	}
+
+	return fileprocessor.NewCategorySelector(&categories), nil
 }
 
 func CheckError(err error) {

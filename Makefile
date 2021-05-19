@@ -13,6 +13,9 @@ run:
 sqlc:
 	sqlc generate
 
+mocks:
+	rm -rf pkg/mocks && mockery --all --keeptree --dir pkg --output pkg/mocks
+
 migrate:
 	sql-migrate up -env="${APP_ENV}"
 

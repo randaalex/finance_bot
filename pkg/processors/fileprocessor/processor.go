@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/manifoldco/promptui"
-
 	"github.com/randaalex/finance_bot/pkg/db"
 	"github.com/randaalex/finance_bot/pkg/entities"
 	"github.com/randaalex/finance_bot/pkg/firefly"
@@ -17,14 +15,16 @@ type Storage interface {
 }
 
 type Processor struct {
-	Storage       Storage
-	FireflyClient *firefly.Client
+	Storage          Storage
+	FireflyClient    *firefly.Client
+	CategorySelector CategorySelectorInterface
 }
 
-func NewProcessor(storage Storage, fireflyClient *firefly.Client) *Processor {
+func NewProcessor(storage Storage, fireflyClient *firefly.Client, categorySelector CategorySelectorInterface) *Processor {
 	return &Processor{
-		Storage:       storage,
-		FireflyClient: fireflyClient,
+		Storage:          storage,
+		FireflyClient:    fireflyClient,
+		CategorySelector: categorySelector,
 	}
 }
 
@@ -48,7 +48,7 @@ func (p *Processor) processTransaction(transaction *entities.ParsedTransaction) 
 
 	fmt.Printf("preselected category: %v\n", preselectedCategoryID)
 
-	selectedCategoryID := p.askCategory(transaction, preselectedCategoryID)
+	selectedCategoryID := p.CategorySelector.Select(transaction, preselectedCategoryID)
 
 	fmt.Printf("selected category: %v\n", selectedCategoryID)
 
@@ -92,69 +92,4 @@ func (p *Processor) createTransactionInFirefly(
 	fmt.Println(createdTransaction, err)
 	fmt.Println("###########")
 	return createdTransaction
-}
-
-func (p *Processor) askCategory(transaction *entities.ParsedTransaction, preselectedCategoryID int) int {
-	type category struct {
-		ID   int
-		Name string
-	}
-
-	categories := []category{
-		{ID: 3, Name: "Work"},
-		{ID: 4, Name: "Food Grocering"},
-		{ID: 5, Name: "Food Restaurants"},
-		{ID: 1, Name: "House Bills"},
-		{ID: 6, Name: "House Purchases"},
-		{ID: 7, Name: "House Pets"},
-		{ID: 8, Name: "House Credit"},
-		{ID: 9, Name: "Leisure General"},
-		{ID: 2, Name: "Leisure Tourism"},
-		{ID: 10, Name: "Leisure Hobby"},
-		{ID: 11, Name: "Leisure Presents"},
-		{ID: 12, Name: "Leisure Entertainment"},
-		{ID: 13, Name: "Personal"},
-		// {ID: 13, Name: "Health"},
-		{ID: 14, Name: "Car Fuel"},
-		{ID: 15, Name: "Car Maintenance"},
-		{ID: 16, Name: "Clothing"},
-		{ID: 17, Name: "Other"},
-		{ID: 18, Name: "Corrections"},
-	}
-
-	preselectedCategoryNumber := 0
-
-	for index, category := range categories {
-		if category.ID == preselectedCategoryID {
-			preselectedCategoryNumber = index
-			break
-		}
-	}
-
-	prompt := promptui.Select{
-		Label:             fmt.Sprintf("Select category for '%v'", transaction),
-		Items:             categories,
-		StartInSearchMode: false,
-		//Searcher: func(input string, index int) bool {
-		//	return strings.Contains(categories[index], input)
-		//},
-		Templates: &promptui.SelectTemplates{
-			Active:   "=> {{ .ID | green }} {{ .Name | green }}",
-			Inactive: "   {{ .ID }} {{ .Name }}",
-			Selected: "{{ .ID }}",
-		},
-		CursorPos:    preselectedCategoryNumber,
-		HideSelected: true,
-		Size:         99,
-	}
-	selectedCategoryNumber, _, err := prompt.Run()
-
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return 0
-	}
-
-	selectedCategory := categories[selectedCategoryNumber]
-
-	return selectedCategory.ID
 }
