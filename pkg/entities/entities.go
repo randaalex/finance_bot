@@ -21,6 +21,7 @@ type ParsedTransaction struct {
 	ForeignAmount       float32
 	ForeignCurrencyCode string
 	Details             string
+	Balance             float32
 }
 
 func (p *ParsedTransaction) Hash() string {

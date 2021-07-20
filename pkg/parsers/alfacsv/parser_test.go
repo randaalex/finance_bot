@@ -71,6 +71,7 @@ func TestAlfacsv_Parse(t *testing.T) {
 					ForeignAmount:       0,
 					ForeignCurrencyCode: "",
 					Details:             "MINSK/BLR/14913.SHOP.ONLINER.BY",
+					Balance:             0,
 				},
 			}
 

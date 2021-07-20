@@ -79,6 +79,7 @@ func (a *AlfaParser) parseRow(row string) (*entities.ParsedTransaction, error) {
 		ForeignAmount:       0,
 		ForeignCurrencyCode: "",
 		Details:             fmt.Sprintf("%s/%s/%s", parsedRow[6], parsedRow[7], parsedRow[8]),
+		Balance:             0,
 	}, nil
 }
 
