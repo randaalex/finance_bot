@@ -8,7 +8,7 @@ build:
 	go build -i -v -o $(BINARY) $(SRC)
 
 run:
-	go run main.go
+	go run main.go run
 
 sqlc:
 	sqlc generate

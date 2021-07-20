@@ -23,8 +23,10 @@ func ParseFileHandler(cmd *cobra.Command, args []string) {
 	fileParser := alfacsv.NewAlfaParser(nil)
 	parseResult := fileParser.Parse(file)
 
-	storage, _ := newDBClient()
-	fireflyClient, _ := newFireflyClient()
+	settings := getSettings()
+
+	storage, _ := newDBClient(settings)
+	fireflyClient, _ := newFireflyClient(settings)
 	categorySelector, _ := newCategorySelector()
 
 	processor := fileprocessor.NewProcessor(storage, fireflyClient, categorySelector)
