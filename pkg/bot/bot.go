@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"github.com/randaalex/finance_bot/pkg/entities"
 	"time"
 
 	"gopkg.in/tucnak/telebot.v2"
@@ -17,17 +18,20 @@ type Storage interface {
 
 type Bot struct {
 	Storage       Storage
-	FireflyClient *firefly.Client
-	Bot           *telebot.Bot
+	FireflyClient *firefly.APIClient
+	Telebot       *telebot.Bot
+	User          *telebot.User
 }
 
-func NewBot(storage Storage, fireflyClient *firefly.Client) *Bot {
-	settings := telebot.Settings{
-		Token:  "token",
-		Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
+func NewBot(storage Storage, fireflyClient *firefly.APIClient, settings *entities.Settings) *Bot {
+	botSettings := telebot.Settings{
+		Token:  settings.TelegramBotToken,
+		Poller: &telebot.LongPoller{
+			Timeout: settings.TelegramPollingInterval * time.Second,
+		},
 	}
 
-	bot, err := telebot.NewBot(settings)
+	bot, err := telebot.NewBot(botSettings)
 
 	if err != nil {
 		panic(err)
@@ -36,14 +40,14 @@ func NewBot(storage Storage, fireflyClient *firefly.Client) *Bot {
 	return &Bot{
 		Storage:       storage,
 		FireflyClient: fireflyClient,
-		Bot:           bot,
+		Telebot:       bot,
+		User:          &telebot.User{ID: settings.TelegramUserId},
 	}
 }
 
-func (b *Bot) Start(storage Storage, fireflyClient *firefly.Client) {
-	b.Bot.Handle("/hello", func(m *telebot.Message) {
-		b.Bot.Send(m.Sender, "Hello World!")
-	})
+func (b *Bot) Start() {
+	b.Telebot.Handle(&telebot.InlineButton{Unique: btnUpdateTransactionCategory}, b.updateTransactionCategoryHandler)
+	b.Telebot.Handle(&telebot.InlineButton{Unique: btnDeleteTransaction}, b.deleteTransactionHandler)
 
-	b.Bot.Start()
+	b.Telebot.Start()
 }
