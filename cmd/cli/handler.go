@@ -3,16 +3,16 @@ package cli
 import (
 	"context"
 	"database/sql"
-	"fmt"
-	"github.com/randaalex/finance_bot/pkg/entities"
-	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
-	"github.com/spf13/viper"
+	"github.com/randaalex/finance_bot/pkg/bot"
 
 	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 
 	"github.com/randaalex/finance_bot/pkg/db"
+	"github.com/randaalex/finance_bot/pkg/entities"
 	"github.com/randaalex/finance_bot/pkg/firefly"
+	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
 )
 
 type Storage interface {
@@ -31,28 +31,29 @@ func newDBClient(settings *entities.Settings) (Storage, error) {
 	err = dbConnection.Ping()
 	CheckError(err)
 
-	fmt.Println("Connected!")
-
 	dbStorage := db.New(dbConnection)
 
 	return dbStorage, nil
 }
 
-func newFireflyClient(settings *entities.Settings) (*firefly.Client, error) {
+func newFireflyClient(settings *entities.Settings) (*firefly.APIClient, error) {
 	ctx := context.TODO()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: settings.FireflyToken},
 	)
 	tc := oauth2.NewClient(ctx, ts)
 
-	return firefly.NewClient(tc, settings.FireflyBaseUrl), nil
+	return firefly.NewAPIClient(&firefly.Configuration{
+		Host: settings.FireflyBaseUrl,
+		HTTPClient: tc,
+	}), nil
 }
 
 func newCategorySelector() (fileprocessor.CategorySelectorInterface, error) {
 	categories := []fileprocessor.Category{
 		{ID: 3, Name: "Work"},
-		{ID: 4, Name: "Food Grocering"},
-		{ID: 5, Name: "Food Restaurants"},
+		{ID: 4, Name: "🛒 Food Groceries"},
+		{ID: 5, Name: "🍔 Food Restaurants"},
 		{ID: 1, Name: "House Bills"},
 		{ID: 6, Name: "House Purchases"},
 		{ID: 7, Name: "House Pets"},
@@ -72,6 +73,10 @@ func newCategorySelector() (fileprocessor.CategorySelectorInterface, error) {
 	}
 
 	return fileprocessor.NewCategorySelector(&categories), nil
+}
+
+func newBot(storage Storage, fireflyClient *firefly.APIClient, settings *entities.Settings) (*bot.Bot, error) {
+	return bot.NewBot(storage, fireflyClient, settings), nil
 }
 
 func getSettings() *entities.Settings {

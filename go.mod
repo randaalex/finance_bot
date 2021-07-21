@@ -4,13 +4,14 @@ go 1.14
 
 require (
 	github.com/emersion/go-imap v1.1.0
+	github.com/emersion/go-message v0.14.1
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/lib/pq v1.2.0
 	github.com/manifoldco/promptui v0.8.0
 	github.com/mattn/go-colorable v0.1.2 // indirect
-	github.com/mitchellh/go-homedir v1.1.0
+	github.com/robfig/cron v1.2.0
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.0
