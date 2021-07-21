@@ -37,6 +37,22 @@ const (
 	//ParsedTransactionTransfer = "transfer"
 )
 
+// income or expense
 type FireflyTransaction struct {
-	ID int
+	Id                  int
+	AccountId           int
+	AccountName         string
+	AccountCurrencyCode string
+	Time                time.Time
+	Type                string  // expense or income
+	Amount              float32 // in account currency
+	ForeignAmount       float32
+	ForeignCurrencyCode string
+	CategoryId          int    // firefly destination id
+	CategoryName        string
+	Hash                string // store in Internal reference
+	Description         string
+	RawContent          string // store in notes
+
+	Tags []string // ???
 }
