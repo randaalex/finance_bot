@@ -16,24 +16,19 @@ var rootCmd = &cobra.Command{
 	Use:   "finance_bot",
 }
 
-var runBotCmd = &cobra.Command{
-	Use: "bot",
-	Run: cli.BotHandler,
-}
-
-var runCronCmd = &cobra.Command{
-	Use: "cron",
-	Run: cli.CronHandler,
-}
-
-var runMailCmd = &cobra.Command{
+var mailCmd = &cobra.Command{
 	Use: "mail",
-	Run: cli.MailHandler,
+	Run: cli.MailListenerHandler,
 }
 
 var parseCmd = &cobra.Command{
 	Use: "parse",
 	Run: cli.ParseFileHandler,
+}
+
+var botCmd = &cobra.Command{
+	Use: "bot",
+	Run: cli.TelegramBotHandler,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -56,10 +51,9 @@ func SetupCloseHandler() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.AddCommand(runBotCmd)
-	rootCmd.AddCommand(runCronCmd)
-	rootCmd.AddCommand(runMailCmd)
+	rootCmd.AddCommand(mailCmd)
 	rootCmd.AddCommand(parseCmd)
+	rootCmd.AddCommand(botCmd)
 }
 
 func initConfig() {

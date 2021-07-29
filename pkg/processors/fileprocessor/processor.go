@@ -72,20 +72,6 @@ func (p *Processor) createTransactionInFirefly(
 	transaction *entities.ParsedTransaction,
 	selectedCategoryID int,
 ) *firefly.TransactionSingle {
-	//req := firefly.CreateTransactionReq{
-	//	Transactions: []firefly.CreateSubTransactionReq{
-	//		{
-	//			Type:          "deposit",
-	//			Date:          transaction.Time.Format("2006-01-02"),
-	//			Amount:        transaction.Amount,
-	//			Description:   transaction.Details,
-	//			SourceID:      4,
-	//			DestinationID: selectedCategoryID,
-	//			Notes:         transaction.Details,
-	//			ExternalID:    transaction.Hash(),
-	//		},
-	//	},
-	//}
 	sourceId := int32(4)
 	destinationId := int32(selectedCategoryID)
 	externalId := transaction.Hash()

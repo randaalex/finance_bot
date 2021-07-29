@@ -1,4 +1,4 @@
-package bot
+package telegram
 
 import (
 	"context"
@@ -21,11 +21,19 @@ type Bot struct {
 	FireflyClient *firefly.APIClient
 	Telebot       *telebot.Bot
 	User          *telebot.User
+	accounts      *map[int]string
+	categories    *map[int]string
 }
 
-func NewBot(storage Storage, fireflyClient *firefly.APIClient, settings *entities.Settings) *Bot {
+func NewBot(
+	storage Storage,
+	fireflyClient *firefly.APIClient,
+	settings *entities.Settings,
+	accounts *map[int]string,
+	categories *map[int]string,
+) *Bot {
 	botSettings := telebot.Settings{
-		Token:  settings.TelegramBotToken,
+		Token: settings.TelegramBotToken,
 		Poller: &telebot.LongPoller{
 			Timeout: settings.TelegramPollingInterval * time.Second,
 		},
@@ -42,11 +50,14 @@ func NewBot(storage Storage, fireflyClient *firefly.APIClient, settings *entitie
 		FireflyClient: fireflyClient,
 		Telebot:       bot,
 		User:          &telebot.User{ID: settings.TelegramUserId},
+		accounts:      accounts,
+		categories:    categories,
 	}
 }
 
 func (b *Bot) Start() {
 	b.Telebot.Handle(&telebot.InlineButton{Unique: btnUpdateTransactionCategory}, b.updateTransactionCategoryHandler)
+	b.Telebot.Handle(&telebot.InlineButton{Unique: btnSetTransactionCategory}, b.setTransactionCategoryHandler)
 	b.Telebot.Handle(&telebot.InlineButton{Unique: btnDeleteTransaction}, b.deleteTransactionHandler)
 
 	b.Telebot.Start()
