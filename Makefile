@@ -11,6 +11,9 @@ build:
 run:
 	go run main.go run
 
+test:
+	go test ./...
+
 sqlc:
 	sqlc generate
 

@@ -1,24 +1,25 @@
 package fileprocessor_test
 
 import (
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/mock"
+
 	"github.com/randaalex/finance_bot/pkg/db"
 	"github.com/randaalex/finance_bot/pkg/entities"
 	"github.com/randaalex/finance_bot/pkg/firefly"
 	fireflyMocks "github.com/randaalex/finance_bot/pkg/mocks/firefly"
 	fileprocessorMocks "github.com/randaalex/finance_bot/pkg/mocks/processors/fileprocessor"
 	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
-	"github.com/stretchr/testify/mock"
-	"net/http"
-	"testing"
-	"time"
 )
 
 func TestFileprocessor_Process(t *testing.T) {
 	storageMock := fileprocessorMocks.Storage{}
-	transactionsFireflyClientMock := fireflyMocks.TransactionsServiceInterface{}
+	fireflyTransactionsApiMock := fireflyMocks.TransactionsApi{}
 
-	fireflyClient := firefly.NewClient(&http.Client{}, "")
-	fireflyClient.Transactions = &transactionsFireflyClientMock
+	fireflyClient := firefly.NewAPIClient(&firefly.Configuration{})
+	fireflyClient.TransactionsApi = &fireflyTransactionsApiMock
 
 	categorySelectorMock := fileprocessorMocks.CategorySelectorInterface{}
 
@@ -61,25 +62,16 @@ func TestFileprocessor_Process(t *testing.T) {
 				).
 				Return(0)
 
-			transactionsFireflyClientMock.
-				On("CreateTransaction",
-					mock.Anything,
-					firefly.CreateTransactionReq{
-						Transactions: []firefly.CreateSubTransactionReq{
-							{
-								Type:          "deposit",
-								Date:          "2021-04-15",
-								Amount:        100,
-								Description:   "details",
-								SourceID:      4,
-								DestinationID: 0,
-								Notes:         "details",
-								ExternalID:    "38b86679585cca16fb0f827559ee5ff3dff4f97666593eafbf47d478be37a76d",
-							},
-						},
-					},
-				).
-				Return(&firefly.Transaction{}, nil)
+			fireflyTransactionsApiMock.
+				On("StoreTransaction", mock.Anything).
+				Return(firefly.ApiStoreTransactionRequest{
+					ApiService: &fireflyTransactionsApiMock,
+				}, nil)
+
+			// TODO: check actual request body instead of mock.Anything
+			fireflyTransactionsApiMock.
+				On("StoreTransactionExecute", mock.Anything).
+				Return(firefly.TransactionSingle{}, nil, nil)
 
 			processor.Process(&transactions)
 		})

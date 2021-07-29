@@ -3,8 +3,6 @@ package cli
 import (
 	"context"
 	"database/sql"
-	"github.com/randaalex/finance_bot/pkg/bot"
-
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
@@ -12,7 +10,7 @@ import (
 	"github.com/randaalex/finance_bot/pkg/db"
 	"github.com/randaalex/finance_bot/pkg/entities"
 	"github.com/randaalex/finance_bot/pkg/firefly"
-	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
+	"github.com/randaalex/finance_bot/pkg/telegram"
 )
 
 type Storage interface {
@@ -44,39 +42,19 @@ func newFireflyClient(settings *entities.Settings) (*firefly.APIClient, error) {
 	tc := oauth2.NewClient(ctx, ts)
 
 	return firefly.NewAPIClient(&firefly.Configuration{
-		Host: settings.FireflyBaseUrl,
+		Host:       "192.168.0.2:8081",
+		Scheme:     "http",
 		HTTPClient: tc,
+		OperationServers: map[string]firefly.ServerConfigurations{
+			"TransactionsApiService.StoreTransaction":  {{URL: ""}},
+			"TransactionsApiService.GetTransaction":    {{URL: ""}},
+			"TransactionsApiService.UpdateTransaction": {{URL: ""}},
+		},
 	}), nil
 }
 
-func newCategorySelector() (fileprocessor.CategorySelectorInterface, error) {
-	categories := []fileprocessor.Category{
-		{ID: 3, Name: "Work"},
-		{ID: 4, Name: "🛒 Food Groceries"},
-		{ID: 5, Name: "🍔 Food Restaurants"},
-		{ID: 1, Name: "House Bills"},
-		{ID: 6, Name: "House Purchases"},
-		{ID: 7, Name: "House Pets"},
-		{ID: 8, Name: "House Credit"},
-		{ID: 9, Name: "Leisure General"},
-		{ID: 2, Name: "Leisure Tourism"},
-		{ID: 10, Name: "Leisure Hobby"},
-		{ID: 11, Name: "Leisure Presents"},
-		{ID: 12, Name: "Leisure Entertainment"},
-		{ID: 13, Name: "Personal"},
-		{ID: 19, Name: "Health"},
-		{ID: 14, Name: "Car Fuel"},
-		{ID: 15, Name: "Car Maintenance"},
-		{ID: 16, Name: "Clothing"},
-		{ID: 17, Name: "Other"},
-		{ID: 18, Name: "Corrections"},
-	}
-
-	return fileprocessor.NewCategorySelector(&categories), nil
-}
-
-func newBot(storage Storage, fireflyClient *firefly.APIClient, settings *entities.Settings) (*bot.Bot, error) {
-	return bot.NewBot(storage, fireflyClient, settings), nil
+func newTelegramBot(storage Storage, fireflyClient *firefly.APIClient, settings *entities.Settings) (*telegram.Bot, error) {
+	return telegram.NewBot(storage, fireflyClient, settings, getAccounts(), getCategories()), nil
 }
 
 func getSettings() *entities.Settings {
@@ -85,6 +63,40 @@ func getSettings() *entities.Settings {
 	_ = viper.Unmarshal(&settings)
 
 	return &settings
+}
+
+func getAccounts() *map[int]string {
+	// TODO: load from API
+	return &map[int]string{
+		7: "AlfaBank N1 (BYN)",
+		8: "AlfaBank Card (USD)",
+	}
+}
+
+func getCategories() *map[int]string {
+	// TODO: load from API
+	return &map[int]string{
+		3:  "👨‍💻 Work",
+		4:  "🛒 Food Groceries",
+		5:  "🍔 Food Restaurants",
+		1:  "🏠 House Bills",
+		6:  "🏠 House Purchases",
+		7:  "🐈 House Pets",
+		8:  "🏦 House Credit",
+		9:  "🏝 Leisure General",
+		2:  "✈️ Leisure Tourism",
+		10: "⚽️ Leisure Hobby",
+		11: "🎁 Leisure Presents",
+		12: "📽 Leisure Entertainment",
+		13: "🏆 Personal",
+		19: "🚑 Health",
+		14: "⛽️ Car Fuel",
+		15: "🛠 Car Maintenance",
+		16: "👕 Clothing",
+		17: " Other",
+		18: " Corrections",
+		20: "❔ Unknown",
+	}
 }
 
 func CheckError(err error) {

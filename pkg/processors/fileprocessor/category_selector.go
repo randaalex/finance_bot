@@ -26,7 +26,6 @@ func NewCategorySelector(categories *[]Category) CategorySelectorInterface {
 }
 
 func (c *CategorySelector) Select(transaction *entities.ParsedTransaction, preselectedCategoryID int) int {
-
 	preselectedCategoryNumber := 0
 
 	for index, category := range c.Categories {

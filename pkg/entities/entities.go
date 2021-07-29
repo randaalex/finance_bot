@@ -48,11 +48,19 @@ type FireflyTransaction struct {
 	Amount              float32 // in account currency
 	ForeignAmount       float32
 	ForeignCurrencyCode string
-	CategoryId          int    // firefly destination id
+	CategoryId          int    // firefly category id
 	CategoryName        string
 	Hash                string // store in Internal reference
 	Description         string
 	RawContent          string // store in notes
 
 	Tags []string // ???
+}
+
+func (f *FireflyTransaction) GetCategoryName() string {
+	if f.CategoryName == "" {
+		return "❔ Without category"
+	}
+
+	return f.CategoryName
 }
