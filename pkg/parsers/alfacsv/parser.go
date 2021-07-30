@@ -86,8 +86,8 @@ func (a *AlfaParser) parseRow(row string) (*entities.ParsedTransaction, error) {
 func (a *AlfaParser) parseTransactionType(value string) string {
 	switch value {
 	case "Безналичная операция", "Списание", "Отправление средств":
-		return entities.ParsedTransactionTypeExpense
+		return entities.TransactionSplitTypeWithdrawal
 	}
 
-	return entities.ParsedTransactionTypeExpense
+	return entities.TransactionSplitTypeWithdrawal
 }

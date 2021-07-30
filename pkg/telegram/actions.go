@@ -2,51 +2,81 @@ package telegram
 
 import (
 	"bytes"
+	"context"
 	"fmt"
-	"github.com/randaalex/finance_bot/pkg/entities"
-	"gopkg.in/tucnak/telebot.v2"
 	"strconv"
+
+	"gopkg.in/tucnak/telebot.v2"
+
+	"github.com/randaalex/finance_bot/pkg/entities"
 )
 
-func (b *Bot) RenderTransaction(transaction *entities.FireflyTransaction) {
+func (b *Bot) RenderTransaction(transaction *entities.Transaction) {
 	keyboard := &telebot.ReplyMarkup{}
 
 	keyboard.Inline(
 		keyboard.Row(
-			keyboard.Data("Change category", btnUpdateTransactionCategory, strconv.Itoa(transaction.Id), strconv.Itoa(transaction.CategoryId)),
-			keyboard.Data("Delete transaction", btnDeleteTransaction, strconv.Itoa(transaction.Id)),
+			keyboard.Data("Change category", btnUpdateTransactionCategory, strconv.Itoa(int(transaction.Id)), strconv.Itoa(int(transaction.CategoryId))),
+			//keyboard.Data("Delete transaction", btnDeleteTransaction, strconv.Itoa(int(transaction.Id))),
 		),
 	)
 
-	message := b.renderTransactionBody(transaction)
+	content := b.renderTransactionBody(transaction)
 
-	_, err := b.Telebot.Send(b.User, message, keyboard)
+	_, err := b.Telebot.Send(b.User, content, keyboard)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (b *Bot) renderTransactionBody(transaction *entities.FireflyTransaction) string {
+func (b *Bot) UpdateTransaction(message telebot.Editable, transaction *entities.Transaction) {
+	keyboard := &telebot.ReplyMarkup{}
+
+	keyboard.Inline(
+		keyboard.Row(
+			keyboard.Data("Change category", btnUpdateTransactionCategory, strconv.Itoa(int(transaction.Id)), strconv.Itoa(int(transaction.CategoryId))),
+			//keyboard.Data("Delete transaction", btnDeleteTransaction, strconv.Itoa(int(transaction.Id))),
+		),
+	)
+
+	content := b.renderTransactionBody(transaction)
+
+	_, err := b.Telebot.Edit(message, content, keyboard)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (b *Bot) renderTransactionBody(transaction *entities.Transaction) string {
+	categoryName := transaction.CategoryName
+
+	if categoryName == "" {
+		categoryName = "❔ Unknown"
+	}
+
 	buf := bytes.NewBufferString("")
 	fmt.Fprintf(buf, "Transaction #%d (%s)\n\n", transaction.Id, transaction.Type)
-	fmt.Fprintf(buf, "💳 %s\n", transaction.AccountName)
-	fmt.Fprintf(buf, "💸 %.2f %s\n", transaction.Amount, transaction.AccountCurrencyCode)
-	fmt.Fprintf(buf, "%s\n", transaction.GetCategoryName())
+	fmt.Fprintf(buf, "💳 %s\n", transaction.SourceName)
+	fmt.Fprintf(buf, "💸 %.2f %s\n", transaction.Amount, transaction.CurrencyCode)
+	fmt.Fprintf(buf, "%s\n", categoryName)
 	fmt.Fprintf(buf, "📝 %s\n", transaction.Description)
-	fmt.Fprintf(buf, "🕓 %s", transaction.Time.Format("02.01.06 15:04"))
+	fmt.Fprintf(buf, "🕓 %s", transaction.IssuedAt.Format("02.01.2006 15:04"))
 
 	return buf.String()
 }
 
-func (b *Bot) RenderTransactionCategoriesKeyboard(transactionId, selectedCategoryId int) {
+func (b *Bot) UpdateTransactionWithCategoriesKeyboard(ctx context.Context, message telebot.Editable, transactionId, _ int) {
 	keyboard := &telebot.ReplyMarkup{}
 
 	i := 1
 	var row []telebot.Btn
 	var inline []telebot.Row
 
-	for categoryId, categoryName := range *b.categories {
-		categoryIdString := strconv.Itoa(categoryId)
+	for _, category := range *b.categories {
+		categoryId := category.Id
+		categoryName := category.Name
+
+		categoryIdString := strconv.Itoa(int(categoryId))
 		transactionIdString := strconv.Itoa(transactionId)
 
 		row = append(row, keyboard.Data(categoryName, btnSetTransactionCategory, transactionIdString, categoryIdString))
@@ -58,12 +88,16 @@ func (b *Bot) RenderTransactionCategoriesKeyboard(transactionId, selectedCategor
 		i++
 	}
 
+	fireflyTransaction, _, err := b.FireflyClient.TransactionsApi.GetTransaction(ctx, int32(transactionId)).Execute()
+	if err != nil {
+		panic(err)
+	}
+	transaction := entities.ConvertFireflyTransactionToTransaction(&fireflyTransaction)
+
 	keyboard.Inline(inline...)
+	content := b.renderTransactionBody(transaction)
 
-
-	//message := b.renderTransactionBody(transaction)
-
-	_, err := b.Telebot.Send(b.User, "kek", keyboard)
+	_, err = b.Telebot.Edit(message, content, keyboard)
 	if err != nil {
 		panic(err)
 	}

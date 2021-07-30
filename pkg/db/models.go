@@ -6,16 +6,10 @@ import (
 	"database/sql"
 )
 
-type Mapping struct {
-	ID                 int32        `json:"id"`
-	TransactionDetails string       `json:"transaction_details"`
-	CategoryID         int32        `json:"category_id"`
-	CreatedAt          sql.NullTime `json:"created_at"`
-	UpdatedAt          sql.NullTime `json:"updated_at"`
-}
-
-type ProcessedTransaction struct {
-	Hash      string        `json:"hash"`
-	FireflyID sql.NullInt32 `json:"firefly_id"`
-	CreatedAt sql.NullTime  `json:"created_at"`
+type TransactionsLog struct {
+	ID          int32        `json:"id"`
+	Description string       `json:"description"`
+	CategoryID  int32        `json:"category_id"`
+	CreatedAt   sql.NullTime `json:"created_at"`
+	UpdatedAt   sql.NullTime `json:"updated_at"`
 }

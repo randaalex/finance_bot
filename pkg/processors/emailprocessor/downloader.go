@@ -1,16 +1,18 @@
 package emailprocessor
 
 import (
+	"context"
 	"io"
 	"io/ioutil"
 	"log"
+	"time"
 
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
 )
 
-func (p *Processor) DownloadEmails() {
+func (p *Processor) DownloadEmails(ctx context.Context) {
 	log.Println("Connecting to server...")
 
 	imapClient, err := client.DialTLS(p.settings.Address, nil)
@@ -30,17 +32,16 @@ func (p *Processor) DownloadEmails() {
 	}
 
 	searchCriteria := imap.NewSearchCriteria()
-	//searchCriteria.WithoutFlags = []string{imap.SeenFlag}
-	searchCriteria.WithoutFlags = []string{}
+	searchCriteria.WithoutFlags = []string{imap.SeenFlag}
+	//searchCriteria.WithoutFlags = []string{}
 	messageUids, err := imapClient.Search(searchCriteria)
 	if err != nil {
 		panic(err)
 	}
 
-	if len(messageUids) > 0 {
+	for _, uuid := range messageUids {
 		seqSet := new(imap.SeqSet)
-		//seqSet.AddNum(messageUids...)
-		seqSet.AddNum(messageUids[0])
+		seqSet.AddNum(uuid)
 
 		var section imap.BodySectionName
 		items := []imap.FetchItem{section.FetchItem(), imap.FetchEnvelope, imap.FetchFlags}
@@ -53,10 +54,36 @@ func (p *Processor) DownloadEmails() {
 
 		for msg := range messages {
 			if email := p.parseImapMessage(&section, msg); email != nil {
-				p.emails = append(p.emails, *email)
+				//p.emails = append(p.emails, *email)
+				p.ProcessEmail(ctx, *email)
 			}
 		}
+
+		time.Sleep(5*time.Second)
 	}
+
+
+	//if len(messageUids) > 0 {
+	//	seqSet := new(imap.SeqSet)
+	//	seqSet.AddNum(messageUids...)
+	//	//seqSet.AddNum(messageUids[0])
+	//
+	//	var section imap.BodySectionName
+	//	items := []imap.FetchItem{section.FetchItem(), imap.FetchEnvelope, imap.FetchFlags}
+	//
+	//	messages := make(chan *imap.Message, 0)
+	//	done := make(chan error, 0)
+	//	go func() {
+	//		done <- imapClient.Fetch(seqSet, items, messages)
+	//	}()
+	//
+	//	for msg := range messages {
+	//		if email := p.parseImapMessage(&section, msg); email != nil {
+	//			//p.emails = append(p.emails, *email)
+	//			p.ProcessEmail(ctx, *email)
+	//		}
+	//	}
+	//}
 }
 
 func (p *Processor) parseImapMessage(section *imap.BodySectionName, msg *imap.Message) *parsedImapMessage {

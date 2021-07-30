@@ -6,6 +6,18 @@ import (
 	"time"
 )
 
+type Account struct {
+	Id            int32
+	Name          string
+	CurrencyCode  string
+	AccountNumber string
+}
+
+type Category struct {
+	Id int32
+	Name string
+}
+
 func DefaultTZ() *time.Location {
 	tz, _ := time.LoadLocation("Europe/Minsk")
 

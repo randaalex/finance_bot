@@ -10,8 +10,8 @@ import (
 )
 
 type Storage interface {
-	CreateMapping(ctx context.Context, arg db.CreateMappingParams) (db.Mapping, error)
-	GetMappingByTransactionDetails(ctx context.Context, transactionDetails string) (db.Mapping, error)
+	CreateTransactionsLog(ctx context.Context, arg db.CreateTransactionsLogParams) (db.TransactionsLog, error)
+	GetTransactionsLogByDescription(ctx context.Context, description string) (db.TransactionsLog, error)
 }
 
 type Processor struct {
@@ -38,7 +38,7 @@ func (p *Processor) processTransaction(transaction *entities.ParsedTransaction) 
 	ctx := context.TODO()
 	preselectedCategoryID := 0
 
-	existedTransaction, e := p.Storage.GetMappingByTransactionDetails(ctx, transaction.Details)
+	existedTransaction, e := p.Storage.GetTransactionsLogByDescription(ctx, transaction.Details)
 	if e != nil {
 		fmt.Printf("transaction not found: %v\n", transaction.Hash())
 	} else {
@@ -52,9 +52,9 @@ func (p *Processor) processTransaction(transaction *entities.ParsedTransaction) 
 
 	fmt.Printf("selected category: %v\n", selectedCategoryID)
 
-	_, err := p.Storage.CreateMapping(ctx, db.CreateMappingParams{
-		TransactionDetails: transaction.Details,
-		CategoryID:         int32(selectedCategoryID),
+	_, err := p.Storage.CreateTransactionsLog(ctx, db.CreateTransactionsLogParams{
+		Description: transaction.Details,
+		CategoryID:  int32(selectedCategoryID),
 	})
 	if err != nil {
 		panic(err)
@@ -90,7 +90,6 @@ func (p *Processor) createTransactionInFirefly(
 			},
 		},
 	}
-
 
 	createdTransaction, _, err := p.FireflyClient.TransactionsApi.StoreTransaction(ctx).Transaction(req).Execute()
 
