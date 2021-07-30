@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"context"
+	"github.com/randaalex/finance_bot/pkg/parsers/alfamail"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -9,11 +11,6 @@ import (
 )
 
 func MailListenerHandler(cmd *cobra.Command, args []string) {
-	//c := cron.New()
-	//_ = c.AddFunc("*/30 * * * * *", runMailHandler)
-	//c.Start()
-	//
-	//fmt.Println("Cron scheduler started:")
 	runMailHandler()
 	for {
 		time.Sleep(10 * time.Second)
@@ -26,11 +23,13 @@ func runMailHandler() {
 	storage, _ := newDBClient(settings)
 	fireflyClient, _ := newFireflyClient(settings)
 	telegramBot, _ := newTelegramBot(storage, fireflyClient, settings)
+	emailParser := alfamail.NewAlfaParser(nil, getAccounts(), getCategories())
 
 	processor := emailprocessor.NewProcessor(
 		storage,
 		fireflyClient,
 		telegramBot,
+		emailParser,
 		getAccounts(),
 		getCategories(),
 		&emailprocessor.Settings{
@@ -40,6 +39,8 @@ func runMailHandler() {
 		},
 	)
 
-	processor.DownloadEmails()
-	processor.Process()
+	ctx := context.TODO()
+
+	processor.DownloadEmails(ctx)
+	processor.Process(ctx)
 }

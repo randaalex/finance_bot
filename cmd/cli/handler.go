@@ -14,12 +14,8 @@ import (
 )
 
 type Storage interface {
-	CreateMapping(ctx context.Context, arg db.CreateMappingParams) (db.Mapping, error)
-	GetMappingByTransactionDetails(ctx context.Context, transactionDetails string) (db.Mapping, error)
-
-	CreateProcessedTransaction(ctx context.Context, arg db.CreateProcessedTransactionParams) (db.ProcessedTransaction, error)
-	GetProcessedTransactionByFireflyID(ctx context.Context, fireflyID sql.NullInt32) (db.ProcessedTransaction, error)
-	GetProcessedTransactionByHash(ctx context.Context, hash string) (db.ProcessedTransaction, error)
+	CreateTransactionsLog(ctx context.Context, arg db.CreateTransactionsLogParams) (db.TransactionsLog, error)
+	GetTransactionsLogByDescription(ctx context.Context, description string) (db.TransactionsLog, error)
 }
 
 func newDBClient(settings *entities.Settings) (Storage, error) {
@@ -65,37 +61,47 @@ func getSettings() *entities.Settings {
 	return &settings
 }
 
-func getAccounts() *map[int]string {
+func getAccounts() *[]entities.Account {
 	// TODO: load from API
-	return &map[int]string{
-		7: "AlfaBank N1 (BYN)",
-		8: "AlfaBank Card (USD)",
+	return &[]entities.Account{
+		{
+			Id: 7,
+			Name: "AlfaBank N1 (BYN)",
+			CurrencyCode: "BYN",
+			AccountNumber: "7858",
+		},
+		{
+			Id: 8,
+			Name: "AlfaBank N1 (USD)",
+			CurrencyCode: "USD",
+			AccountNumber: "6185",
+		},
 	}
 }
 
-func getCategories() *map[int]string {
+func getCategories() *[]entities.Category {
 	// TODO: load from API
-	return &map[int]string{
-		3:  "👨‍💻 Work",
-		4:  "🛒 Food Groceries",
-		5:  "🍔 Food Restaurants",
-		1:  "🏠 House Bills",
-		6:  "🏠 House Purchases",
-		7:  "🐈 House Pets",
-		8:  "🏦 House Credit",
-		9:  "🏝 Leisure General",
-		2:  "✈️ Leisure Tourism",
-		10: "⚽️ Leisure Hobby",
-		11: "🎁 Leisure Presents",
-		12: "📽 Leisure Entertainment",
-		13: "🏆 Personal",
-		19: "🚑 Health",
-		14: "⛽️ Car Fuel",
-		15: "🛠 Car Maintenance",
-		16: "👕 Clothing",
-		17: " Other",
-		18: " Corrections",
-		20: "❔ Unknown",
+	return &[]entities.Category{
+		{ Id: 14, Name: "⛽️ Car Fuel" },
+		{ Id: 15, Name: "🛠 Car Maintenance" },
+		{ Id: 4, Name:  "🛒 Food Groceries" },
+		{ Id: 5, Name:  "🍔 Food Restaurants" },
+		{ Id: 1, Name:  "🏠 House Bills" },
+		{ Id: 6, Name:  "🏠 House Purchases" },
+		{ Id: 7, Name:  "🐈 House Pets" },
+		{ Id: 8, Name:  "🏦 House Credit" },
+		{ Id: 9, Name:  "🏝 Leisure General" },
+		{ Id: 2, Name:  "✈️ Leisure Tourism" },
+		{ Id: 10, Name: "⚽️ Leisure Hobby" },
+		{ Id: 11, Name: "🎁 Leisure Presents" },
+		{ Id: 12, Name: "📽 Leisure Entertainment" },
+		{ Id: 16, Name: "👕 Clothing" },
+		{ Id: 19, Name: "🚑 Health" },
+		{ Id: 17, Name: "🪣 Other" },
+		{ Id: 13, Name: "🏆 Personal" },
+		{ Id: 3, Name:  "👨‍💻 Work" },
+		{ Id: 18, Name: "🧹 Corrections" },
+		{ Id: 20, Name: "❔ Unknown" },
 	}
 }
 

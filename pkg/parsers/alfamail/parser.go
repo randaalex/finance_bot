@@ -1,7 +1,6 @@
 package alfamail
 
 import (
-	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -15,58 +14,81 @@ import (
 )
 
 const (
-	timeFormat       = "02.01.2006 15:04:05"
-	timeRegexp       = `(?m)(\d{2}.\d{2}.\d{4} \d{2}:\d{2}:\d{2})`
-	amountRegexp     = `(?m)^Сумма:(\d+\.?\d{0,2})\s(\w{3})(\s\((\d+\.?\d{0,2})\s(\w{3})\))?$`
-	cardNumberRegexp = `(?m)^Карта \d.(\d{4})`
-	balanceRegexp    = `(?m)^Остаток:(\d+\.?\d{0,2})\s(\w{3})$`
-	detailsRegexp    = `(?m)^(.*\/.*\/.*)$`
+	timeFormat = "02.01.2006 15:04:05"
 )
 
 var encoding = charmap.Windows1251
 
 type AlfaParser struct {
-	logger *logrus.Logger
+	accounts   *[]entities.Account
+	categories *[]entities.Category
+	logger     *logrus.Logger
 }
 
-func NewAlfaParser(logger *logrus.Logger) *AlfaParser {
+func NewAlfaParser(logger *logrus.Logger, accounts *[]entities.Account, categories *[]entities.Category) *AlfaParser {
 	return &AlfaParser{
-		logger: logger,
+		accounts:   accounts,
+		categories: categories,
+		logger:     logger,
 	}
 }
 
-func (a *AlfaParser) Parse(mail string) *[]entities.ParsedTransaction {
-	var parsedTransactions []entities.ParsedTransaction
+func (p *AlfaParser) Parse(mail string) *entities.Transaction {
+	// TODO: return error
 
-	if isValid, _ := regexp.Match(cardNumberRegexp, []byte(mail)); !isValid {
-		fmt.Printf("parse error: %v | %v\n", errors.New("invalid mail format"), mail)
-		return &parsedTransactions
-	}
+	//if isValid, _ := regexp.Match(cardNumberRegexp, []byte(mail)); !isValid {
+	//	fmt.Printf("parse error: %v | %v\n", errors.New("invalid mail format"), mail)
+	//	return &entities.Transaction{}
+	//}
 
 	mailRows := strings.Split(mail, "\n")
 
-	parsedCardNumber := a.parseCardNumber(mail)
-	parsedTime := a.parseTime(mail)
-	parsedType := a.parseTransactionType(mailRows[2])
-	parsedAmount, parsedCurrencyCode, parsedForeignAmount, parsedForeignCurrencyCode := a.parseAmountAndCurrency(mail)
-	parsedBalance := a.parseBalance(mail)
+	account := p.getAccount(mail)
+	amount, foreignAmount, foreignCurrencyCode := p.getAmounts(mail)
+	transactionType := p.getType(mail)
+	issuedAt := p.getTime(mail)
 
-	parsedTransactions = append(parsedTransactions, entities.ParsedTransaction{
-		CardNumber:          parsedCardNumber,
-		Time:                parsedTime,
-		Type:                parsedType,
-		Amount:              float32(parsedAmount),
-		CurrencyCode:        parsedCurrencyCode,
-		ForeignAmount:       float32(parsedForeignAmount),
-		ForeignCurrencyCode: parsedForeignCurrencyCode,
-		Details:             mailRows[7],
-		Balance:             float32(parsedBalance),
-	})
+	transaction := entities.Transaction{
+		IssuedAt:     issuedAt,
+		Type:         transactionType,
+		Description:  mailRows[7],
+		Amount:       float32(amount),
+		CurrencyCode: account.CurrencyCode,
+		Recipient:    p.getRecipient(mail),
+		Notes:        mail,
+		//CategoryId:          fireflySplit.GetCategoryId(),
+		//CategoryName:        fireflySplit.GetCategoryName(),
+	}
 
-	return &parsedTransactions
+	if foreignAmount != nil {
+		transaction.ForeignAmount = float32(*foreignAmount)
+		transaction.ForeignCurrencyCode = *foreignCurrencyCode
+	}
+
+	if transactionType == entities.TransactionSplitTypeWithdrawal {
+		transaction.SourceId = account.Id
+	} else {
+		transaction.DestinationId = account.Id
+	}
+
+	return &transaction
 }
 
-func (a *AlfaParser) parseCardNumber(mail string) string {
+func (p *AlfaParser) getType(value string) string {
+	switch value {
+	case "Оплата товаров/услуг", "Перевод (Списание)":
+		return entities.TransactionSplitTypeWithdrawal
+	case "Поступление успешно":
+		return entities.TransactionSplitTypeDeposit
+	}
+
+	// TODO: error?
+	return entities.TransactionSplitTypeWithdrawal
+}
+
+func (p *AlfaParser) getAccount(mail string) *entities.Account {
+	const cardNumberRegexp = `(?m)^Карта \d.(\d{4})`
+
 	re := regexp.MustCompile(cardNumberRegexp)
 	match := re.FindStringSubmatch(mail)
 
@@ -74,10 +96,18 @@ func (a *AlfaParser) parseCardNumber(mail string) string {
 		panic("parse error")
 	}
 
-	return match[1]
+	for _, acc := range *p.accounts {
+		if acc.AccountNumber == match[1] {
+			return &acc
+		}
+	}
+
+	panic("account not found")
 }
 
-func (a *AlfaParser) parseTime(mail string) time.Time {
+func (p *AlfaParser) getTime(mail string) time.Time {
+	const timeRegexp = `(?m)(\d{2}.\d{2}.\d{4} \d{2}:\d{2}:\d{2})`
+
 	re := regexp.MustCompile(timeRegexp)
 	match := re.FindStringSubmatch(mail)
 
@@ -93,18 +123,11 @@ func (a *AlfaParser) parseTime(mail string) time.Time {
 	return parsedTime
 }
 
-func (a *AlfaParser) parseTransactionType(value string) string {
-	switch value {
-	case "Оплата товаров/услуг":
-		return entities.ParsedTransactionTypeExpense
-	}
-
-	return entities.ParsedTransactionTypeExpense
-}
-
-func (a *AlfaParser) parseAmountAndCurrency(value string) (
-	amount float64, currency string, foreignAmount float64, foreignCurrency string,
+func (p *AlfaParser) getAmounts(value string) (
+	amount float64, foreignAmount *float64, foreignCurrency *string,
 ) {
+	const amountRegexp = `(?m)^Сумма:(\d+\.?\d{0,2})\s(\w{3})(\s\((\d+\.?\d{0,2})\s(\w{3})\))?$`
+
 	re := regexp.MustCompile(amountRegexp)
 	match := re.FindStringSubmatch(value)
 
@@ -113,15 +136,31 @@ func (a *AlfaParser) parseAmountAndCurrency(value string) (
 	}
 
 	amount = 0.0
+	parenthesisAmount := 0.0
+	currency := match[2]
+	parenthesisCurrency := match[5]
+
 	amount, _ = strconv.ParseFloat(match[1], 64)
+	parenthesisAmount, _ = strconv.ParseFloat(match[4], 64)
 
-	foreignAmount = 0.0
-	foreignAmount, _ = strconv.ParseFloat(match[4], 64)
+	if parenthesisCurrency == "" {
+		// transaction in native currency
+		return amount, nil, nil
+	} else {
+		// transaction with exchange
+		if currency != "USD" && currency != "EUR" && currency != "BYN" {
+			fmt.Printf("unknown currency: %v\n", currency)
 
-	return amount, match[2], foreignAmount, match[5]
+			panic("unknown currency")
+		}
+
+		return parenthesisAmount, &amount, &currency
+	}
 }
 
-func (a *AlfaParser) parseBalance(mail string) float64 {
+func (p *AlfaParser) parseBalance(mail string) float64 {
+	const balanceRegexp = `(?m)^Остаток:(\d+\.?\d{0,2})\s(\w{3})$`
+
 	re := regexp.MustCompile(balanceRegexp)
 	match := re.FindStringSubmatch(mail)
 
@@ -134,7 +173,9 @@ func (a *AlfaParser) parseBalance(mail string) float64 {
 	return balance
 }
 
-func (a *AlfaParser) parseDetails(mail string) string {
+func (p *AlfaParser) getRecipient(mail string) string {
+	const detailsRegexp = `(?m)^(.*\/.*\/.*)$`
+
 	re := regexp.MustCompile(detailsRegexp)
 	match := re.FindStringSubmatch(mail)
 

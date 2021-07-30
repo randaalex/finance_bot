@@ -3,7 +3,11 @@ SRC=./main.go
 APP_ENV?=development
 FIREFLY_API_VERSION=1.4.0
 
-.PHONY: build run sqlc firefly-api migrate migrate-down migrate-status
+.PHONY: install build run sqlc firefly-api migrate migrate-down migrate-status
+
+install:
+	go get -v github.com/rubenv/sql-migrate/...
+	echo "brew install sqlc"
 
 build:
 	go build -i -v -o $(BINARY) $(SRC)

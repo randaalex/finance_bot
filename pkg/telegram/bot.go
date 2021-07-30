@@ -12,8 +12,8 @@ import (
 )
 
 type Storage interface {
-	CreateMapping(ctx context.Context, arg db.CreateMappingParams) (db.Mapping, error)
-	GetMappingByTransactionDetails(ctx context.Context, transactionDetails string) (db.Mapping, error)
+	CreateTransactionsLog(ctx context.Context, arg db.CreateTransactionsLogParams) (db.TransactionsLog, error)
+	GetTransactionsLogByDescription(ctx context.Context, description string) (db.TransactionsLog, error)
 }
 
 type Bot struct {
@@ -21,16 +21,16 @@ type Bot struct {
 	FireflyClient *firefly.APIClient
 	Telebot       *telebot.Bot
 	User          *telebot.User
-	accounts      *map[int]string
-	categories    *map[int]string
+	accounts      *[]entities.Account
+	categories    *[]entities.Category
 }
 
 func NewBot(
 	storage Storage,
 	fireflyClient *firefly.APIClient,
 	settings *entities.Settings,
-	accounts *map[int]string,
-	categories *map[int]string,
+	accounts *[]entities.Account,
+	categories *[]entities.Category,
 ) *Bot {
 	botSettings := telebot.Settings{
 		Token: settings.TelegramBotToken,
