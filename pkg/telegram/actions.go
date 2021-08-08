@@ -25,7 +25,7 @@ func (b *Bot) RenderTransaction(transaction *entities.Transaction) {
 
 	_, err := b.Telebot.Send(b.User, content, keyboard)
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 }
 
@@ -43,7 +43,7 @@ func (b *Bot) UpdateTransaction(message telebot.Editable, transaction *entities.
 
 	_, err := b.Telebot.Edit(message, content, keyboard)
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 }
 
@@ -90,7 +90,7 @@ func (b *Bot) UpdateTransactionWithCategoriesKeyboard(ctx context.Context, messa
 
 	fireflyTransaction, _, err := b.FireflyClient.TransactionsApi.GetTransaction(ctx, int32(transactionId)).Execute()
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 	transaction := entities.ConvertFireflyTransactionToTransaction(&fireflyTransaction)
 
@@ -99,6 +99,6 @@ func (b *Bot) UpdateTransactionWithCategoriesKeyboard(ctx context.Context, messa
 
 	_, err = b.Telebot.Edit(message, content, keyboard)
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 }

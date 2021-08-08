@@ -10,7 +10,7 @@ import (
 	"golang.org/x/text/transform"
 
 	"github.com/randaalex/finance_bot/pkg/entities"
-	"github.com/randaalex/finance_bot/pkg/parsers/alfacsv"
+	"github.com/randaalex/finance_bot/pkg/fileprocessor/alfacsv"
 )
 
 func TestAlfacsv_Parse(t *testing.T) {

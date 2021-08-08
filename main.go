@@ -1,7 +1,7 @@
 package main
 
-import "github.com/randaalex/finance_bot/cmd"
+import "github.com/randaalex/finance_bot/pkg/cli"
 
 func main() {
-	cmd.Execute()
+	cli.Execute()
 }

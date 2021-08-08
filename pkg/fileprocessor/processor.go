@@ -57,7 +57,7 @@ func (p *Processor) processTransaction(transaction *entities.ParsedTransaction) 
 		CategoryID:  int32(selectedCategoryID),
 	})
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 
 	p.createTransactionInFirefly(

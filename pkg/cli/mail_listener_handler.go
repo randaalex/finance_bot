@@ -2,12 +2,12 @@ package cli
 
 import (
 	"context"
-	"github.com/randaalex/finance_bot/pkg/parsers/alfamail"
 	"time"
 
 	"github.com/spf13/cobra"
 
-	"github.com/randaalex/finance_bot/pkg/processors/emailprocessor"
+	"github.com/randaalex/finance_bot/pkg/emailprocessor"
+	"github.com/randaalex/finance_bot/pkg/emailprocessor/alfaparser"
 )
 
 func MailListenerHandler(cmd *cobra.Command, args []string) {
@@ -19,28 +19,34 @@ func MailListenerHandler(cmd *cobra.Command, args []string) {
 
 func runMailHandler() {
 	settings := getSettings()
+	logger := newLogger()
+
+	initSentry(logger, settings)
 
 	storage, _ := newDBClient(settings)
 	fireflyClient, _ := newFireflyClient(settings)
 	telegramBot, _ := newTelegramBot(storage, fireflyClient, settings)
-	emailParser := alfamail.NewAlfaParser(nil, getAccounts(), getCategories())
+	emailParser := alfaparser.NewParser(logger, getAccounts(), getCategories())
 
 	processor := emailprocessor.NewProcessor(
 		storage,
 		fireflyClient,
 		telegramBot,
 		emailParser,
+		logger,
 		getAccounts(),
 		getCategories(),
-		&emailprocessor.Settings{
-			Address:  settings.MailClientAddress,
-			Username: settings.MailClientUsername,
-			Password: settings.MailClientPassword,
-		},
+		settings,
 	)
 
 	ctx := context.TODO()
 
-	processor.DownloadEmails(ctx)
-	processor.Process(ctx)
+	//err := processor.Connect(ctx)
+	//if err != nil {
+	//	panic(err) // TODO: fix panic
+	//}
+	err := processor.Start(ctx)
+	if err != nil {
+		panic(err) // TODO: fix panic
+	}
 }

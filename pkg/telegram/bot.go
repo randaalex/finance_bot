@@ -42,7 +42,7 @@ func NewBot(
 	bot, err := telebot.NewBot(botSettings)
 
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 
 	return &Bot{
