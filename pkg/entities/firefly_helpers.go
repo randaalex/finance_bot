@@ -2,8 +2,10 @@ package entities
 
 import "github.com/randaalex/finance_bot/pkg/firefly"
 
-func NewNullableInt32(val *int32) *firefly.NullableInt32 {
-	result := firefly.NewNullableInt32(val)
+func NewNullableInt32(val *int) *firefly.NullableInt32 {
+	convertedVal := int32(*val)
+
+	result := firefly.NewNullableInt32(&convertedVal)
 	if val == nil || *val == 0 {
 		result.Unset()
 	}

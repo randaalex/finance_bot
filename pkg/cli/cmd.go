@@ -1,8 +1,7 @@
-package cmd
+package cli
 
 import (
 	"fmt"
-	"github.com/randaalex/finance_bot/cmd/cli"
 	"os"
 	"os/signal"
 	"syscall"
@@ -18,17 +17,17 @@ var rootCmd = &cobra.Command{
 
 var mailCmd = &cobra.Command{
 	Use: "mail",
-	Run: cli.MailListenerHandler,
+	Run: MailListenerHandler,
 }
 
 var parseCmd = &cobra.Command{
 	Use: "parse",
-	Run: cli.ParseFileHandler,
+	Run: ParseFileHandler,
 }
 
 var botCmd = &cobra.Command{
 	Use: "bot",
-	Run: cli.TelegramBotHandler,
+	Run: TelegramBotHandler,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

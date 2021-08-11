@@ -19,19 +19,19 @@ const (
 )
 
 type Transaction struct {
-	Id                  int32
+	Id                  int
 	IssuedAt            time.Time // Internal Reference
 	Type                string
 	Description         string // custom or ExternalId
-	Amount              float32
+	Amount              float64
 	CurrencyCode        string
-	ForeignAmount       float32
+	ForeignAmount       float64
 	ForeignCurrencyCode string
-	CategoryId          int32
+	CategoryId          int
 	CategoryName        string
-	SourceId            int32
+	SourceId            int
 	SourceName          string
-	DestinationId       int32
+	DestinationId       int
 	DestinationName     string
 	Date                string
 	Recipient           string // firefly: ExternalId
@@ -47,8 +47,7 @@ func (t *Transaction) GetHash() string {
 }
 
 func ConvertTransactionToFireflyTransaction(transaction *Transaction) *firefly.Transaction {
-	//errorIfDuplicateHash := true
-
+	errorIfDuplicateHash := true
 
 	hash := transaction.GetHash()
 	internalReference := transaction.IssuedAt.Format(FireflyTransactionDateTimeFormat)
@@ -75,7 +74,7 @@ func ConvertTransactionToFireflyTransaction(transaction *Transaction) *firefly.T
 	}
 
 	fireflyTransaction := firefly.Transaction{
-		//ErrorIfDuplicateHash: &errorIfDuplicateHash,
+		ErrorIfDuplicateHash: &errorIfDuplicateHash,
 		Transactions: []firefly.TransactionSplit{fireflySplit},
 	}
 
@@ -90,7 +89,7 @@ func ConvertFireflyTransactionToTransaction(fireflyTransactionSingle *firefly.Tr
 	transactionId, _ := strconv.Atoi(fireflyTransactionRead.GetId())
 
 	if len(fireflyTransactionSplits) == 0 {
-		panic("empty firefly transactions split")
+		panic("empty firefly transactions split") // TODO: fix panic
 	}
 
 	// we use only one TransactionSplit in firefly
@@ -104,19 +103,19 @@ func ConvertFireflyTransactionToTransaction(fireflyTransactionSingle *firefly.Tr
 	}
 
 	transaction := Transaction{
-		Id:                  int32(transactionId),
+		Id:                  transactionId,
 		IssuedAt:            issuedAt,
 		Type:                fireflySplit.GetType(),
 		Description:         fireflySplit.GetDescription(),
-		Amount:              float32(amount),
+		Amount:              amount,
 		CurrencyCode:        fireflySplit.GetCurrencyCode(),
-		ForeignAmount:       float32(foreignAmount),
+		ForeignAmount:       foreignAmount,
 		ForeignCurrencyCode: fireflySplit.GetForeignCurrencyCode(),
-		CategoryId:          fireflySplit.GetCategoryId(),
+		CategoryId:          int(fireflySplit.GetCategoryId()),
 		CategoryName:        fireflySplit.GetCategoryName(),
-		SourceId:            fireflySplit.GetSourceId(),
+		SourceId:            int(fireflySplit.GetSourceId()),
 		SourceName:          fireflySplit.GetSourceName(),
-		DestinationId:       fireflySplit.GetDestinationId(),
+		DestinationId:       int(fireflySplit.GetDestinationId()),
 		DestinationName:     fireflySplit.GetDestinationName(),
 		Recipient:           fireflySplit.GetExternalId(),
 		Notes:               fireflySplit.GetNotes(),

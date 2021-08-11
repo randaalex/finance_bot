@@ -8,10 +8,10 @@ import (
 
 	"github.com/randaalex/finance_bot/pkg/db"
 	"github.com/randaalex/finance_bot/pkg/entities"
+	"github.com/randaalex/finance_bot/pkg/fileprocessor"
 	"github.com/randaalex/finance_bot/pkg/firefly"
 	fireflyMocks "github.com/randaalex/finance_bot/pkg/mocks/firefly"
 	fileprocessorMocks "github.com/randaalex/finance_bot/pkg/mocks/processors/fileprocessor"
-	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
 )
 
 func TestFileprocessor_Process(t *testing.T) {

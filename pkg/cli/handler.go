@@ -3,7 +3,12 @@ package cli
 import (
 	"context"
 	"database/sql"
+	"time"
+
 	_ "github.com/lib/pq"
+
+	"github.com/getsentry/sentry-go"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 
@@ -16,6 +21,25 @@ import (
 type Storage interface {
 	CreateTransactionsLog(ctx context.Context, arg db.CreateTransactionsLogParams) (db.TransactionsLog, error)
 	GetTransactionsLogByDescription(ctx context.Context, description string) (db.TransactionsLog, error)
+}
+
+func newLogger() *logrus.Logger {
+	log := logrus.New()
+
+	return log
+}
+
+func initSentry(logger *logrus.Logger, settings *entities.Settings) {
+	err := sentry.Init(sentry.ClientOptions{
+		Dsn: settings.SentryDsn,
+		Environment: settings.SentryEnvironment,
+	})
+	if err != nil {
+		logger.Fatalf("sentry.Init error: %s", err)
+	}
+
+	defer sentry.Flush(2 * time.Second)
+	//defer sentry.Recover()
 }
 
 func newDBClient(settings *entities.Settings) (Storage, error) {
@@ -38,8 +62,8 @@ func newFireflyClient(settings *entities.Settings) (*firefly.APIClient, error) {
 	tc := oauth2.NewClient(ctx, ts)
 
 	return firefly.NewAPIClient(&firefly.Configuration{
-		Host:       "192.168.0.2:8081",
-		Scheme:     "http",
+		Host:       settings.FireflyHost,
+		Scheme:     settings.FireflyScheme,
 		HTTPClient: tc,
 		OperationServers: map[string]firefly.ServerConfigurations{
 			"TransactionsApiService.StoreTransaction":  {{URL: ""}},
@@ -107,6 +131,6 @@ func getCategories() *[]entities.Category {
 
 func CheckError(err error) {
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 }

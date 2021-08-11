@@ -7,14 +7,14 @@ import (
 )
 
 type Account struct {
-	Id            int32
+	Id            int
 	Name          string
 	CurrencyCode  string
 	AccountNumber string
 }
 
 type Category struct {
-	Id int32
+	Id int
 	Name string
 }
 

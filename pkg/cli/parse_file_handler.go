@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/randaalex/finance_bot/pkg/parsers/alfacsv"
-	"github.com/randaalex/finance_bot/pkg/processors/fileprocessor"
+	"github.com/randaalex/finance_bot/pkg/fileprocessor"
+	"github.com/randaalex/finance_bot/pkg/fileprocessor/alfacsv"
 )
 
 func ParseFileHandler(cmd *cobra.Command, args []string) {

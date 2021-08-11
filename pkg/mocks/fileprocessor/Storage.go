@@ -6,6 +6,7 @@ import (
 	context "context"
 
 	db "github.com/randaalex/finance_bot/pkg/db"
+
 	mock "github.com/stretchr/testify/mock"
 )
 

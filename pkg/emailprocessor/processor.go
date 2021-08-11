@@ -3,15 +3,18 @@ package emailprocessor
 import (
 	"context"
 	"fmt"
-	"github.com/randaalex/finance_bot/pkg/db"
-	"github.com/randaalex/finance_bot/pkg/entities"
-	"github.com/randaalex/finance_bot/pkg/firefly"
-	"github.com/randaalex/finance_bot/pkg/parsers/alfamail"
-	"github.com/randaalex/finance_bot/pkg/telegram"
-	"log"
 	"os"
 	"regexp"
-	"time"
+
+	imapclient "github.com/emersion/go-imap/client"
+	"github.com/getsentry/sentry-go"
+	"github.com/sirupsen/logrus"
+
+	"github.com/randaalex/finance_bot/pkg/db"
+	"github.com/randaalex/finance_bot/pkg/emailprocessor/alfaparser"
+	"github.com/randaalex/finance_bot/pkg/entities"
+	"github.com/randaalex/finance_bot/pkg/firefly"
+	"github.com/randaalex/finance_bot/pkg/telegram"
 )
 
 const (
@@ -28,17 +31,12 @@ type Processor struct {
 	Storage       Storage
 	FireflyClient *firefly.APIClient
 	TelegramBot   *telegram.Bot
-	EmailParser   *alfamail.AlfaParser
+	EmailParser   *alfaparser.Parser
+	logger        *logrus.Logger
 	accounts      *[]entities.Account
 	categories    *[]entities.Category
-	settings      *Settings
-	emails        []parsedImapMessage
-}
-
-type Settings struct {
-	Address  string
-	Username string
-	Password string
+	settings      *entities.Settings
+	imapClient    *imapclient.Client
 }
 
 type parsedImapMessage struct {
@@ -50,62 +48,59 @@ func NewProcessor(
 	storage Storage,
 	fireflyClient *firefly.APIClient,
 	bot *telegram.Bot,
-	emailParser *alfamail.AlfaParser,
+	emailParser *alfaparser.Parser,
+	logger *logrus.Logger,
 	accounts *[]entities.Account,
 	categories *[]entities.Category,
-	settings *Settings,
+	settings *entities.Settings,
 ) *Processor {
 	return &Processor{
 		Storage:       storage,
 		FireflyClient: fireflyClient,
 		TelegramBot:   bot,
 		EmailParser:   emailParser,
+		logger:        logger,
 		accounts:      accounts,
 		categories:    categories,
 		settings:      settings,
 	}
 }
 
-func (p *Processor) Process(ctx context.Context) {
-	log.Printf("process")
-
-	for _, email := range p.emails {
-		if isValidEmail, _ := regexp.Match(emailSubjectFormat, []byte(email.subject)); !isValidEmail {
-			log.Printf("Skip email with invalid subject: %s", email.subject)
-			continue
-		}
-
-		transactionReq := *p.EmailParser.Parse(email.body)
-
-		p.processTransaction(ctx, transactionReq)
-
-		time.Sleep(5 * time.Second)
-	}
-}
-
-func (p *Processor) ProcessEmail(ctx context.Context, email parsedImapMessage) {
-	log.Printf("process signle email")
-
+func (p *Processor) ProcessEmail(ctx context.Context, email *parsedImapMessage) error {
 	if isValidEmail, _ := regexp.Match(emailSubjectFormat, []byte(email.subject)); !isValidEmail {
-		log.Printf("Skip email with invalid subject: %s", email.subject)
-		return
+		p.logger.Printf("Skip email with invalid subject: %s", email.subject)
+		return nil
 	}
 
-	transactionReq := *p.EmailParser.Parse(email.body)
+	transactionReq, err := p.EmailParser.Parse(email.body)
+	if err != nil {
+		p.logger.Printf("parse error: %+v\n", err)
 
-	p.processTransaction(ctx, transactionReq)
+		sentry.ConfigureScope(func(scope *sentry.Scope) {
+			scope.SetExtras(map[string]interface{}{
+				"mail":   err.(alfaparser.ParseMailError).Mail,
+				"line":   err.(alfaparser.ParseMailError).Line,
+				"action": err.(alfaparser.ParseMailError).Action,
+			})
+			sentry.CaptureException(err)
+		})
+
+		panic(err)
+	}
+
+	return p.processTransaction(ctx, transactionReq)
 }
 
-func (p *Processor) processTransaction(ctx context.Context, transactionReq entities.Transaction) {
+func (p *Processor) processTransaction(ctx context.Context, transactionReq *entities.Transaction) error {
 	recentTransaction, e := p.Storage.GetTransactionsLogByDescription(ctx, transactionReq.Description)
 	if e != nil {
-		log.Printf("mapping not found: %v\n", transactionReq.Description)
+		p.logger.Printf("mapping not found: %v\n", transactionReq.Description)
 	} else {
-		log.Printf("mapping found: %v\n", recentTransaction)
-		transactionReq.CategoryId = recentTransaction.CategoryID
+		p.logger.Printf("mapping found: %v\n", recentTransaction)
+		transactionReq.CategoryId = int(recentTransaction.CategoryID)
 	}
 
-	fireflyTransactionReq := entities.ConvertTransactionToFireflyTransaction(&transactionReq)
+	fireflyTransactionReq := entities.ConvertTransactionToFireflyTransaction(transactionReq)
 
 	// TODO: add request for update VirtualBalance of account in firefly
 	fireflyTransaction, r, err :=
@@ -115,10 +110,12 @@ func (p *Processor) processTransaction(ctx context.Context, transactionReq entit
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.StoreTransaction``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 
-		panic(err)
+		panic(err) // TODO: fix panic
 	}
 
 	transaction := entities.ConvertFireflyTransactionToTransaction(&fireflyTransaction)
 
 	p.TelegramBot.RenderTransaction(transaction)
+
+	return nil
 }
