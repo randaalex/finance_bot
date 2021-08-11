@@ -4,13 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
-	"io/ioutil"
-	"time"
-
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
+	"io"
+	"io/ioutil"
+	"time"
 )
 
 func (p *Processor) Connect(ctx context.Context) error {
@@ -60,6 +59,19 @@ func (p *Processor) Start(ctx context.Context) error {
 	searchCriteria := imap.NewSearchCriteria()
 	searchCriteria.WithoutFlags = []string{imap.SeenFlag}
 	//searchCriteria.WithoutFlags = []string{}
+
+	for {
+		if err = p.fetchMessages(ctx, searchCriteria); err != nil {
+			panic(err)
+		}
+
+		time.Sleep(10 * time.Second)
+	}
+
+	return nil
+}
+
+func (p *Processor) fetchMessages(ctx context.Context, searchCriteria *imap.SearchCriteria) error {
 	messageUids, err := p.imapClient.Search(searchCriteria)
 	if err != nil {
 		return fmt.Errorf("search error: %w", err)

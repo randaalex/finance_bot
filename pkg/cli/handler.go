@@ -3,19 +3,14 @@ package cli
 import (
 	"context"
 	"database/sql"
-	"time"
-
 	_ "github.com/lib/pq"
-
-	"github.com/getsentry/sentry-go"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
-	"golang.org/x/oauth2"
-
 	"github.com/randaalex/finance_bot/pkg/db"
 	"github.com/randaalex/finance_bot/pkg/entities"
 	"github.com/randaalex/finance_bot/pkg/firefly"
 	"github.com/randaalex/finance_bot/pkg/telegram"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"golang.org/x/oauth2"
 )
 
 type Storage interface {
@@ -25,21 +20,10 @@ type Storage interface {
 
 func newLogger() *logrus.Logger {
 	log := logrus.New()
+	log.SetFormatter(&logrus.JSONFormatter{})
+	//log.SetReportCaller(true)
 
 	return log
-}
-
-func initSentry(logger *logrus.Logger, settings *entities.Settings) {
-	err := sentry.Init(sentry.ClientOptions{
-		Dsn: settings.SentryDsn,
-		Environment: settings.SentryEnvironment,
-	})
-	if err != nil {
-		logger.Fatalf("sentry.Init error: %s", err)
-	}
-
-	defer sentry.Flush(2 * time.Second)
-	//defer sentry.Recover()
 }
 
 func newDBClient(settings *entities.Settings) (Storage, error) {
@@ -73,8 +57,8 @@ func newFireflyClient(settings *entities.Settings) (*firefly.APIClient, error) {
 	}), nil
 }
 
-func newTelegramBot(storage Storage, fireflyClient *firefly.APIClient, settings *entities.Settings) (*telegram.Bot, error) {
-	return telegram.NewBot(storage, fireflyClient, settings, getAccounts(), getCategories()), nil
+func newTelegramBot(storage Storage, logger *logrus.Logger, fireflyClient *firefly.APIClient, settings *entities.Settings) (*telegram.Bot, error) {
+	return telegram.NewBot(storage, logger, fireflyClient, settings, getAccounts(), getCategories()), nil
 }
 
 func getSettings() *entities.Settings {

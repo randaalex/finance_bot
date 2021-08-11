@@ -3,6 +3,11 @@ SRC=./main.go
 APP_ENV?=development
 FIREFLY_API_VERSION=1.4.0
 
+ifneq (,$(wildcard ./app.env))
+	include app.env
+	export
+endif
+
 .PHONY: install build run sqlc firefly-api migrate migrate-down migrate-status
 
 install:
@@ -19,7 +24,7 @@ test:
 	go test ./...
 
 sqlc:
-	sqlc generate
+	cd config && sqlc generate && cd ..
 
 firefly-api:
 	rm -rf pkg/firefly
@@ -39,10 +44,10 @@ mocks:
 	rm -rf pkg/mocks && mockery --all --keeptree --dir pkg --output pkg/mocks
 
 migrate:
-	sql-migrate up -env="${APP_ENV}"
+	sql-migrate up -env="${APP_ENV}" -config=config/dbconfig.yml
 
 migrate-down:
-	sql-migrate down -env="${APP_ENV}"
+	sql-migrate down -env="${APP_ENV}" -config=config/dbconfig.yml
 
 migrate-status:
-	sql-migrate status -env="${APP_ENV}"
+	sql-migrate status -env="${APP_ENV}" -config=config/dbconfig.yml

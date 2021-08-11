@@ -2,9 +2,8 @@ package emailprocessor
 
 import (
 	"context"
-	"fmt"
-	"os"
 	"regexp"
+	"strings"
 
 	imapclient "github.com/emersion/go-imap/client"
 	"github.com/getsentry/sentry-go"
@@ -68,13 +67,13 @@ func NewProcessor(
 
 func (p *Processor) ProcessEmail(ctx context.Context, email *parsedImapMessage) error {
 	if isValidEmail, _ := regexp.Match(emailSubjectFormat, []byte(email.subject)); !isValidEmail {
-		p.logger.Printf("Skip email with invalid subject: %s", email.subject)
+		p.logger.Infof("Skip email with invalid subject: %s", email.subject)
 		return nil
 	}
 
 	transactionReq, err := p.EmailParser.Parse(email.body)
 	if err != nil {
-		p.logger.Printf("parse error: %+v\n", err)
+		p.logger.Infof("parse error: %+v\n", err)
 
 		sentry.ConfigureScope(func(scope *sentry.Scope) {
 			scope.SetExtras(map[string]interface{}{
@@ -94,9 +93,9 @@ func (p *Processor) ProcessEmail(ctx context.Context, email *parsedImapMessage) 
 func (p *Processor) processTransaction(ctx context.Context, transactionReq *entities.Transaction) error {
 	recentTransaction, e := p.Storage.GetTransactionsLogByDescription(ctx, transactionReq.Description)
 	if e != nil {
-		p.logger.Printf("mapping not found: %v\n", transactionReq.Description)
+		p.logger.Infof("mapping not found: %v\n", transactionReq.Description)
 	} else {
-		p.logger.Printf("mapping found: %v\n", recentTransaction)
+		p.logger.Infof("mapping found: %v\n", recentTransaction)
 		transactionReq.CategoryId = int(recentTransaction.CategoryID)
 	}
 
@@ -107,10 +106,19 @@ func (p *Processor) processTransaction(ctx context.Context, transactionReq *enti
 		p.FireflyClient.TransactionsApi.StoreTransaction(context.TODO()).Transaction(*fireflyTransactionReq).Execute()
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.StoreTransaction``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+		p.logger.WithFields(logrus.Fields{
+			"err": err, "httpResp": r,
+		}).Info("Error when calling `TransactionsApi.StoreTransaction`")
 
-		panic(err) // TODO: fix panic
+		if fireflyError, ok := err.(*firefly.GenericOpenAPIError); ok {
+			if strings.Contains(string(fireflyError.Body()), "Duplicate of transaction") {
+				p.logger.Infof("Transaction duplicated in firefly: %v\n", fireflyTransaction)
+
+				return nil
+			}
+		}
+
+		panic(err)
 	}
 
 	transaction := entities.ConvertFireflyTransactionToTransaction(&fireflyTransaction)

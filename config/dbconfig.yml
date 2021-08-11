@@ -1,0 +1,9 @@
+development:
+  dialect: postgres
+  datasource: ${DB_CONNECTION}
+  dir: pkg/db/migrations
+
+production:
+  dialect: postgres
+  datasource: ${DB_CONNECTION}
+  dir: pkg/db/migrations
