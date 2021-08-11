@@ -3,6 +3,8 @@ package entities
 import "time"
 
 type Settings struct {
+	AppEnv string `mapstructure:"APP_ENV"`
+
 	DbConnection string `mapstructure:"DB_CONNECTION"`
 
 	FireflyHost   string `mapstructure:"FIREFLY_HOST"`
@@ -17,6 +19,5 @@ type Settings struct {
 	TelegramPollingInterval time.Duration `mapstructure:"TELEGRAM_POLLING_INTERVAL"`
 	TelegramUserId          int           `mapstructure:"TELEGRAM_USER_ID"`
 
-	SentryDsn         string `mapstructure:"SENTRY_DSN"`
-	SentryEnvironment string `mapstructure:"SENTRY_ENVIRONMENT"`
+	SentryDsn string `mapstructure:"SENTRY_DSN"`
 }

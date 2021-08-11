@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/spf13/cobra"
 
 	"github.com/randaalex/finance_bot/pkg/emailprocessor"
@@ -21,11 +22,19 @@ func runMailHandler() {
 	settings := getSettings()
 	logger := newLogger()
 
-	initSentry(logger, settings)
+	err := sentry.Init(sentry.ClientOptions{
+		Dsn: settings.SentryDsn,
+		Environment: settings.AppEnv,
+	})
+	if err != nil {
+		logger.Fatalf("sentry.Init error: %s", err)
+	}
+	defer sentry.Recover()
+	defer sentry.Flush(2 * time.Second)
 
 	storage, _ := newDBClient(settings)
 	fireflyClient, _ := newFireflyClient(settings)
-	telegramBot, _ := newTelegramBot(storage, fireflyClient, settings)
+	telegramBot, _ := newTelegramBot(storage, logger, fireflyClient, settings)
 	emailParser := alfaparser.NewParser(logger, getAccounts(), getCategories())
 
 	processor := emailprocessor.NewProcessor(
@@ -45,7 +54,8 @@ func runMailHandler() {
 	//if err != nil {
 	//	panic(err) // TODO: fix panic
 	//}
-	err := processor.Start(ctx)
+	logger.Println("Mail listener started")
+	err = processor.Start(ctx)
 	if err != nil {
 		panic(err) // TODO: fix panic
 	}

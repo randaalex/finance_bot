@@ -3,7 +3,12 @@ SRC=./main.go
 APP_ENV?=development
 FIREFLY_API_VERSION=1.4.0
 
-.PHONY: install build run sqlc firefly-api migrate migrate-down migrate-status
+ifneq (,$(wildcard ./app.env))
+	include app.env
+	export
+endif
+
+.PHONY: install build docker-build docker-push run sqlc firefly-api migrate migrate-down migrate-status
 
 install:
 	go get -v github.com/rubenv/sql-migrate/...
@@ -12,6 +17,12 @@ install:
 build:
 	go build -i -v -o $(BINARY) $(SRC)
 
+docker-build:
+	docker build . --tag ghcr.io/randaalex/finance_bot:latest
+
+docker-push:
+	docker push ghcr.io/randaalex/finance_bot:latest
+
 run:
 	go run main.go run
 
@@ -19,7 +30,7 @@ test:
 	go test ./...
 
 sqlc:
-	sqlc generate
+	cd config && sqlc generate && cd ..
 
 firefly-api:
 	rm -rf pkg/firefly
@@ -39,10 +50,10 @@ mocks:
 	rm -rf pkg/mocks && mockery --all --keeptree --dir pkg --output pkg/mocks
 
 migrate:
-	sql-migrate up -env="${APP_ENV}"
+	sql-migrate up -env="${APP_ENV}" -config=config/dbconfig.yml
 
 migrate-down:
-	sql-migrate down -env="${APP_ENV}"
+	sql-migrate down -env="${APP_ENV}" -config=config/dbconfig.yml
 
 migrate-status:
-	sql-migrate status -env="${APP_ENV}"
+	sql-migrate status -env="${APP_ENV}" -config=config/dbconfig.yml

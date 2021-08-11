@@ -53,6 +53,14 @@ func (p *Parser) Parse(mail string) (*entities.Transaction, error) {
 		return nil, err
 	}
 
+	if *transactionType == entities.TransactionSplitTypeTransfer {
+		return nil, ParseMailError{
+			Mail:   mail,
+			Action: "parse",
+			Err:    errors.New("skip mail"),
+		}
+	}
+
 	description, err := p.getDescription(*transactionType, mail)
 	if err != nil {
 		return nil, err
@@ -100,6 +108,7 @@ func (p *Parser) Parse(mail string) (*entities.Transaction, error) {
 func (p *Parser) getType(mail string) (*string, error) {
 	withdrawal := entities.TransactionSplitTypeWithdrawal
 	deposit := entities.TransactionSplitTypeDeposit
+	transfer := entities.TransactionSplitTypeTransfer
 
 	mailRows := strings.Split(mail, "\n")
 	if len(mailRows) < 2 {
@@ -115,6 +124,8 @@ func (p *Parser) getType(mail string) (*string, error) {
 		return &withdrawal, nil
 	case "Поступление", "Поступление успешно":
 		return &deposit, nil
+	case "Списание", "Выдача наличных":
+		return &transfer, nil
 	}
 
 	return nil, ParseMailError{
