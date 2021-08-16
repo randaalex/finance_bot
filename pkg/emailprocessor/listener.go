@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"time"
@@ -12,75 +13,71 @@ import (
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
 	"github.com/getsentry/sentry-go"
-
 )
 
-func (p *Processor) Connect(ctx context.Context) error {
-	imapClient, err := client.DialTLS(p.settings.MailClientAddress, nil)
-	if err != nil {
-		return ImapError{
-			Err: fmt.Errorf("dial error: %w", err),
+const ImapUpdatesInterval = time.Minute
+
+func (p *Processor) Start(ctx context.Context) {
+	defer sentry.Recover()
+
+	for {
+		p.logger.Info("Connecting...")
+		imapConnection, errConn := p.connect(ctx)
+		defer imapConnection.Logout()
+
+		if errConn != nil {
+			p.logger.WithFields(logrus.Fields{"err": errConn}).Error("mail connection error")
+			sentry.CaptureException(errConn)
+
+			p.logger.Info("Sleeping...")
+			time.Sleep(ImapUpdatesInterval)
+			break
 		}
-	}
 
-	p.imapClient = imapClient
-
-	defer imapClient.Logout()
-
-	if err = p.imapClient.Login(p.settings.MailClientUsername, p.settings.MailClientPassword); err != nil {
-		return ImapError{
-			Err: fmt.Errorf("login error: %w", err),
+		p.logger.Info("Processing new mails...")
+		errProcess := p.process(ctx, imapConnection)
+		if errProcess != nil {
+			p.logger.WithFields(logrus.Fields{"err": errProcess}).Error("mail processing error")
+			sentry.CaptureException(errProcess)
 		}
-	}
 
-	return nil
+		p.logger.Info("Sleeping...")
+		time.Sleep(ImapUpdatesInterval)
+	}
 }
 
-func (p *Processor) Start(ctx context.Context) error {
-	imapClient, err := client.DialTLS(p.settings.MailClientAddress, nil)
+func (p *Processor) connect(ctx context.Context) (*client.Client, error) {
+	imapConnection, err := client.DialTLS(p.settings.MailClientAddress, nil)
 	if err != nil {
-		return ImapError{
+		return nil, ImapError{
 			Err: fmt.Errorf("dial error: %w", err),
 		}
 	}
 
-	p.imapClient = imapClient
-
-	defer imapClient.Logout()
-
-	if err = p.imapClient.Login(p.settings.MailClientUsername, p.settings.MailClientPassword); err != nil {
-		return ImapError{
+	if err = imapConnection.Login(p.settings.MailClientUsername, p.settings.MailClientPassword); err != nil {
+		return nil, ImapError{
 			Err: fmt.Errorf("login error: %w", err),
 		}
 	}
 
-	_, err = p.imapClient.Select(mailboxName, false)
+	_, err = imapConnection.Select(mailboxName, false)
 	if err != nil {
-		return fmt.Errorf("select mailbox error: %w", err)
+		return nil, ImapError{
+			Err: fmt.Errorf("select mailbox error: %w", err),
+		}
 	}
 
+	return imapConnection, nil
+}
+
+func (p *Processor) process(ctx context.Context, imapConnection *client.Client) error {
 	searchCriteria := imap.NewSearchCriteria()
 	searchCriteria.WithoutFlags = []string{imap.SeenFlag}
 	//searchCriteria.WithoutFlags = []string{}
 
-	for {
-		p.logger.Info("Fetching mails...")
-		if err = p.fetchMessages(ctx, searchCriteria); err != nil {
-			panic(err)
-		}
-
-		time.Sleep(10 * time.Second)
-	}
-
-	return nil
-}
-
-func (p *Processor) fetchMessages(ctx context.Context, searchCriteria *imap.SearchCriteria) error {
-	defer sentry.Recover()
-
-	messageUids, err := p.imapClient.Search(searchCriteria)
+	messageUids, err := imapConnection.Search(searchCriteria)
 	if err != nil {
-		return fmt.Errorf("search error: %w", err)
+		return fmt.Errorf("imap search error: %w", err)
 	}
 
 	for _, uuid := range messageUids {
@@ -93,22 +90,26 @@ func (p *Processor) fetchMessages(ctx context.Context, searchCriteria *imap.Sear
 		messages := make(chan *imap.Message, 0)
 		done := make(chan error, 0)
 		go func() {
-			done <- p.imapClient.Fetch(seqSet, items, messages)
+			done <- imapConnection.Fetch(seqSet, items, messages)
 		}()
 
 		for msg := range messages {
 			email, err := p.parseImapMessage(&section, msg)
 			if err != nil {
-				p.copyMailToErrorFolder(seqSet)
-				// TODO: logger, sentry
-				return err
+				p.copyMailToErrorFolder(imapConnection, seqSet)
+
+				p.logger.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("parse imap message error")
+
+				return fmt.Errorf("imap parse message error: %w", err)
 			}
 
 			err = p.ProcessEmail(ctx, email)
 			if err != nil {
-				p.copyMailToErrorFolder(seqSet)
-				// TODO: logger, sentry
-				return err
+				p.copyMailToErrorFolder(imapConnection, seqSet)
+
+				p.logger.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("mail process error")
+
+				return fmt.Errorf("mail process message error: %w", err)
 			}
 		}
 
@@ -118,8 +119,8 @@ func (p *Processor) fetchMessages(ctx context.Context, searchCriteria *imap.Sear
 	return nil
 }
 
-func (p *Processor) copyMailToErrorFolder(seqSet *imap.SeqSet) {
-	err := p.imapClient.Copy(seqSet, "ALFABANK_ERROR")
+func (p *Processor) copyMailToErrorFolder(imapConnection *client.Client, seqSet *imap.SeqSet) {
+	err := imapConnection.Copy(seqSet, "ALFABANK_ERROR")
 	if err != nil {
 		panic(err) // TODO: fix
 	}

@@ -20,11 +20,6 @@ var mailCmd = &cobra.Command{
 	Run: MailListenerHandler,
 }
 
-var parseCmd = &cobra.Command{
-	Use: "parse",
-	Run: ParseFileHandler,
-}
-
 var botCmd = &cobra.Command{
 	Use: "bot",
 	Run: TelegramBotHandler,
@@ -51,7 +46,6 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.AddCommand(mailCmd)
-	rootCmd.AddCommand(parseCmd)
 	rootCmd.AddCommand(botCmd)
 }
 

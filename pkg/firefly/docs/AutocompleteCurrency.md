@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Currency name. | [readonly] 
-**Code** | **string** | Currency code for this account. | [readonly] 
-**Symbol** | **string** |  | [readonly] 
-**DecimalPlaces** | **int32** |  | [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Currency name. | 
+**Code** | **string** | Currency code. | 
+**Symbol** | **string** |  | 
+**DecimalPlaces** | **int32** |  | 
 
 ## Methods
 

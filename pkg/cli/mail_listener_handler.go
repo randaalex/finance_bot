@@ -29,7 +29,7 @@ func runMailHandler() {
 	if err != nil {
 		logger.Fatalf("sentry.Init error: %s", err)
 	}
-	defer sentry.Recover()
+	//defer sentry.Recover()
 	defer sentry.Flush(2 * time.Second)
 
 	storage, _ := newDBClient(settings)
@@ -50,13 +50,6 @@ func runMailHandler() {
 
 	ctx := context.TODO()
 
-	//err := processor.Connect(ctx)
-	//if err != nil {
-	//	panic(err) // TODO: fix panic
-	//}
 	logger.Println("Mail listener started")
-	err = processor.Start(ctx)
-	if err != nil {
-		panic(err) // TODO: fix panic
-	}
+	processor.Start(ctx)
 }

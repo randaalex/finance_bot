@@ -4,13 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Name of the piggy bank found by an auto-complete search. | [readonly] 
-**NameWithBalance** | Pointer to **string** | Name of the piggy bank found by an auto-complete search with the current balance formatted nicely. | [optional] [readonly] 
-**CurrencyId** | Pointer to **int32** | Currency ID for this piggy bank. | [optional] [readonly] 
-**CurrencyCode** | Pointer to **string** | Currency code for this piggy bank. | [optional] [readonly] 
-**CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
-**CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Name of the piggy bank found by an auto-complete search. | 
+**NameWithBalance** | Pointer to **string** | Name of the piggy bank found by an auto-complete search with the current balance formatted nicely. | [optional] 
+**ObjectGroupId** | Pointer to **NullableString** | The group ID of the group this object is part of. NULL if no group. | [optional] 
+**ObjectGroupTitle** | Pointer to **NullableString** | The name of the group. NULL if no group. | [optional] 
+**CurrencyId** | Pointer to **string** | Currency ID for this piggy bank. | [optional] 
+**CurrencyCode** | Pointer to **string** | Currency code for this piggy bank. | [optional] 
+**CurrencySymbol** | Pointer to **string** |  | [optional] 
+**CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -96,22 +98,92 @@ SetNameWithBalance sets NameWithBalance field to given value.
 
 HasNameWithBalance returns a boolean if a field has been set.
 
+### GetObjectGroupId
+
+`func (o *AutocompletePiggyBalance) GetObjectGroupId() string`
+
+GetObjectGroupId returns the ObjectGroupId field if non-nil, zero value otherwise.
+
+### GetObjectGroupIdOk
+
+`func (o *AutocompletePiggyBalance) GetObjectGroupIdOk() (*string, bool)`
+
+GetObjectGroupIdOk returns a tuple with the ObjectGroupId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectGroupId
+
+`func (o *AutocompletePiggyBalance) SetObjectGroupId(v string)`
+
+SetObjectGroupId sets ObjectGroupId field to given value.
+
+### HasObjectGroupId
+
+`func (o *AutocompletePiggyBalance) HasObjectGroupId() bool`
+
+HasObjectGroupId returns a boolean if a field has been set.
+
+### SetObjectGroupIdNil
+
+`func (o *AutocompletePiggyBalance) SetObjectGroupIdNil(b bool)`
+
+ SetObjectGroupIdNil sets the value for ObjectGroupId to be an explicit nil
+
+### UnsetObjectGroupId
+`func (o *AutocompletePiggyBalance) UnsetObjectGroupId()`
+
+UnsetObjectGroupId ensures that no value is present for ObjectGroupId, not even an explicit nil
+### GetObjectGroupTitle
+
+`func (o *AutocompletePiggyBalance) GetObjectGroupTitle() string`
+
+GetObjectGroupTitle returns the ObjectGroupTitle field if non-nil, zero value otherwise.
+
+### GetObjectGroupTitleOk
+
+`func (o *AutocompletePiggyBalance) GetObjectGroupTitleOk() (*string, bool)`
+
+GetObjectGroupTitleOk returns a tuple with the ObjectGroupTitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectGroupTitle
+
+`func (o *AutocompletePiggyBalance) SetObjectGroupTitle(v string)`
+
+SetObjectGroupTitle sets ObjectGroupTitle field to given value.
+
+### HasObjectGroupTitle
+
+`func (o *AutocompletePiggyBalance) HasObjectGroupTitle() bool`
+
+HasObjectGroupTitle returns a boolean if a field has been set.
+
+### SetObjectGroupTitleNil
+
+`func (o *AutocompletePiggyBalance) SetObjectGroupTitleNil(b bool)`
+
+ SetObjectGroupTitleNil sets the value for ObjectGroupTitle to be an explicit nil
+
+### UnsetObjectGroupTitle
+`func (o *AutocompletePiggyBalance) UnsetObjectGroupTitle()`
+
+UnsetObjectGroupTitle ensures that no value is present for ObjectGroupTitle, not even an explicit nil
 ### GetCurrencyId
 
-`func (o *AutocompletePiggyBalance) GetCurrencyId() int32`
+`func (o *AutocompletePiggyBalance) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *AutocompletePiggyBalance) GetCurrencyIdOk() (*int32, bool)`
+`func (o *AutocompletePiggyBalance) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *AutocompletePiggyBalance) SetCurrencyId(v int32)`
+`func (o *AutocompletePiggyBalance) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 

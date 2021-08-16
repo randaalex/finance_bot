@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## SearchAccounts
 
-> AccountArray SearchAccounts(ctx).Query(query).Type_(type_).Field(field).Page(page).Execute()
+> AccountArray SearchAccounts(ctx).Query(query).Field(field).Page(page).Type_(type_).Execute()
 
 Search for accounts
 
@@ -31,13 +31,13 @@ import (
 
 func main() {
     query := "checking" // string | The query you wish to search for.
-    type_ := openapiclient.AccountTypeFilter("all") // AccountTypeFilter | The type of accounts you wish to limit the search to.
     field := openapiclient.AccountSearchFieldFilter("all") // AccountSearchFieldFilter | The account field(s) you want to search in.
     page := int32(1) // int32 | Page number. The default pagination is 50 (optional)
+    type_ := openapiclient.AccountTypeFilter("all") // AccountTypeFilter | The type of accounts you wish to limit the search to. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.SearchApi.SearchAccounts(context.Background()).Query(query).Type_(type_).Field(field).Page(page).Execute()
+    resp, r, err := api_client.SearchApi.SearchAccounts(context.Background()).Query(query).Field(field).Page(page).Type_(type_).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `SearchApi.SearchAccounts``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -59,9 +59,9 @@ Other parameters are passed through a pointer to a apiSearchAccountsRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The query you wish to search for. | 
- **type_** | [**AccountTypeFilter**](AccountTypeFilter.md) | The type of accounts you wish to limit the search to. | 
  **field** | [**AccountSearchFieldFilter**](AccountSearchFieldFilter.md) | The account field(s) you want to search in. | 
  **page** | **int32** | Page number. The default pagination is 50 | 
+ **type_** | [**AccountTypeFilter**](AccountTypeFilter.md) | The type of accounts you wish to limit the search to. | 
 
 ### Return type
 
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -142,7 +142,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

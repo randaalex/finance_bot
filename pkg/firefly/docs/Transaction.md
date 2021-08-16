@@ -6,10 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
-**User** | Pointer to **int32** | User ID | [optional] [readonly] 
+**User** | Pointer to **string** | User ID | [optional] [readonly] 
 **ErrorIfDuplicateHash** | Pointer to **bool** | Break if the submitted transaction exists already. | [optional] 
 **ApplyRules** | Pointer to **bool** | Whether or not to apply rules when submitting transaction. | [optional] 
-**GroupTitle** | Pointer to **string** | Title of the transaction if it has been split in more than one piece. Empty otherwise. | [optional] 
+**GroupTitle** | Pointer to **NullableString** | Title of the transaction if it has been split in more than one piece. Empty otherwise. | [optional] 
 **Transactions** | [**[]TransactionSplit**](TransactionSplit.md) |  | 
 
 ## Methods
@@ -83,20 +83,20 @@ HasUpdatedAt returns a boolean if a field has been set.
 
 ### GetUser
 
-`func (o *Transaction) GetUser() int32`
+`func (o *Transaction) GetUser() string`
 
 GetUser returns the User field if non-nil, zero value otherwise.
 
 ### GetUserOk
 
-`func (o *Transaction) GetUserOk() (*int32, bool)`
+`func (o *Transaction) GetUserOk() (*string, bool)`
 
 GetUserOk returns a tuple with the User field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUser
 
-`func (o *Transaction) SetUser(v int32)`
+`func (o *Transaction) SetUser(v string)`
 
 SetUser sets User field to given value.
 
@@ -181,6 +181,16 @@ SetGroupTitle sets GroupTitle field to given value.
 
 HasGroupTitle returns a boolean if a field has been set.
 
+### SetGroupTitleNil
+
+`func (o *Transaction) SetGroupTitleNil(b bool)`
+
+ SetGroupTitleNil sets the value for GroupTitle to be an explicit nil
+
+### UnsetGroupTitle
+`func (o *Transaction) UnsetGroupTitle()`
+
+UnsetGroupTitle ensures that no value is present for GroupTitle, not even an explicit nil
 ### GetTransactions
 
 `func (o *Transaction) GetTransactions() []TransactionSplit`

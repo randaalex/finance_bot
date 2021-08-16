@@ -6,7 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteTag**](TagsApi.md#DeleteTag) | **Delete** /api/v1/tags/{tag} | Delete an tag.
 [**GetTag**](TagsApi.md#GetTag) | **Get** /api/v1/tags/{tag} | Get a single tag.
-[**GetTagCloud**](TagsApi.md#GetTagCloud) | **Get** /api/v1/tag-cloud | Returns a basic tag cloud.
 [**ListAttachmentByTag**](TagsApi.md#ListAttachmentByTag) | **Get** /api/v1/tags/{tag}/attachments | Lists all attachments.
 [**ListTag**](TagsApi.md#ListTag) | **Get** /api/v1/tags | List all tags.
 [**ListTransactionByTag**](TagsApi.md#ListTransactionByTag) | **Get** /api/v1/tags/{tag}/transactions | List all transactions with this tag.
@@ -36,7 +35,7 @@ import (
 )
 
 func main() {
-    tag := "groceries" // string | Either the tag itself or the tag ID.
+    tag := "groceries" // string | Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -54,7 +53,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**tag** | **string** | Either the tag itself or the tag ID. | 
+**tag** | **string** | Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary. | 
 
 ### Other Parameters
 
@@ -104,7 +103,7 @@ import (
 )
 
 func main() {
-    tag := "groceries" // string | Either the tag itself or the tag ID.
+    tag := "groceries" // string | Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
     page := int32(56) // int32 | Page number (optional)
 
     configuration := openapiclient.NewConfiguration()
@@ -125,7 +124,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**tag** | **string** | Either the tag itself or the tag ID. | 
+**tag** | **string** | Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary. | 
 
 ### Other Parameters
 
@@ -148,76 +147,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetTagCloud
-
-> TagCloud GetTagCloud(ctx).Start(start).End(end).Execute()
-
-Returns a basic tag cloud.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    "time"
-    openapiclient "./openapi"
-)
-
-func main() {
-    start := time.Now() // string | A date formatted YYYY-MM-DD. 
-    end := time.Now() // string | A date formatted YYYY-MM-DD. 
-
-    configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.TagsApi.GetTagCloud(context.Background()).Start(start).End(end).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `TagsApi.GetTagCloud``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetTagCloud`: TagCloud
-    fmt.Fprintf(os.Stdout, "Response from `TagsApi.GetTagCloud`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetTagCloudRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **start** | **string** | A date formatted YYYY-MM-DD.  | 
- **end** | **string** | A date formatted YYYY-MM-DD.  | 
-
-### Return type
-
-[**TagCloud**](TagCloud.md)
-
-### Authorization
-
-[firefly_iii_auth](../README.md#firefly_iii_auth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -289,7 +219,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -355,7 +285,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -434,7 +364,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -443,7 +373,7 @@ Name | Type | Description  | Notes
 
 ## StoreTag
 
-> TagSingle StoreTag(ctx).TagModel(tagModel).Execute()
+> TagSingle StoreTag(ctx).TagModelStore(tagModelStore).Execute()
 
 Store a new tag
 
@@ -462,11 +392,11 @@ import (
 )
 
 func main() {
-    tagModel := *openapiclient.NewTagModel("expensive") // TagModel | JSON array or key=value pairs with the necessary tag information. See the model for the exact specifications.
+    tagModelStore := *openapiclient.NewTagModelStore("expensive") // TagModelStore | JSON array or key=value pairs with the necessary tag information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.TagsApi.StoreTag(context.Background()).TagModel(tagModel).Execute()
+    resp, r, err := api_client.TagsApi.StoreTag(context.Background()).TagModelStore(tagModelStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `TagsApi.StoreTag``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -487,7 +417,7 @@ Other parameters are passed through a pointer to a apiStoreTagRequest struct via
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tagModel** | [**TagModel**](TagModel.md) | JSON array or key&#x3D;value pairs with the necessary tag information. See the model for the exact specifications. | 
+ **tagModelStore** | [**TagModelStore**](TagModelStore.md) | JSON array or key&#x3D;value pairs with the necessary tag information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -500,7 +430,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -509,7 +439,7 @@ Name | Type | Description  | Notes
 
 ## UpdateTag
 
-> TagSingle UpdateTag(ctx, tag).TagModel(tagModel).Execute()
+> TagSingle UpdateTag(ctx, tag).TagModelUpdate(tagModelUpdate).Execute()
 
 Update existing tag.
 
@@ -528,12 +458,12 @@ import (
 )
 
 func main() {
-    tag := "groceries" // string | Either the tag itself or the tag ID.
-    tagModel := *openapiclient.NewTagModel("expensive") // TagModel | JSON array with updated tag information. See the model for the exact specifications.
+    tag := "groceries" // string | Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
+    tagModelUpdate := *openapiclient.NewTagModelUpdate() // TagModelUpdate | JSON array with updated tag information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.TagsApi.UpdateTag(context.Background(), tag).TagModel(tagModel).Execute()
+    resp, r, err := api_client.TagsApi.UpdateTag(context.Background(), tag).TagModelUpdate(tagModelUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `TagsApi.UpdateTag``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -549,7 +479,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**tag** | **string** | Either the tag itself or the tag ID. | 
+**tag** | **string** | Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary. | 
 
 ### Other Parameters
 
@@ -559,7 +489,7 @@ Other parameters are passed through a pointer to a apiUpdateTagRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **tagModel** | [**TagModel**](TagModel.md) | JSON array with updated tag information. See the model for the exact specifications. | 
+ **tagModelUpdate** | [**TagModelUpdate**](TagModelUpdate.md) | JSON array with updated tag information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -572,7 +502,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

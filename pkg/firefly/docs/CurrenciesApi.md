@@ -15,7 +15,6 @@ Method | HTTP request | Description
 [**ListBillByCurrency**](CurrenciesApi.md#ListBillByCurrency) | **Get** /api/v1/currencies/{code}/bills | List all bills with this currency.
 [**ListBudgetLimitByCurrency**](CurrenciesApi.md#ListBudgetLimitByCurrency) | **Get** /api/v1/currencies/{code}/budget_limits | List all budget limits with this currency
 [**ListCurrency**](CurrenciesApi.md#ListCurrency) | **Get** /api/v1/currencies | List all currencies.
-[**ListExchangeRateByCurrency**](CurrenciesApi.md#ListExchangeRateByCurrency) | **Get** /api/v1/currencies/{code}/cer | List all known exchange rates with (from or to) this currency.
 [**ListRecurrenceByCurrency**](CurrenciesApi.md#ListRecurrenceByCurrency) | **Get** /api/v1/currencies/{code}/recurrences | List all recurring transactions with this currency.
 [**ListRuleByCurrency**](CurrenciesApi.md#ListRuleByCurrency) | **Get** /api/v1/currencies/{code}/rules | List all rules with this currency.
 [**ListTransactionByCurrency**](CurrenciesApi.md#ListTransactionByCurrency) | **Get** /api/v1/currencies/{code}/transactions | List all transactions with this currency.
@@ -87,7 +86,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -225,7 +224,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -295,7 +294,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -365,7 +364,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -450,13 +449,14 @@ import (
     "context"
     "fmt"
     "os"
+    "time"
     openapiclient "./openapi"
 )
 
 func main() {
     code := "USD" // string | The currency code.
     page := int32(1) // int32 | Page number. The default pagination is 50. (optional)
-    date := "date_example" // string | A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.  (optional)
+    date := time.Now() // string | A date formatted YYYY-MM-DD. When added to the request, Firefly III will show the account's balance on that day.  (optional)
     type_ := openapiclient.AccountTypeFilter("all") // AccountTypeFilter | Optional filter on the account type(s) returned (optional)
 
     configuration := openapiclient.NewConfiguration()
@@ -502,7 +502,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -574,7 +574,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -646,7 +646,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -723,7 +723,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -789,86 +789,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ListExchangeRateByCurrency
-
-> ExchangeRateArray ListExchangeRateByCurrency(ctx, code).Page(page).Date(date).Start(start).End(end).Execute()
-
-List all known exchange rates with (from or to) this currency.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    "time"
-    openapiclient "./openapi"
-)
-
-func main() {
-    code := "GBP" // string | The currency code.
-    page := int32(1) // int32 | Page number. The default pagination is 50. (optional)
-    date := time.Now() // string | The date of which you want to know the exchange rate  (optional)
-    start := time.Now() // string | Use this instead of the date parameter to search for a range of currency exchange values.  (optional)
-    end := time.Now() // string | Use this instead of the date parameter to search for a range of currency exchange values.  (optional)
-
-    configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.CurrenciesApi.ListExchangeRateByCurrency(context.Background(), code).Page(page).Date(date).Start(start).End(end).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `CurrenciesApi.ListExchangeRateByCurrency``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ListExchangeRateByCurrency`: ExchangeRateArray
-    fmt.Fprintf(os.Stdout, "Response from `CurrenciesApi.ListExchangeRateByCurrency`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**code** | **string** | The currency code. | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiListExchangeRateByCurrencyRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **page** | **int32** | Page number. The default pagination is 50. | 
- **date** | **string** | The date of which you want to know the exchange rate  | 
- **start** | **string** | Use this instead of the date parameter to search for a range of currency exchange values.  | 
- **end** | **string** | Use this instead of the date parameter to search for a range of currency exchange values.  | 
-
-### Return type
-
-[**ExchangeRateArray**](ExchangeRateArray.md)
-
-### Authorization
-
-[firefly_iii_auth](../README.md#firefly_iii_auth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -940,7 +861,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1012,7 +933,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1021,7 +942,7 @@ Name | Type | Description  | Notes
 
 ## ListTransactionByCurrency
 
-> TransactionArray ListTransactionByCurrency(ctx, code).Page(page).StartDate(startDate).EndDate(endDate).Type_(type_).Execute()
+> TransactionArray ListTransactionByCurrency(ctx, code).Page(page).Start(start).End(end).Type_(type_).Execute()
 
 List all transactions with this currency.
 
@@ -1043,13 +964,13 @@ import (
 func main() {
     code := "USD" // string | The currency code.
     page := int32(1) // int32 | Page number. The default pagination is per 50. (optional)
-    startDate := time.Now() // string | A date formatted YYYY-MM-DD, to limit the list of transactions.  (optional)
-    endDate := time.Now() // string | A date formatted YYYY-MM-DD, to limit the list of transactions.  (optional)
+    start := time.Now() // string | A date formatted YYYY-MM-DD, to limit the list of transactions.  (optional)
+    end := time.Now() // string | A date formatted YYYY-MM-DD, to limit the list of transactions.  (optional)
     type_ := openapiclient.TransactionTypeFilter("all") // TransactionTypeFilter | Optional filter on the transaction type(s) returned (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.CurrenciesApi.ListTransactionByCurrency(context.Background(), code).Page(page).StartDate(startDate).EndDate(endDate).Type_(type_).Execute()
+    resp, r, err := api_client.CurrenciesApi.ListTransactionByCurrency(context.Background(), code).Page(page).Start(start).End(end).Type_(type_).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `CurrenciesApi.ListTransactionByCurrency``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1076,8 +997,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **page** | **int32** | Page number. The default pagination is per 50. | 
- **startDate** | **string** | A date formatted YYYY-MM-DD, to limit the list of transactions.  | 
- **endDate** | **string** | A date formatted YYYY-MM-DD, to limit the list of transactions.  | 
+ **start** | **string** | A date formatted YYYY-MM-DD, to limit the list of transactions.  | 
+ **end** | **string** | A date formatted YYYY-MM-DD, to limit the list of transactions.  | 
  **type_** | [**TransactionTypeFilter**](TransactionTypeFilter.md) | Optional filter on the transaction type(s) returned | 
 
 ### Return type
@@ -1091,7 +1012,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1100,7 +1021,7 @@ Name | Type | Description  | Notes
 
 ## StoreCurrency
 
-> CurrencySingle StoreCurrency(ctx).Currency(currency).Execute()
+> CurrencySingle StoreCurrency(ctx).CurrencyStore(currencyStore).Execute()
 
 Store a new currency
 
@@ -1119,11 +1040,11 @@ import (
 )
 
 func main() {
-    currency := *openapiclient.NewCurrency("AMS", "Ankh-Morpork dollar", "AM$") // Currency | JSON array or key=value pairs with the necessary currency information. See the model for the exact specifications.
+    currencyStore := *openapiclient.NewCurrencyStore("AMS", "Ankh-Morpork dollar", "AM$") // CurrencyStore | JSON array or key=value pairs with the necessary currency information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.CurrenciesApi.StoreCurrency(context.Background()).Currency(currency).Execute()
+    resp, r, err := api_client.CurrenciesApi.StoreCurrency(context.Background()).CurrencyStore(currencyStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `CurrenciesApi.StoreCurrency``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1144,7 +1065,7 @@ Other parameters are passed through a pointer to a apiStoreCurrencyRequest struc
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **currency** | [**Currency**](Currency.md) | JSON array or key&#x3D;value pairs with the necessary currency information. See the model for the exact specifications. | 
+ **currencyStore** | [**CurrencyStore**](CurrencyStore.md) | JSON array or key&#x3D;value pairs with the necessary currency information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -1157,7 +1078,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1166,7 +1087,7 @@ Name | Type | Description  | Notes
 
 ## UpdateCurrency
 
-> CurrencySingle UpdateCurrency(ctx, code).Currency(currency).Execute()
+> CurrencySingle UpdateCurrency(ctx, code).CurrencyUpdate(currencyUpdate).Execute()
 
 Update existing currency.
 
@@ -1186,11 +1107,11 @@ import (
 
 func main() {
     code := "EUR" // string | The currency code.
-    currency := *openapiclient.NewCurrency("AMS", "Ankh-Morpork dollar", "AM$") // Currency | JSON array with updated currency information. See the model for the exact specifications.
+    currencyUpdate := *openapiclient.NewCurrencyUpdate() // CurrencyUpdate | JSON array with updated currency information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.CurrenciesApi.UpdateCurrency(context.Background(), code).Currency(currency).Execute()
+    resp, r, err := api_client.CurrenciesApi.UpdateCurrency(context.Background(), code).CurrencyUpdate(currencyUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `CurrenciesApi.UpdateCurrency``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1216,7 +1137,7 @@ Other parameters are passed through a pointer to a apiUpdateCurrencyRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **currency** | [**Currency**](Currency.md) | JSON array with updated currency information. See the model for the exact specifications. | 
+ **currencyUpdate** | [**CurrencyUpdate**](CurrencyUpdate.md) | JSON array with updated currency information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -1228,7 +1149,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json, application/x-www-form-urlencoded
+- **Content-Type**: application/vnd.api+json, application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

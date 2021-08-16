@@ -105,9 +105,9 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the rule.
-    start := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  (optional)
-    end := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  (optional)
-    accounts := "1,2,3" // string | Limit the testing of the rule to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  (optional)
+    start := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.  (optional)
+    end := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.  (optional)
+    accounts := []int64{int64(123)} // []int64 | Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -135,9 +135,9 @@ Other parameters are passed through a pointer to a apiFireRuleRequest struct via
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **start** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  | 
- **end** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  | 
- **accounts** | **string** | Limit the testing of the rule to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  | 
+ **start** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the start date is not present, it will be set to one year ago. If you use this field, both the start date and the end date must be present.  | 
+ **end** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. If the end date is not present, it will be set to today. If you use this field, both the start date and the end date must be present.  | 
+ **accounts** | **[]int64** | Limit the triggering of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  | 
 
 ### Return type
 
@@ -220,7 +220,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -286,7 +286,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -295,7 +295,7 @@ Name | Type | Description  | Notes
 
 ## StoreRule
 
-> RuleSingle StoreRule(ctx).Rule(rule).Execute()
+> RuleSingle StoreRule(ctx).RuleStore(ruleStore).Execute()
 
 Store a new rule
 
@@ -314,11 +314,11 @@ import (
 )
 
 func main() {
-    rule := *openapiclient.NewRule("First rule title.", int32(81), "store-journal", []openapiclient.RuleTrigger{*openapiclient.NewRuleTrigger("user_action", "tag1")}, []openapiclient.RuleAction{*openapiclient.NewRuleAction("set_category", "Daily groceries")}) // Rule | JSON array or key=value pairs with the necessary rule information. See the model for the exact specifications.
+    ruleStore := *openapiclient.NewRuleStore("First rule title.", "81", "store-journal", []openapiclient.RuleTriggerStore{*openapiclient.NewRuleTriggerStore("user_action", "tag1")}, []openapiclient.RuleActionStore{*openapiclient.NewRuleActionStore("set_category", "Daily groceries")}) // RuleStore | JSON array or key=value pairs with the necessary rule information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.RulesApi.StoreRule(context.Background()).Rule(rule).Execute()
+    resp, r, err := api_client.RulesApi.StoreRule(context.Background()).RuleStore(ruleStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `RulesApi.StoreRule``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -339,7 +339,7 @@ Other parameters are passed through a pointer to a apiStoreRuleRequest struct vi
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **rule** | [**Rule**](Rule.md) | JSON array or key&#x3D;value pairs with the necessary rule information. See the model for the exact specifications. | 
+ **ruleStore** | [**RuleStore**](RuleStore.md) | JSON array or key&#x3D;value pairs with the necessary rule information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -352,7 +352,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -384,7 +384,7 @@ func main() {
     id := int32(1) // int32 | The ID of the rule.
     start := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.  (optional)
     end := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.  (optional)
-    accounts := "1,2,3" // string | Limit the testing of the rule to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  (optional)
+    accounts := []int64{int64(123)} // []int64 | Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -416,7 +416,7 @@ Name | Type | Description  | Notes
 
  **start** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.  | 
  **end** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.  | 
- **accounts** | **string** | Limit the testing of the rule to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  | 
+ **accounts** | **[]int64** | Limit the testing of the rule to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  | 
 
 ### Return type
 
@@ -429,7 +429,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -438,7 +438,7 @@ Name | Type | Description  | Notes
 
 ## UpdateRule
 
-> RuleSingle UpdateRule(ctx, id).Rule(rule).Execute()
+> RuleSingle UpdateRule(ctx, id).RuleUpdate(ruleUpdate).Execute()
 
 Update existing rule.
 
@@ -458,11 +458,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the object.X
-    rule := *openapiclient.NewRule("First rule title.", int32(81), "store-journal", []openapiclient.RuleTrigger{*openapiclient.NewRuleTrigger("user_action", "tag1")}, []openapiclient.RuleAction{*openapiclient.NewRuleAction("set_category", "Daily groceries")}) // Rule | JSON array with updated rule information. See the model for the exact specifications.
+    ruleUpdate := *openapiclient.NewRuleUpdate() // RuleUpdate | JSON array with updated rule information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.RulesApi.UpdateRule(context.Background(), id).Rule(rule).Execute()
+    resp, r, err := api_client.RulesApi.UpdateRule(context.Background(), id).RuleUpdate(ruleUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `RulesApi.UpdateRule``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -488,7 +488,7 @@ Other parameters are passed through a pointer to a apiUpdateRuleRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **rule** | [**Rule**](Rule.md) | JSON array with updated rule information. See the model for the exact specifications. | 
+ **ruleUpdate** | [**RuleUpdate**](RuleUpdate.md) | JSON array with updated rule information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -501,7 +501,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

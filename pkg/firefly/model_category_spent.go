@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -17,15 +17,13 @@ import (
 
 // CategorySpent struct for CategorySpent
 type CategorySpent struct {
-	Start *string `json:"start,omitempty"`
-	End *string `json:"end,omitempty"`
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	// Number of decimals supported by the currency
 	CurrencyDecimalPlaces *int32 `json:"currency_decimal_places,omitempty"`
 	// The amount spent.
-	Amount *string `json:"amount,omitempty"`
+	Sum *string `json:"sum,omitempty"`
 }
 
 // NewCategorySpent instantiates a new CategorySpent object
@@ -45,74 +43,10 @@ func NewCategorySpentWithDefaults() *CategorySpent {
 	return &this
 }
 
-// GetStart returns the Start field value if set, zero value otherwise.
-func (o *CategorySpent) GetStart() string {
-	if o == nil || o.Start == nil {
-		var ret string
-		return ret
-	}
-	return *o.Start
-}
-
-// GetStartOk returns a tuple with the Start field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CategorySpent) GetStartOk() (*string, bool) {
-	if o == nil || o.Start == nil {
-		return nil, false
-	}
-	return o.Start, true
-}
-
-// HasStart returns a boolean if a field has been set.
-func (o *CategorySpent) HasStart() bool {
-	if o != nil && o.Start != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetStart gets a reference to the given string and assigns it to the Start field.
-func (o *CategorySpent) SetStart(v string) {
-	o.Start = &v
-}
-
-// GetEnd returns the End field value if set, zero value otherwise.
-func (o *CategorySpent) GetEnd() string {
-	if o == nil || o.End == nil {
-		var ret string
-		return ret
-	}
-	return *o.End
-}
-
-// GetEndOk returns a tuple with the End field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CategorySpent) GetEndOk() (*string, bool) {
-	if o == nil || o.End == nil {
-		return nil, false
-	}
-	return o.End, true
-}
-
-// HasEnd returns a boolean if a field has been set.
-func (o *CategorySpent) HasEnd() bool {
-	if o != nil && o.End != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEnd gets a reference to the given string and assigns it to the End field.
-func (o *CategorySpent) SetEnd(v string) {
-	o.End = &v
-}
-
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *CategorySpent) GetCurrencyId() int32 {
+func (o *CategorySpent) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -120,7 +54,7 @@ func (o *CategorySpent) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CategorySpent) GetCurrencyIdOk() (*int32, bool) {
+func (o *CategorySpent) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -136,8 +70,8 @@ func (o *CategorySpent) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *CategorySpent) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *CategorySpent) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 
@@ -237,46 +171,40 @@ func (o *CategorySpent) SetCurrencyDecimalPlaces(v int32) {
 	o.CurrencyDecimalPlaces = &v
 }
 
-// GetAmount returns the Amount field value if set, zero value otherwise.
-func (o *CategorySpent) GetAmount() string {
-	if o == nil || o.Amount == nil {
+// GetSum returns the Sum field value if set, zero value otherwise.
+func (o *CategorySpent) GetSum() string {
+	if o == nil || o.Sum == nil {
 		var ret string
 		return ret
 	}
-	return *o.Amount
+	return *o.Sum
 }
 
-// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
+// GetSumOk returns a tuple with the Sum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CategorySpent) GetAmountOk() (*string, bool) {
-	if o == nil || o.Amount == nil {
+func (o *CategorySpent) GetSumOk() (*string, bool) {
+	if o == nil || o.Sum == nil {
 		return nil, false
 	}
-	return o.Amount, true
+	return o.Sum, true
 }
 
-// HasAmount returns a boolean if a field has been set.
-func (o *CategorySpent) HasAmount() bool {
-	if o != nil && o.Amount != nil {
+// HasSum returns a boolean if a field has been set.
+func (o *CategorySpent) HasSum() bool {
+	if o != nil && o.Sum != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetAmount gets a reference to the given string and assigns it to the Amount field.
-func (o *CategorySpent) SetAmount(v string) {
-	o.Amount = &v
+// SetSum gets a reference to the given string and assigns it to the Sum field.
+func (o *CategorySpent) SetSum(v string) {
+	o.Sum = &v
 }
 
 func (o CategorySpent) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Start != nil {
-		toSerialize["start"] = o.Start
-	}
-	if o.End != nil {
-		toSerialize["end"] = o.End
-	}
 	if o.CurrencyId != nil {
 		toSerialize["currency_id"] = o.CurrencyId
 	}
@@ -289,8 +217,8 @@ func (o CategorySpent) MarshalJSON() ([]byte, error) {
 	if o.CurrencyDecimalPlaces != nil {
 		toSerialize["currency_decimal_places"] = o.CurrencyDecimalPlaces
 	}
-	if o.Amount != nil {
-		toSerialize["amount"] = o.Amount
+	if o.Sum != nil {
+		toSerialize["sum"] = o.Sum
 	}
 	return json.Marshal(toSerialize)
 }

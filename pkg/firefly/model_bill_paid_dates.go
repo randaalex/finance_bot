@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -13,16 +13,17 @@ package firefly
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // BillPaidDates struct for BillPaidDates
 type BillPaidDates struct {
 	// Transaction group ID of the paid bill.
-	TransactionGroupId *int32 `json:"transaction_group_id,omitempty"`
+	TransactionGroupId *string `json:"transaction_group_id,omitempty"`
 	// Transaction journal ID of the paid bill.
-	TransactionJournalId *int32 `json:"transaction_journal_id,omitempty"`
+	TransactionJournalId *string `json:"transaction_journal_id,omitempty"`
 	// Date the bill was paid.
-	Date *string `json:"date,omitempty"`
+	Date *time.Time `json:"date,omitempty"`
 }
 
 // NewBillPaidDates instantiates a new BillPaidDates object
@@ -43,9 +44,9 @@ func NewBillPaidDatesWithDefaults() *BillPaidDates {
 }
 
 // GetTransactionGroupId returns the TransactionGroupId field value if set, zero value otherwise.
-func (o *BillPaidDates) GetTransactionGroupId() int32 {
+func (o *BillPaidDates) GetTransactionGroupId() string {
 	if o == nil || o.TransactionGroupId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.TransactionGroupId
@@ -53,7 +54,7 @@ func (o *BillPaidDates) GetTransactionGroupId() int32 {
 
 // GetTransactionGroupIdOk returns a tuple with the TransactionGroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BillPaidDates) GetTransactionGroupIdOk() (*int32, bool) {
+func (o *BillPaidDates) GetTransactionGroupIdOk() (*string, bool) {
 	if o == nil || o.TransactionGroupId == nil {
 		return nil, false
 	}
@@ -69,15 +70,15 @@ func (o *BillPaidDates) HasTransactionGroupId() bool {
 	return false
 }
 
-// SetTransactionGroupId gets a reference to the given int32 and assigns it to the TransactionGroupId field.
-func (o *BillPaidDates) SetTransactionGroupId(v int32) {
+// SetTransactionGroupId gets a reference to the given string and assigns it to the TransactionGroupId field.
+func (o *BillPaidDates) SetTransactionGroupId(v string) {
 	o.TransactionGroupId = &v
 }
 
 // GetTransactionJournalId returns the TransactionJournalId field value if set, zero value otherwise.
-func (o *BillPaidDates) GetTransactionJournalId() int32 {
+func (o *BillPaidDates) GetTransactionJournalId() string {
 	if o == nil || o.TransactionJournalId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.TransactionJournalId
@@ -85,7 +86,7 @@ func (o *BillPaidDates) GetTransactionJournalId() int32 {
 
 // GetTransactionJournalIdOk returns a tuple with the TransactionJournalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BillPaidDates) GetTransactionJournalIdOk() (*int32, bool) {
+func (o *BillPaidDates) GetTransactionJournalIdOk() (*string, bool) {
 	if o == nil || o.TransactionJournalId == nil {
 		return nil, false
 	}
@@ -101,15 +102,15 @@ func (o *BillPaidDates) HasTransactionJournalId() bool {
 	return false
 }
 
-// SetTransactionJournalId gets a reference to the given int32 and assigns it to the TransactionJournalId field.
-func (o *BillPaidDates) SetTransactionJournalId(v int32) {
+// SetTransactionJournalId gets a reference to the given string and assigns it to the TransactionJournalId field.
+func (o *BillPaidDates) SetTransactionJournalId(v string) {
 	o.TransactionJournalId = &v
 }
 
 // GetDate returns the Date field value if set, zero value otherwise.
-func (o *BillPaidDates) GetDate() string {
+func (o *BillPaidDates) GetDate() time.Time {
 	if o == nil || o.Date == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.Date
@@ -117,7 +118,7 @@ func (o *BillPaidDates) GetDate() string {
 
 // GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BillPaidDates) GetDateOk() (*string, bool) {
+func (o *BillPaidDates) GetDateOk() (*time.Time, bool) {
 	if o == nil || o.Date == nil {
 		return nil, false
 	}
@@ -133,8 +134,8 @@ func (o *BillPaidDates) HasDate() bool {
 	return false
 }
 
-// SetDate gets a reference to the given string and assigns it to the Date field.
-func (o *BillPaidDates) SetDate(v string) {
+// SetDate gets a reference to the given time.Time and assigns it to the Date field.
+func (o *BillPaidDates) SetDate(v time.Time) {
 	o.Date = &v
 }
 

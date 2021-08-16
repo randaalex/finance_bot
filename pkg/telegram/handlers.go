@@ -72,10 +72,10 @@ func (b *Bot) setTransactionCategoryHandler(c *telebot.Callback) {
 		panic(err) // TODO: fix panic
 	}
 
-	fireflyTransaction := entities.ConvertTransactionToFireflyTransaction(transaction)
+	fireflyTransactionUpdate := entities.ConvertTransactionToFireflyTransactionUpdate(transaction)
 
 	fireflyTransaction2, r, err :=
-		b.FireflyClient.TransactionsApi.UpdateTransaction(context.TODO(), int32(transactionId)).Transaction(*fireflyTransaction).Execute()
+		b.FireflyClient.TransactionsApi.UpdateTransaction(context.TODO(), int32(transactionId)).TransactionUpdate(*fireflyTransactionUpdate).Execute()
 	if err != nil {
 		b.logger.WithFields(logrus.Fields{
 			"err": err, "httpResp": r,

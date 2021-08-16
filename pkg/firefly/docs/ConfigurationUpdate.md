@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Value** | **string** | Can be a number or a boolean. This depends on the actual configuration value. | 
+**Value** | [**string**](oneOf&lt;boolean,string,object,array&gt;.md) | Can be a number, a string, boolean or object. This depends on the actual configuration value. | 
 
 ## Methods
 

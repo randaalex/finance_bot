@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -25,9 +25,9 @@ type User struct {
 	// Boolean to indicate if the user is blocked.
 	Blocked *bool `json:"blocked,omitempty"`
 	// If you say the user must be blocked, this will be the reason code.
-	BlockedCode NullableString `json:"blocked_code,omitempty"`
+	BlockedCode *string `json:"blocked_code,omitempty"`
 	// Role for the new user. Can be empty or omitted.
-	Role NullableString `json:"role,omitempty"`
+	Role *string `json:"role,omitempty"`
 }
 
 // NewUser instantiates a new User object
@@ -168,88 +168,68 @@ func (o *User) SetBlocked(v bool) {
 	o.Blocked = &v
 }
 
-// GetBlockedCode returns the BlockedCode field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetBlockedCode returns the BlockedCode field value if set, zero value otherwise.
 func (o *User) GetBlockedCode() string {
-	if o == nil || o.BlockedCode.Get() == nil {
+	if o == nil || o.BlockedCode == nil {
 		var ret string
 		return ret
 	}
-	return *o.BlockedCode.Get()
+	return *o.BlockedCode
 }
 
 // GetBlockedCodeOk returns a tuple with the BlockedCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *User) GetBlockedCodeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || o.BlockedCode == nil {
 		return nil, false
 	}
-	return o.BlockedCode.Get(), o.BlockedCode.IsSet()
+	return o.BlockedCode, true
 }
 
 // HasBlockedCode returns a boolean if a field has been set.
 func (o *User) HasBlockedCode() bool {
-	if o != nil && o.BlockedCode.IsSet() {
+	if o != nil && o.BlockedCode != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetBlockedCode gets a reference to the given NullableString and assigns it to the BlockedCode field.
+// SetBlockedCode gets a reference to the given string and assigns it to the BlockedCode field.
 func (o *User) SetBlockedCode(v string) {
-	o.BlockedCode.Set(&v)
-}
-// SetBlockedCodeNil sets the value for BlockedCode to be an explicit nil
-func (o *User) SetBlockedCodeNil() {
-	o.BlockedCode.Set(nil)
+	o.BlockedCode = &v
 }
 
-// UnsetBlockedCode ensures that no value is present for BlockedCode, not even an explicit nil
-func (o *User) UnsetBlockedCode() {
-	o.BlockedCode.Unset()
-}
-
-// GetRole returns the Role field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetRole returns the Role field value if set, zero value otherwise.
 func (o *User) GetRole() string {
-	if o == nil || o.Role.Get() == nil {
+	if o == nil || o.Role == nil {
 		var ret string
 		return ret
 	}
-	return *o.Role.Get()
+	return *o.Role
 }
 
 // GetRoleOk returns a tuple with the Role field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *User) GetRoleOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || o.Role == nil {
 		return nil, false
 	}
-	return o.Role.Get(), o.Role.IsSet()
+	return o.Role, true
 }
 
 // HasRole returns a boolean if a field has been set.
 func (o *User) HasRole() bool {
-	if o != nil && o.Role.IsSet() {
+	if o != nil && o.Role != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetRole gets a reference to the given NullableString and assigns it to the Role field.
+// SetRole gets a reference to the given string and assigns it to the Role field.
 func (o *User) SetRole(v string) {
-	o.Role.Set(&v)
-}
-// SetRoleNil sets the value for Role to be an explicit nil
-func (o *User) SetRoleNil() {
-	o.Role.Set(nil)
-}
-
-// UnsetRole ensures that no value is present for Role, not even an explicit nil
-func (o *User) UnsetRole() {
-	o.Role.Unset()
+	o.Role = &v
 }
 
 func (o User) MarshalJSON() ([]byte, error) {
@@ -266,11 +246,11 @@ func (o User) MarshalJSON() ([]byte, error) {
 	if o.Blocked != nil {
 		toSerialize["blocked"] = o.Blocked
 	}
-	if o.BlockedCode.IsSet() {
-		toSerialize["blocked_code"] = o.BlockedCode.Get()
+	if o.BlockedCode != nil {
+		toSerialize["blocked_code"] = o.BlockedCode
 	}
-	if o.Role.IsSet() {
-		toSerialize["role"] = o.Role.Get()
+	if o.Role != nil {
+		toSerialize["role"] = o.Role
 	}
 	return json.Marshal(toSerialize)
 }

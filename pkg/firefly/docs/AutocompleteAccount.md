@@ -4,20 +4,20 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Name of the account found by an auto-complete search. | [readonly] 
-**NameWithBalance** | **string** | Asset accounts and liabilities have a second field with the given date&#39;s account balance. | [readonly] 
-**Type** | **string** | Account type of the account found by the auto-complete search. | [readonly] 
-**CurrencyId** | **int32** | Currency ID for this account. | [readonly] 
-**CurrencyCode** | **string** | Currency code for this account. | [readonly] 
-**CurrencySymbol** | **string** |  | [readonly] 
-**CurrencyDecimalPlaces** | **int32** |  | [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Name of the account found by an auto-complete search. | 
+**NameWithBalance** | **string** | Asset accounts and liabilities have a second field with the given date&#39;s account balance. | 
+**Type** | **string** | Account type of the account found by the auto-complete search. | 
+**CurrencyId** | **string** | Currency ID for this account. | 
+**CurrencyCode** | **string** | Currency code for this account. | 
+**CurrencySymbol** | **string** |  | 
+**CurrencyDecimalPlaces** | **int32** |  | 
 
 ## Methods
 
 ### NewAutocompleteAccount
 
-`func NewAutocompleteAccount(id string, name string, nameWithBalance string, type_ string, currencyId int32, currencyCode string, currencySymbol string, currencyDecimalPlaces int32, ) *AutocompleteAccount`
+`func NewAutocompleteAccount(id string, name string, nameWithBalance string, type_ string, currencyId string, currencyCode string, currencySymbol string, currencyDecimalPlaces int32, ) *AutocompleteAccount`
 
 NewAutocompleteAccount instantiates a new AutocompleteAccount object
 This constructor will assign default values to properties that have it defined,
@@ -114,20 +114,20 @@ SetType sets Type field to given value.
 
 ### GetCurrencyId
 
-`func (o *AutocompleteAccount) GetCurrencyId() int32`
+`func (o *AutocompleteAccount) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *AutocompleteAccount) GetCurrencyIdOk() (*int32, bool)`
+`func (o *AutocompleteAccount) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *AutocompleteAccount) SetCurrencyId(v int32)`
+`func (o *AutocompleteAccount) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 

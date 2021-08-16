@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -22,8 +22,12 @@ type AutocompletePiggyBalance struct {
 	Name string `json:"name"`
 	// Name of the piggy bank found by an auto-complete search with the current balance formatted nicely.
 	NameWithBalance *string `json:"name_with_balance,omitempty"`
+	// The group ID of the group this object is part of. NULL if no group.
+	ObjectGroupId NullableString `json:"object_group_id,omitempty"`
+	// The name of the group. NULL if no group.
+	ObjectGroupTitle NullableString `json:"object_group_title,omitempty"`
 	// Currency ID for this piggy bank.
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	// Currency code for this piggy bank.
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
@@ -129,10 +133,94 @@ func (o *AutocompletePiggyBalance) SetNameWithBalance(v string) {
 	o.NameWithBalance = &v
 }
 
+// GetObjectGroupId returns the ObjectGroupId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AutocompletePiggyBalance) GetObjectGroupId() string {
+	if o == nil || o.ObjectGroupId.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.ObjectGroupId.Get()
+}
+
+// GetObjectGroupIdOk returns a tuple with the ObjectGroupId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AutocompletePiggyBalance) GetObjectGroupIdOk() (*string, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return o.ObjectGroupId.Get(), o.ObjectGroupId.IsSet()
+}
+
+// HasObjectGroupId returns a boolean if a field has been set.
+func (o *AutocompletePiggyBalance) HasObjectGroupId() bool {
+	if o != nil && o.ObjectGroupId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetObjectGroupId gets a reference to the given NullableString and assigns it to the ObjectGroupId field.
+func (o *AutocompletePiggyBalance) SetObjectGroupId(v string) {
+	o.ObjectGroupId.Set(&v)
+}
+// SetObjectGroupIdNil sets the value for ObjectGroupId to be an explicit nil
+func (o *AutocompletePiggyBalance) SetObjectGroupIdNil() {
+	o.ObjectGroupId.Set(nil)
+}
+
+// UnsetObjectGroupId ensures that no value is present for ObjectGroupId, not even an explicit nil
+func (o *AutocompletePiggyBalance) UnsetObjectGroupId() {
+	o.ObjectGroupId.Unset()
+}
+
+// GetObjectGroupTitle returns the ObjectGroupTitle field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AutocompletePiggyBalance) GetObjectGroupTitle() string {
+	if o == nil || o.ObjectGroupTitle.Get() == nil {
+		var ret string
+		return ret
+	}
+	return *o.ObjectGroupTitle.Get()
+}
+
+// GetObjectGroupTitleOk returns a tuple with the ObjectGroupTitle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AutocompletePiggyBalance) GetObjectGroupTitleOk() (*string, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return o.ObjectGroupTitle.Get(), o.ObjectGroupTitle.IsSet()
+}
+
+// HasObjectGroupTitle returns a boolean if a field has been set.
+func (o *AutocompletePiggyBalance) HasObjectGroupTitle() bool {
+	if o != nil && o.ObjectGroupTitle.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetObjectGroupTitle gets a reference to the given NullableString and assigns it to the ObjectGroupTitle field.
+func (o *AutocompletePiggyBalance) SetObjectGroupTitle(v string) {
+	o.ObjectGroupTitle.Set(&v)
+}
+// SetObjectGroupTitleNil sets the value for ObjectGroupTitle to be an explicit nil
+func (o *AutocompletePiggyBalance) SetObjectGroupTitleNil() {
+	o.ObjectGroupTitle.Set(nil)
+}
+
+// UnsetObjectGroupTitle ensures that no value is present for ObjectGroupTitle, not even an explicit nil
+func (o *AutocompletePiggyBalance) UnsetObjectGroupTitle() {
+	o.ObjectGroupTitle.Unset()
+}
+
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *AutocompletePiggyBalance) GetCurrencyId() int32 {
+func (o *AutocompletePiggyBalance) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -140,7 +228,7 @@ func (o *AutocompletePiggyBalance) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AutocompletePiggyBalance) GetCurrencyIdOk() (*int32, bool) {
+func (o *AutocompletePiggyBalance) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -156,8 +244,8 @@ func (o *AutocompletePiggyBalance) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *AutocompletePiggyBalance) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *AutocompletePiggyBalance) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 
@@ -267,6 +355,12 @@ func (o AutocompletePiggyBalance) MarshalJSON() ([]byte, error) {
 	}
 	if o.NameWithBalance != nil {
 		toSerialize["name_with_balance"] = o.NameWithBalance
+	}
+	if o.ObjectGroupId.IsSet() {
+		toSerialize["object_group_id"] = o.ObjectGroupId.Get()
+	}
+	if o.ObjectGroupTitle.IsSet() {
+		toSerialize["object_group_title"] = o.ObjectGroupTitle.Get()
 	}
 	if o.CurrencyId != nil {
 		toSerialize["currency_id"] = o.CurrencyId

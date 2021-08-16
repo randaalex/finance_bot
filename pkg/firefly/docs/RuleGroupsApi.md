@@ -108,7 +108,7 @@ func main() {
     id := int32(1) // int32 | The ID of the rule group.
     start := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  (optional)
     end := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  (optional)
-    accounts := "1,2,3" // string | Limit the testing of the rule group to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  (optional)
+    accounts := []int64{int64(123)} // []int64 | Limit the triggering of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -138,7 +138,7 @@ Name | Type | Description  | Notes
 
  **start** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  | 
  **end** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the actions will be applied to. Both the start date and the end date must be present.  | 
- **accounts** | **string** | Limit the testing of the rule group to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  | 
+ **accounts** | **[]int64** | Limit the triggering of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  | 
 
 ### Return type
 
@@ -221,7 +221,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -293,7 +293,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -359,7 +359,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -368,7 +368,7 @@ Name | Type | Description  | Notes
 
 ## StoreRuleGroup
 
-> RuleGroupSingle StoreRuleGroup(ctx).RuleGroup(ruleGroup).Execute()
+> RuleGroupSingle StoreRuleGroup(ctx).RuleGroupStore(ruleGroupStore).Execute()
 
 Store a new rule group.
 
@@ -387,11 +387,11 @@ import (
 )
 
 func main() {
-    ruleGroup := *openapiclient.NewRuleGroup("Default rule group") // RuleGroup | JSON array or key=value pairs with the necessary rule group information. See the model for the exact specifications.
+    ruleGroupStore := *openapiclient.NewRuleGroupStore("Default rule group") // RuleGroupStore | JSON array or key=value pairs with the necessary rule group information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.RuleGroupsApi.StoreRuleGroup(context.Background()).RuleGroup(ruleGroup).Execute()
+    resp, r, err := api_client.RuleGroupsApi.StoreRuleGroup(context.Background()).RuleGroupStore(ruleGroupStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `RuleGroupsApi.StoreRuleGroup``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -412,7 +412,7 @@ Other parameters are passed through a pointer to a apiStoreRuleGroupRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ruleGroup** | [**RuleGroup**](RuleGroup.md) | JSON array or key&#x3D;value pairs with the necessary rule group information. See the model for the exact specifications. | 
+ **ruleGroupStore** | [**RuleGroupStore**](RuleGroupStore.md) | JSON array or key&#x3D;value pairs with the necessary rule group information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -425,7 +425,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -460,7 +460,7 @@ func main() {
     end := time.Now() // string | A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.  (optional)
     searchLimit := int32(56) // int32 | Maximum number of transactions Firefly III will try. Don't set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.  (optional)
     triggeredLimit := int32(56) // int32 | Maximum number of transactions the rule group can actually trigger on, before Firefly III stops. I would suggest setting this to 10 or 15. Don't go above the user's page size, because browsing to page 2 or 3 of a test result would fire the test again, making any navigation efforts very slow.  (optional)
-    accounts := "1,2,3" // string | Limit the testing of the rule group to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  (optional)
+    accounts := []int64{int64(123)} // []int64 | Limit the testing of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -495,7 +495,7 @@ Name | Type | Description  | Notes
  **end** | **string** | A date formatted YYYY-MM-DD, to limit the transactions the test will be applied to. Both the start date and the end date must be present.  | 
  **searchLimit** | **int32** | Maximum number of transactions Firefly III will try. Don&#39;t set this too high, or it will take Firefly III very long to run the test. I suggest a max of 200.  | 
  **triggeredLimit** | **int32** | Maximum number of transactions the rule group can actually trigger on, before Firefly III stops. I would suggest setting this to 10 or 15. Don&#39;t go above the user&#39;s page size, because browsing to page 2 or 3 of a test result would fire the test again, making any navigation efforts very slow.  | 
- **accounts** | **string** | Limit the testing of the rule group to these asset accounts. Only asset accounts will be accepted. Other types will be silently dropped.  | 
+ **accounts** | **[]int64** | Limit the testing of the rule group to these asset accounts or liabilities. Only asset accounts and liabilities will be accepted. Other types will be silently dropped.  | 
 
 ### Return type
 
@@ -508,7 +508,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -517,7 +517,7 @@ Name | Type | Description  | Notes
 
 ## UpdateRuleGroup
 
-> RuleGroupSingle UpdateRuleGroup(ctx, id).RuleGroup(ruleGroup).Execute()
+> RuleGroupSingle UpdateRuleGroup(ctx, id).RuleGroupUpdate(ruleGroupUpdate).Execute()
 
 Update existing rule group.
 
@@ -537,11 +537,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the rule group.
-    ruleGroup := *openapiclient.NewRuleGroup("Default rule group") // RuleGroup | JSON array with updated rule group information. See the model for the exact specifications.
+    ruleGroupUpdate := *openapiclient.NewRuleGroupUpdate() // RuleGroupUpdate | JSON array with updated rule group information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.RuleGroupsApi.UpdateRuleGroup(context.Background(), id).RuleGroup(ruleGroup).Execute()
+    resp, r, err := api_client.RuleGroupsApi.UpdateRuleGroup(context.Background(), id).RuleGroupUpdate(ruleGroupUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `RuleGroupsApi.UpdateRuleGroup``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -567,7 +567,7 @@ Other parameters are passed through a pointer to a apiUpdateRuleGroupRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **ruleGroup** | [**RuleGroup**](RuleGroup.md) | JSON array with updated rule group information. See the model for the exact specifications. | 
+ **ruleGroupUpdate** | [**RuleGroupUpdate**](RuleGroupUpdate.md) | JSON array with updated rule group information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -580,7 +580,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

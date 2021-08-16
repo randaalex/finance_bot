@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -29,7 +29,7 @@ type CurrenciesApi interface {
 
 	/*
 	 * DefaultCurrency Make currency default currency.
-	 * Make this currency the default currency. If the currency is not enabled, it will be enabled as well.
+	 * Make this currency the default currency for the user. If the currency is not enabled, it will be enabled as well.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @param code The currency code.
 	 * @return ApiDefaultCurrencyRequest
@@ -190,21 +190,6 @@ type CurrenciesApi interface {
 	ListCurrencyExecute(r ApiListCurrencyRequest) (CurrencyArray, *_nethttp.Response, error)
 
 	/*
-	 * ListExchangeRateByCurrency List all known exchange rates with (from or to) this currency.
-	 * List all known exchange rates.
-	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param code The currency code.
-	 * @return ApiListExchangeRateByCurrencyRequest
-	 */
-	ListExchangeRateByCurrency(ctx _context.Context, code string) ApiListExchangeRateByCurrencyRequest
-
-	/*
-	 * ListExchangeRateByCurrencyExecute executes the request
-	 * @return ExchangeRateArray
-	 */
-	ListExchangeRateByCurrencyExecute(r ApiListExchangeRateByCurrencyRequest) (ExchangeRateArray, *_nethttp.Response, error)
-
-	/*
 	 * ListRecurrenceByCurrency List all recurring transactions with this currency.
 	 * List all recurring transactions with this currency.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -295,7 +280,7 @@ func (r ApiDefaultCurrencyRequest) Execute() (CurrencySingle, *_nethttp.Response
 
 /*
  * DefaultCurrency Make currency default currency.
- * Make this currency the default currency. If the currency is not enabled, it will be enabled as well.
+ * Make this currency the default currency for the user. If the currency is not enabled, it will be enabled as well.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param code The currency code.
  * @return ApiDefaultCurrencyRequest
@@ -344,7 +329,7 @@ func (a *CurrenciesApiService) DefaultCurrencyExecute(r ApiDefaultCurrencyReques
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -545,7 +530,7 @@ func (a *CurrenciesApiService) DisableCurrencyExecute(r ApiDisableCurrencyReques
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -651,7 +636,7 @@ func (a *CurrenciesApiService) EnableCurrencyExecute(r ApiEnableCurrencyRequest)
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -757,7 +742,7 @@ func (a *CurrenciesApiService) GetCurrencyExecute(r ApiGetCurrencyRequest) (Curr
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -989,7 +974,7 @@ func (a *CurrenciesApiService) ListAccountByCurrencyExecute(r ApiListAccountByCu
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1103,7 +1088,7 @@ func (a *CurrenciesApiService) ListAvailableBudgetByCurrencyExecute(r ApiListAva
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1217,7 +1202,7 @@ func (a *CurrenciesApiService) ListBillByCurrencyExecute(r ApiListBillByCurrency
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1347,7 +1332,7 @@ func (a *CurrenciesApiService) ListBudgetLimitByCurrencyExecute(r ApiListBudgetL
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1457,145 +1442,7 @@ func (a *CurrenciesApiService) ListCurrencyExecute(r ApiListCurrencyRequest) (Cu
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiListExchangeRateByCurrencyRequest struct {
-	ctx _context.Context
-	ApiService CurrenciesApi
-	code string
-	page *int32
-	date *string
-	start *string
-	end *string
-}
-
-func (r ApiListExchangeRateByCurrencyRequest) Page(page int32) ApiListExchangeRateByCurrencyRequest {
-	r.page = &page
-	return r
-}
-func (r ApiListExchangeRateByCurrencyRequest) Date(date string) ApiListExchangeRateByCurrencyRequest {
-	r.date = &date
-	return r
-}
-func (r ApiListExchangeRateByCurrencyRequest) Start(start string) ApiListExchangeRateByCurrencyRequest {
-	r.start = &start
-	return r
-}
-func (r ApiListExchangeRateByCurrencyRequest) End(end string) ApiListExchangeRateByCurrencyRequest {
-	r.end = &end
-	return r
-}
-
-func (r ApiListExchangeRateByCurrencyRequest) Execute() (ExchangeRateArray, *_nethttp.Response, error) {
-	return r.ApiService.ListExchangeRateByCurrencyExecute(r)
-}
-
-/*
- * ListExchangeRateByCurrency List all known exchange rates with (from or to) this currency.
- * List all known exchange rates.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param code The currency code.
- * @return ApiListExchangeRateByCurrencyRequest
- */
-func (a *CurrenciesApiService) ListExchangeRateByCurrency(ctx _context.Context, code string) ApiListExchangeRateByCurrencyRequest {
-	return ApiListExchangeRateByCurrencyRequest{
-		ApiService: a,
-		ctx: ctx,
-		code: code,
-	}
-}
-
-/*
- * Execute executes the request
- * @return ExchangeRateArray
- */
-func (a *CurrenciesApiService) ListExchangeRateByCurrencyExecute(r ApiListExchangeRateByCurrencyRequest) (ExchangeRateArray, *_nethttp.Response, error) {
-	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ExchangeRateArray
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CurrenciesApiService.ListExchangeRateByCurrency")
-	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/currencies/{code}/cer"
-	localVarPath = strings.Replace(localVarPath, "{"+"code"+"}", _neturl.PathEscape(parameterToString(r.code, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
-
-	if r.page != nil {
-		localVarQueryParams.Add("page", parameterToString(*r.page, ""))
-	}
-	if r.date != nil {
-		localVarQueryParams.Add("date", parameterToString(*r.date, ""))
-	}
-	if r.start != nil {
-		localVarQueryParams.Add("start", parameterToString(*r.start, ""))
-	}
-	if r.end != nil {
-		localVarQueryParams.Add("end", parameterToString(*r.end, ""))
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1709,7 +1556,7 @@ func (a *CurrenciesApiService) ListRecurrenceByCurrencyExecute(r ApiListRecurren
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1823,7 +1670,7 @@ func (a *CurrenciesApiService) ListRuleByCurrencyExecute(r ApiListRuleByCurrency
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1872,8 +1719,8 @@ type ApiListTransactionByCurrencyRequest struct {
 	ApiService CurrenciesApi
 	code string
 	page *int32
-	startDate *string
-	endDate *string
+	start *string
+	end *string
 	type_ *TransactionTypeFilter
 }
 
@@ -1881,12 +1728,12 @@ func (r ApiListTransactionByCurrencyRequest) Page(page int32) ApiListTransaction
 	r.page = &page
 	return r
 }
-func (r ApiListTransactionByCurrencyRequest) StartDate(startDate string) ApiListTransactionByCurrencyRequest {
-	r.startDate = &startDate
+func (r ApiListTransactionByCurrencyRequest) Start(start string) ApiListTransactionByCurrencyRequest {
+	r.start = &start
 	return r
 }
-func (r ApiListTransactionByCurrencyRequest) EndDate(endDate string) ApiListTransactionByCurrencyRequest {
-	r.endDate = &endDate
+func (r ApiListTransactionByCurrencyRequest) End(end string) ApiListTransactionByCurrencyRequest {
+	r.end = &end
 	return r
 }
 func (r ApiListTransactionByCurrencyRequest) Type_(type_ TransactionTypeFilter) ApiListTransactionByCurrencyRequest {
@@ -1942,11 +1789,11 @@ func (a *CurrenciesApiService) ListTransactionByCurrencyExecute(r ApiListTransac
 	if r.page != nil {
 		localVarQueryParams.Add("page", parameterToString(*r.page, ""))
 	}
-	if r.startDate != nil {
-		localVarQueryParams.Add("start_date", parameterToString(*r.startDate, ""))
+	if r.start != nil {
+		localVarQueryParams.Add("start", parameterToString(*r.start, ""))
 	}
-	if r.endDate != nil {
-		localVarQueryParams.Add("end_date", parameterToString(*r.endDate, ""))
+	if r.end != nil {
+		localVarQueryParams.Add("end", parameterToString(*r.end, ""))
 	}
 	if r.type_ != nil {
 		localVarQueryParams.Add("type", parameterToString(*r.type_, ""))
@@ -1961,7 +1808,7 @@ func (a *CurrenciesApiService) ListTransactionByCurrencyExecute(r ApiListTransac
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2008,11 +1855,11 @@ func (a *CurrenciesApiService) ListTransactionByCurrencyExecute(r ApiListTransac
 type ApiStoreCurrencyRequest struct {
 	ctx _context.Context
 	ApiService CurrenciesApi
-	currency *Currency
+	currencyStore *CurrencyStore
 }
 
-func (r ApiStoreCurrencyRequest) Currency(currency Currency) ApiStoreCurrencyRequest {
-	r.currency = &currency
+func (r ApiStoreCurrencyRequest) CurrencyStore(currencyStore CurrencyStore) ApiStoreCurrencyRequest {
+	r.currencyStore = &currencyStore
 	return r
 }
 
@@ -2057,8 +1904,8 @@ func (a *CurrenciesApiService) StoreCurrencyExecute(r ApiStoreCurrencyRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.currency == nil {
-		return localVarReturnValue, nil, reportError("currency is required and must be specified")
+	if r.currencyStore == nil {
+		return localVarReturnValue, nil, reportError("currencyStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -2071,7 +1918,7 @@ func (a *CurrenciesApiService) StoreCurrencyExecute(r ApiStoreCurrencyRequest) (
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2079,7 +1926,7 @@ func (a *CurrenciesApiService) StoreCurrencyExecute(r ApiStoreCurrencyRequest) (
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.currency
+	localVarPostBody = r.currencyStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2130,11 +1977,11 @@ type ApiUpdateCurrencyRequest struct {
 	ctx _context.Context
 	ApiService CurrenciesApi
 	code string
-	currency *Currency
+	currencyUpdate *CurrencyUpdate
 }
 
-func (r ApiUpdateCurrencyRequest) Currency(currency Currency) ApiUpdateCurrencyRequest {
-	r.currency = &currency
+func (r ApiUpdateCurrencyRequest) CurrencyUpdate(currencyUpdate CurrencyUpdate) ApiUpdateCurrencyRequest {
+	r.currencyUpdate = &currencyUpdate
 	return r
 }
 
@@ -2182,12 +2029,12 @@ func (a *CurrenciesApiService) UpdateCurrencyExecute(r ApiUpdateCurrencyRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.currency == nil {
-		return localVarReturnValue, nil, reportError("currency is required and must be specified")
+	if r.currencyUpdate == nil {
+		return localVarReturnValue, nil, reportError("currencyUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
+	localVarHTTPContentTypes := []string{"application/vnd.api+json", "application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2204,7 +2051,7 @@ func (a *CurrenciesApiService) UpdateCurrencyExecute(r ApiUpdateCurrencyRequest)
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.currency
+	localVarPostBody = r.currencyUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

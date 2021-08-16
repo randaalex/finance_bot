@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -27,7 +27,7 @@ var (
 type AutocompleteApi interface {
 
 	/*
-	 * GetAccountsAC All accounts of the user returned in a basic auto-complete array.
+	 * GetAccountsAC Returns all accounts of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetAccountsACRequest
 	 */
@@ -40,7 +40,7 @@ type AutocompleteApi interface {
 	GetAccountsACExecute(r ApiGetAccountsACRequest) ([]AutocompleteAccount, *_nethttp.Response, error)
 
 	/*
-	 * GetBillsAC All bills of the user returned in a basic auto-complete array.
+	 * GetBillsAC Returns all bills of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetBillsACRequest
 	 */
@@ -53,7 +53,7 @@ type AutocompleteApi interface {
 	GetBillsACExecute(r ApiGetBillsACRequest) ([]AutocompleteBill, *_nethttp.Response, error)
 
 	/*
-	 * GetBudgetsAC All budgets of the user returned in a basic auto-complete array.
+	 * GetBudgetsAC Returns all budgets of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetBudgetsACRequest
 	 */
@@ -66,7 +66,7 @@ type AutocompleteApi interface {
 	GetBudgetsACExecute(r ApiGetBudgetsACRequest) ([]AutocompleteBudget, *_nethttp.Response, error)
 
 	/*
-	 * GetCategoriesAC All categories of the user returned in a basic auto-complete array.
+	 * GetCategoriesAC Returns all categories of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetCategoriesACRequest
 	 */
@@ -79,7 +79,7 @@ type AutocompleteApi interface {
 	GetCategoriesACExecute(r ApiGetCategoriesACRequest) ([]AutocompleteCategory, *_nethttp.Response, error)
 
 	/*
-	 * GetCurrenciesAC All currencies of the user returned in a basic auto-complete array.
+	 * GetCurrenciesAC Returns all currencies of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetCurrenciesACRequest
 	 */
@@ -92,7 +92,7 @@ type AutocompleteApi interface {
 	GetCurrenciesACExecute(r ApiGetCurrenciesACRequest) ([]AutocompleteCurrency, *_nethttp.Response, error)
 
 	/*
-	 * GetCurrenciesCodeAC All currencies of the user returned in a basic auto-complete array.
+	 * GetCurrenciesCodeAC Returns all currencies of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetCurrenciesCodeACRequest
 	 */
@@ -105,7 +105,7 @@ type AutocompleteApi interface {
 	GetCurrenciesCodeACExecute(r ApiGetCurrenciesCodeACRequest) ([]AutocompleteCurrencyCode, *_nethttp.Response, error)
 
 	/*
-	 * GetObjectGroupsAC All object groups of the user returned in a basic auto-complete array.
+	 * GetObjectGroupsAC Returns all object groups of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetObjectGroupsACRequest
 	 */
@@ -118,7 +118,7 @@ type AutocompleteApi interface {
 	GetObjectGroupsACExecute(r ApiGetObjectGroupsACRequest) ([]AutocompleteObjectGroup, *_nethttp.Response, error)
 
 	/*
-	 * GetPiggiesAC All piggy banks of the user returned in a basic auto-complete array.
+	 * GetPiggiesAC Returns all piggy banks of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetPiggiesACRequest
 	 */
@@ -131,7 +131,7 @@ type AutocompleteApi interface {
 	GetPiggiesACExecute(r ApiGetPiggiesACRequest) ([]AutocompletePiggy, *_nethttp.Response, error)
 
 	/*
-	 * GetPiggiesBalanceAC All piggy banks of the user returned in a basic auto-complete array complemented with balance information.
+	 * GetPiggiesBalanceAC Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetPiggiesBalanceACRequest
 	 */
@@ -144,7 +144,20 @@ type AutocompleteApi interface {
 	GetPiggiesBalanceACExecute(r ApiGetPiggiesBalanceACRequest) ([]AutocompletePiggyBalance, *_nethttp.Response, error)
 
 	/*
-	 * GetRuleGroupsAC All rule groups of the user returned in a basic auto-complete array.
+	 * GetRecurringAC Returns all recurring transactions of the user returned in a basic auto-complete array.
+	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	 * @return ApiGetRecurringACRequest
+	 */
+	GetRecurringAC(ctx _context.Context) ApiGetRecurringACRequest
+
+	/*
+	 * GetRecurringACExecute executes the request
+	 * @return []AutocompleteRecurrence
+	 */
+	GetRecurringACExecute(r ApiGetRecurringACRequest) ([]AutocompleteRecurrence, *_nethttp.Response, error)
+
+	/*
+	 * GetRuleGroupsAC Returns all rule groups of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetRuleGroupsACRequest
 	 */
@@ -157,7 +170,7 @@ type AutocompleteApi interface {
 	GetRuleGroupsACExecute(r ApiGetRuleGroupsACRequest) ([]AutocompleteRuleGroup, *_nethttp.Response, error)
 
 	/*
-	 * GetRulesAC All rules of the user returned in a basic auto-complete array.
+	 * GetRulesAC Returns all rules of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetRulesACRequest
 	 */
@@ -170,7 +183,7 @@ type AutocompleteApi interface {
 	GetRulesACExecute(r ApiGetRulesACRequest) ([]AutocompleteRule, *_nethttp.Response, error)
 
 	/*
-	 * GetTagAC All tags of the user returned in a basic auto-complete array.
+	 * GetTagAC Returns all tags of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetTagACRequest
 	 */
@@ -183,7 +196,7 @@ type AutocompleteApi interface {
 	GetTagACExecute(r ApiGetTagACRequest) ([]AutocompleteTag, *_nethttp.Response, error)
 
 	/*
-	 * GetTransactionTypesAC All transaction types returned in a basic auto-complete array. English only.
+	 * GetTransactionTypesAC Returns all transaction types returned in a basic auto-complete array. English only.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetTransactionTypesACRequest
 	 */
@@ -196,7 +209,7 @@ type AutocompleteApi interface {
 	GetTransactionTypesACExecute(r ApiGetTransactionTypesACRequest) ([]AutocompleteTransactionType, *_nethttp.Response, error)
 
 	/*
-	 * GetTransactionsAC All transaction descriptions of the user returned in a basic auto-complete array.
+	 * GetTransactionsAC Returns all transaction descriptions of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetTransactionsACRequest
 	 */
@@ -209,7 +222,7 @@ type AutocompleteApi interface {
 	GetTransactionsACExecute(r ApiGetTransactionsACRequest) ([]AutocompleteTransaction, *_nethttp.Response, error)
 
 	/*
-	 * GetTransactionsIDAC All transactions, complemented with their ID, of the user returned in a basic auto-complete array.
+	 * GetTransactionsIDAC Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiGetTransactionsIDACRequest
 	 */
@@ -256,7 +269,7 @@ func (r ApiGetAccountsACRequest) Execute() ([]AutocompleteAccount, *_nethttp.Res
 }
 
 /*
- * GetAccountsAC All accounts of the user returned in a basic auto-complete array.
+ * GetAccountsAC Returns all accounts of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetAccountsACRequest
  */
@@ -379,7 +392,7 @@ func (r ApiGetBillsACRequest) Execute() ([]AutocompleteBill, *_nethttp.Response,
 }
 
 /*
- * GetBillsAC All bills of the user returned in a basic auto-complete array.
+ * GetBillsAC Returns all bills of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetBillsACRequest
  */
@@ -496,7 +509,7 @@ func (r ApiGetBudgetsACRequest) Execute() ([]AutocompleteBudget, *_nethttp.Respo
 }
 
 /*
- * GetBudgetsAC All budgets of the user returned in a basic auto-complete array.
+ * GetBudgetsAC Returns all budgets of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetBudgetsACRequest
  */
@@ -613,7 +626,7 @@ func (r ApiGetCategoriesACRequest) Execute() ([]AutocompleteCategory, *_nethttp.
 }
 
 /*
- * GetCategoriesAC All categories of the user returned in a basic auto-complete array.
+ * GetCategoriesAC Returns all categories of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetCategoriesACRequest
  */
@@ -730,7 +743,7 @@ func (r ApiGetCurrenciesACRequest) Execute() ([]AutocompleteCurrency, *_nethttp.
 }
 
 /*
- * GetCurrenciesAC All currencies of the user returned in a basic auto-complete array.
+ * GetCurrenciesAC Returns all currencies of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetCurrenciesACRequest
  */
@@ -847,7 +860,7 @@ func (r ApiGetCurrenciesCodeACRequest) Execute() ([]AutocompleteCurrencyCode, *_
 }
 
 /*
- * GetCurrenciesCodeAC All currencies of the user returned in a basic auto-complete array.
+ * GetCurrenciesCodeAC Returns all currencies of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetCurrenciesCodeACRequest
  */
@@ -964,7 +977,7 @@ func (r ApiGetObjectGroupsACRequest) Execute() ([]AutocompleteObjectGroup, *_net
 }
 
 /*
- * GetObjectGroupsAC All object groups of the user returned in a basic auto-complete array.
+ * GetObjectGroupsAC Returns all object groups of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetObjectGroupsACRequest
  */
@@ -1081,7 +1094,7 @@ func (r ApiGetPiggiesACRequest) Execute() ([]AutocompletePiggy, *_nethttp.Respon
 }
 
 /*
- * GetPiggiesAC All piggy banks of the user returned in a basic auto-complete array.
+ * GetPiggiesAC Returns all piggy banks of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetPiggiesACRequest
  */
@@ -1198,7 +1211,7 @@ func (r ApiGetPiggiesBalanceACRequest) Execute() ([]AutocompletePiggyBalance, *_
 }
 
 /*
- * GetPiggiesBalanceAC All piggy banks of the user returned in a basic auto-complete array complemented with balance information.
+ * GetPiggiesBalanceAC Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetPiggiesBalanceACRequest
  */
@@ -1294,6 +1307,123 @@ func (a *AutocompleteApiService) GetPiggiesBalanceACExecute(r ApiGetPiggiesBalan
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetRecurringACRequest struct {
+	ctx _context.Context
+	ApiService AutocompleteApi
+	query *string
+	limit *int32
+}
+
+func (r ApiGetRecurringACRequest) Query(query string) ApiGetRecurringACRequest {
+	r.query = &query
+	return r
+}
+func (r ApiGetRecurringACRequest) Limit(limit int32) ApiGetRecurringACRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetRecurringACRequest) Execute() ([]AutocompleteRecurrence, *_nethttp.Response, error) {
+	return r.ApiService.GetRecurringACExecute(r)
+}
+
+/*
+ * GetRecurringAC Returns all recurring transactions of the user returned in a basic auto-complete array.
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @return ApiGetRecurringACRequest
+ */
+func (a *AutocompleteApiService) GetRecurringAC(ctx _context.Context) ApiGetRecurringACRequest {
+	return ApiGetRecurringACRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return []AutocompleteRecurrence
+ */
+func (a *AutocompleteApiService) GetRecurringACExecute(r ApiGetRecurringACRequest) ([]AutocompleteRecurrence, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  []AutocompleteRecurrence
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AutocompleteApiService.GetRecurringAC")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/autocomplete/recurring"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if r.query != nil {
+		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+	}
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetRuleGroupsACRequest struct {
 	ctx _context.Context
 	ApiService AutocompleteApi
@@ -1315,7 +1445,7 @@ func (r ApiGetRuleGroupsACRequest) Execute() ([]AutocompleteRuleGroup, *_nethttp
 }
 
 /*
- * GetRuleGroupsAC All rule groups of the user returned in a basic auto-complete array.
+ * GetRuleGroupsAC Returns all rule groups of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetRuleGroupsACRequest
  */
@@ -1432,7 +1562,7 @@ func (r ApiGetRulesACRequest) Execute() ([]AutocompleteRule, *_nethttp.Response,
 }
 
 /*
- * GetRulesAC All rules of the user returned in a basic auto-complete array.
+ * GetRulesAC Returns all rules of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetRulesACRequest
  */
@@ -1549,7 +1679,7 @@ func (r ApiGetTagACRequest) Execute() ([]AutocompleteTag, *_nethttp.Response, er
 }
 
 /*
- * GetTagAC All tags of the user returned in a basic auto-complete array.
+ * GetTagAC Returns all tags of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetTagACRequest
  */
@@ -1666,7 +1796,7 @@ func (r ApiGetTransactionTypesACRequest) Execute() ([]AutocompleteTransactionTyp
 }
 
 /*
- * GetTransactionTypesAC All transaction types returned in a basic auto-complete array. English only.
+ * GetTransactionTypesAC Returns all transaction types returned in a basic auto-complete array. English only.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetTransactionTypesACRequest
  */
@@ -1783,7 +1913,7 @@ func (r ApiGetTransactionsACRequest) Execute() ([]AutocompleteTransaction, *_net
 }
 
 /*
- * GetTransactionsAC All transaction descriptions of the user returned in a basic auto-complete array.
+ * GetTransactionsAC Returns all transaction descriptions of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetTransactionsACRequest
  */
@@ -1900,7 +2030,7 @@ func (r ApiGetTransactionsIDACRequest) Execute() ([]AutocompleteTransactionID, *
 }
 
 /*
- * GetTransactionsIDAC All transactions, complemented with their ID, of the user returned in a basic auto-complete array.
+ * GetTransactionsIDAC Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetTransactionsIDACRequest
  */

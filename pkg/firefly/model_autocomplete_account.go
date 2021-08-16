@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -25,7 +25,7 @@ type AutocompleteAccount struct {
 	// Account type of the account found by the auto-complete search.
 	Type string `json:"type"`
 	// Currency ID for this account.
-	CurrencyId int32 `json:"currency_id"`
+	CurrencyId string `json:"currency_id"`
 	// Currency code for this account.
 	CurrencyCode string `json:"currency_code"`
 	CurrencySymbol string `json:"currency_symbol"`
@@ -36,7 +36,7 @@ type AutocompleteAccount struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAutocompleteAccount(id string, name string, nameWithBalance string, type_ string, currencyId int32, currencyCode string, currencySymbol string, currencyDecimalPlaces int32) *AutocompleteAccount {
+func NewAutocompleteAccount(id string, name string, nameWithBalance string, type_ string, currencyId string, currencyCode string, currencySymbol string, currencyDecimalPlaces int32) *AutocompleteAccount {
 	this := AutocompleteAccount{}
 	this.Id = id
 	this.Name = name
@@ -154,9 +154,9 @@ func (o *AutocompleteAccount) SetType(v string) {
 }
 
 // GetCurrencyId returns the CurrencyId field value
-func (o *AutocompleteAccount) GetCurrencyId() int32 {
+func (o *AutocompleteAccount) GetCurrencyId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -165,7 +165,7 @@ func (o *AutocompleteAccount) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value
 // and a boolean to check if the value has been set.
-func (o *AutocompleteAccount) GetCurrencyIdOk() (*int32, bool) {
+func (o *AutocompleteAccount) GetCurrencyIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -173,7 +173,7 @@ func (o *AutocompleteAccount) GetCurrencyIdOk() (*int32, bool) {
 }
 
 // SetCurrencyId sets field value
-func (o *AutocompleteAccount) SetCurrencyId(v int32) {
+func (o *AutocompleteAccount) SetCurrencyId(v string) {
 	o.CurrencyId = v
 }
 

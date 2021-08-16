@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Label** | Pointer to **string** | This is the title of the current set. It can refer to an account, a budget or another object (by name). | [optional] 
-**CurrencyId** | Pointer to **int32** | The currency ID of the currency associated to the data in the entries. | [optional] 
+**CurrencyId** | Pointer to **string** | The currency ID of the currency associated to the data in the entries. | [optional] 
 **CurrencyCode** | Pointer to **string** |  | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals for the currency associated to the data in the entries. | [optional] 
@@ -59,20 +59,20 @@ HasLabel returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *ChartDataSet) GetCurrencyId() int32`
+`func (o *ChartDataSet) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *ChartDataSet) GetCurrencyIdOk() (*int32, bool)`
+`func (o *ChartDataSet) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *ChartDataSet) SetCurrencyId(v int32)`
+`func (o *ChartDataSet) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 

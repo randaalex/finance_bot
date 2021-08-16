@@ -2,10 +2,10 @@ package emailprocessor
 
 import (
 	"context"
+	"io/ioutil"
 	"regexp"
 	"strings"
 
-	imapclient "github.com/emersion/go-imap/client"
 	"github.com/getsentry/sentry-go"
 	"github.com/sirupsen/logrus"
 
@@ -27,15 +27,15 @@ type Storage interface {
 }
 
 type Processor struct {
-	Storage       Storage
-	FireflyClient *firefly.APIClient
-	TelegramBot   *telegram.Bot
-	EmailParser   *alfaparser.Parser
-	logger        *logrus.Logger
-	accounts      *[]entities.Account
-	categories    *[]entities.Category
-	settings      *entities.Settings
-	imapClient    *imapclient.Client
+	Storage         Storage
+	FireflyClient   *firefly.APIClient
+	TelegramBot     *telegram.Bot
+	EmailParser     *alfaparser.Parser
+	logger          *logrus.Logger
+	accounts        *[]entities.Account
+	categories      *[]entities.Category
+	settings        *entities.Settings
+	//imapConnection2 *imapclient.Client
 }
 
 type parsedImapMessage struct {
@@ -93,21 +93,26 @@ func (p *Processor) ProcessEmail(ctx context.Context, email *parsedImapMessage) 
 func (p *Processor) processTransaction(ctx context.Context, transactionReq *entities.Transaction) error {
 	recentTransaction, e := p.Storage.GetTransactionsLogByDescription(ctx, transactionReq.Description)
 	if e != nil {
-		p.logger.Infof("mapping not found: %v\n", transactionReq.Description)
+		p.logger.Infof("mapping not found: %v", transactionReq.Description)
 	} else {
 		p.logger.Infof("mapping found: %v\n", recentTransaction)
 		transactionReq.CategoryId = int(recentTransaction.CategoryID)
 	}
 
-	fireflyTransactionReq := entities.ConvertTransactionToFireflyTransaction(transactionReq)
+	fireflyTransactionStoreReq := entities.ConvertTransactionToFireflyTransactionStore(transactionReq)
 
 	// TODO: add request for update VirtualBalance of account in firefly
 	fireflyTransaction, r, err :=
-		p.FireflyClient.TransactionsApi.StoreTransaction(context.TODO()).Transaction(*fireflyTransactionReq).Execute()
+		p.FireflyClient.TransactionsApi.StoreTransaction(context.TODO()).TransactionStore(*fireflyTransactionStoreReq).Execute()
 
 	if err != nil {
+		var rr []byte
+		if r != nil {
+			rr, _ = ioutil.ReadAll(r.Body)
+		}
+
 		p.logger.WithFields(logrus.Fields{
-			"err": err, "httpResp": r,
+			"err": err, "httpResp": string(rr),
 		}).Info("Error when calling `TransactionsApi.StoreTransaction`")
 
 		if fireflyError, ok := err.(*firefly.GenericOpenAPIError); ok {

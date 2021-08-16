@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -21,13 +21,13 @@ type Transaction struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// User ID
-	User *int32 `json:"user,omitempty"`
+	User *string `json:"user,omitempty"`
 	// Break if the submitted transaction exists already.
 	ErrorIfDuplicateHash *bool `json:"error_if_duplicate_hash,omitempty"`
 	// Whether or not to apply rules when submitting transaction.
 	ApplyRules *bool `json:"apply_rules,omitempty"`
 	// Title of the transaction if it has been split in more than one piece. Empty otherwise.
-	GroupTitle *string `json:"group_title,omitempty"`
+	GroupTitle NullableString `json:"group_title,omitempty"`
 	Transactions []TransactionSplit `json:"transactions"`
 }
 
@@ -114,9 +114,9 @@ func (o *Transaction) SetUpdatedAt(v time.Time) {
 }
 
 // GetUser returns the User field value if set, zero value otherwise.
-func (o *Transaction) GetUser() int32 {
+func (o *Transaction) GetUser() string {
 	if o == nil || o.User == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.User
@@ -124,7 +124,7 @@ func (o *Transaction) GetUser() int32 {
 
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetUserOk() (*int32, bool) {
+func (o *Transaction) GetUserOk() (*string, bool) {
 	if o == nil || o.User == nil {
 		return nil, false
 	}
@@ -140,8 +140,8 @@ func (o *Transaction) HasUser() bool {
 	return false
 }
 
-// SetUser gets a reference to the given int32 and assigns it to the User field.
-func (o *Transaction) SetUser(v int32) {
+// SetUser gets a reference to the given string and assigns it to the User field.
+func (o *Transaction) SetUser(v string) {
 	o.User = &v
 }
 
@@ -209,36 +209,46 @@ func (o *Transaction) SetApplyRules(v bool) {
 	o.ApplyRules = &v
 }
 
-// GetGroupTitle returns the GroupTitle field value if set, zero value otherwise.
+// GetGroupTitle returns the GroupTitle field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Transaction) GetGroupTitle() string {
-	if o == nil || o.GroupTitle == nil {
+	if o == nil || o.GroupTitle.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.GroupTitle
+	return *o.GroupTitle.Get()
 }
 
 // GetGroupTitleOk returns a tuple with the GroupTitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Transaction) GetGroupTitleOk() (*string, bool) {
-	if o == nil || o.GroupTitle == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.GroupTitle, true
+	return o.GroupTitle.Get(), o.GroupTitle.IsSet()
 }
 
 // HasGroupTitle returns a boolean if a field has been set.
 func (o *Transaction) HasGroupTitle() bool {
-	if o != nil && o.GroupTitle != nil {
+	if o != nil && o.GroupTitle.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetGroupTitle gets a reference to the given string and assigns it to the GroupTitle field.
+// SetGroupTitle gets a reference to the given NullableString and assigns it to the GroupTitle field.
 func (o *Transaction) SetGroupTitle(v string) {
-	o.GroupTitle = &v
+	o.GroupTitle.Set(&v)
+}
+// SetGroupTitleNil sets the value for GroupTitle to be an explicit nil
+func (o *Transaction) SetGroupTitleNil() {
+	o.GroupTitle.Set(nil)
+}
+
+// UnsetGroupTitle ensures that no value is present for GroupTitle, not even an explicit nil
+func (o *Transaction) UnsetGroupTitle() {
+	o.GroupTitle.Unset()
 }
 
 // GetTransactions returns the Transactions field value
@@ -282,8 +292,8 @@ func (o Transaction) MarshalJSON() ([]byte, error) {
 	if o.ApplyRules != nil {
 		toSerialize["apply_rules"] = o.ApplyRules
 	}
-	if o.GroupTitle != nil {
-		toSerialize["group_title"] = o.GroupTitle
+	if o.GroupTitle.IsSet() {
+		toSerialize["group_title"] = o.GroupTitle.Get()
 	}
 	if true {
 		toSerialize["transactions"] = o.Transactions

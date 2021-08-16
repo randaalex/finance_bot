@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -31,7 +31,7 @@ type TagsApi interface {
 	 * DeleteTag Delete an tag.
 	 * Delete an tag.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param tag Either the tag itself or the tag ID.
+	 * @param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
 	 * @return ApiDeleteTagRequest
 	 */
 	DeleteTag(ctx _context.Context, tag string) ApiDeleteTagRequest
@@ -45,7 +45,7 @@ type TagsApi interface {
 	 * GetTag Get a single tag.
 	 * Get a single tag.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param tag Either the tag itself or the tag ID.
+	 * @param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
 	 * @return ApiGetTagRequest
 	 */
 	GetTag(ctx _context.Context, tag string) ApiGetTagRequest
@@ -55,20 +55,6 @@ type TagsApi interface {
 	 * @return TagSingle
 	 */
 	GetTagExecute(r ApiGetTagRequest) (TagSingle, *_nethttp.Response, error)
-
-	/*
-	 * GetTagCloud Returns a basic tag cloud.
-	 * Returns a list of tags, which can be used to draw a basic tag cloud.
-	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @return ApiGetTagCloudRequest
-	 */
-	GetTagCloud(ctx _context.Context) ApiGetTagCloudRequest
-
-	/*
-	 * GetTagCloudExecute executes the request
-	 * @return TagCloud
-	 */
-	GetTagCloudExecute(r ApiGetTagCloudRequest) (TagCloud, *_nethttp.Response, error)
 
 	/*
 	 * ListAttachmentByTag Lists all attachments.
@@ -132,7 +118,7 @@ type TagsApi interface {
 	 * UpdateTag Update existing tag.
 	 * Update existing tag.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param tag Either the tag itself or the tag ID.
+	 * @param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
 	 * @return ApiUpdateTagRequest
 	 */
 	UpdateTag(ctx _context.Context, tag string) ApiUpdateTagRequest
@@ -162,7 +148,7 @@ func (r ApiDeleteTagRequest) Execute() (*_nethttp.Response, error) {
  * DeleteTag Delete an tag.
  * Delete an tag.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param tag Either the tag itself or the tag ID.
+ * @param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
  * @return ApiDeleteTagRequest
  */
 func (a *TagsApiService) DeleteTag(ctx _context.Context, tag string) ApiDeleteTagRequest {
@@ -262,7 +248,7 @@ func (r ApiGetTagRequest) Execute() (TagSingle, *_nethttp.Response, error) {
  * GetTag Get a single tag.
  * Get a single tag.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param tag Either the tag itself or the tag ID.
+ * @param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
  * @return ApiGetTagRequest
  */
 func (a *TagsApiService) GetTag(ctx _context.Context, tag string) ApiGetTagRequest {
@@ -312,127 +298,7 @@ func (a *TagsApiService) GetTagExecute(r ApiGetTagRequest) (TagSingle, *_nethttp
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetTagCloudRequest struct {
-	ctx _context.Context
-	ApiService TagsApi
-	start *string
-	end *string
-}
-
-func (r ApiGetTagCloudRequest) Start(start string) ApiGetTagCloudRequest {
-	r.start = &start
-	return r
-}
-func (r ApiGetTagCloudRequest) End(end string) ApiGetTagCloudRequest {
-	r.end = &end
-	return r
-}
-
-func (r ApiGetTagCloudRequest) Execute() (TagCloud, *_nethttp.Response, error) {
-	return r.ApiService.GetTagCloudExecute(r)
-}
-
-/*
- * GetTagCloud Returns a basic tag cloud.
- * Returns a list of tags, which can be used to draw a basic tag cloud.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiGetTagCloudRequest
- */
-func (a *TagsApiService) GetTagCloud(ctx _context.Context) ApiGetTagCloudRequest {
-	return ApiGetTagCloudRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-/*
- * Execute executes the request
- * @return TagCloud
- */
-func (a *TagsApiService) GetTagCloudExecute(r ApiGetTagCloudRequest) (TagCloud, *_nethttp.Response, error) {
-	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  TagCloud
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsApiService.GetTagCloud")
-	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/tag-cloud"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
-	if r.start == nil {
-		return localVarReturnValue, nil, reportError("start is required and must be specified")
-	}
-	if r.end == nil {
-		return localVarReturnValue, nil, reportError("end is required and must be specified")
-	}
-
-	localVarQueryParams.Add("start", parameterToString(*r.start, ""))
-	localVarQueryParams.Add("end", parameterToString(*r.end, ""))
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -546,7 +412,7 @@ func (a *TagsApiService) ListAttachmentByTagExecute(r ApiListAttachmentByTagRequ
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -656,7 +522,7 @@ func (a *TagsApiService) ListTagExecute(r ApiListTagRequest) (TagArray, *_nethtt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -794,7 +660,7 @@ func (a *TagsApiService) ListTransactionByTagExecute(r ApiListTransactionByTagRe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -841,11 +707,11 @@ func (a *TagsApiService) ListTransactionByTagExecute(r ApiListTransactionByTagRe
 type ApiStoreTagRequest struct {
 	ctx _context.Context
 	ApiService TagsApi
-	tagModel *TagModel
+	tagModelStore *TagModelStore
 }
 
-func (r ApiStoreTagRequest) TagModel(tagModel TagModel) ApiStoreTagRequest {
-	r.tagModel = &tagModel
+func (r ApiStoreTagRequest) TagModelStore(tagModelStore TagModelStore) ApiStoreTagRequest {
+	r.tagModelStore = &tagModelStore
 	return r
 }
 
@@ -890,8 +756,8 @@ func (a *TagsApiService) StoreTagExecute(r ApiStoreTagRequest) (TagSingle, *_net
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.tagModel == nil {
-		return localVarReturnValue, nil, reportError("tagModel is required and must be specified")
+	if r.tagModelStore == nil {
+		return localVarReturnValue, nil, reportError("tagModelStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -904,7 +770,7 @@ func (a *TagsApiService) StoreTagExecute(r ApiStoreTagRequest) (TagSingle, *_net
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -912,7 +778,7 @@ func (a *TagsApiService) StoreTagExecute(r ApiStoreTagRequest) (TagSingle, *_net
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.tagModel
+	localVarPostBody = r.tagModelStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -963,11 +829,11 @@ type ApiUpdateTagRequest struct {
 	ctx _context.Context
 	ApiService TagsApi
 	tag string
-	tagModel *TagModel
+	tagModelUpdate *TagModelUpdate
 }
 
-func (r ApiUpdateTagRequest) TagModel(tagModel TagModel) ApiUpdateTagRequest {
-	r.tagModel = &tagModel
+func (r ApiUpdateTagRequest) TagModelUpdate(tagModelUpdate TagModelUpdate) ApiUpdateTagRequest {
+	r.tagModelUpdate = &tagModelUpdate
 	return r
 }
 
@@ -979,7 +845,7 @@ func (r ApiUpdateTagRequest) Execute() (TagSingle, *_nethttp.Response, error) {
  * UpdateTag Update existing tag.
  * Update existing tag.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param tag Either the tag itself or the tag ID.
+ * @param tag Either the tag itself or the tag ID. If you use the tag itself, and it contains international (non-ASCII) characters, your milage may vary.
  * @return ApiUpdateTagRequest
  */
 func (a *TagsApiService) UpdateTag(ctx _context.Context, tag string) ApiUpdateTagRequest {
@@ -1015,8 +881,8 @@ func (a *TagsApiService) UpdateTagExecute(r ApiUpdateTagRequest) (TagSingle, *_n
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.tagModel == nil {
-		return localVarReturnValue, nil, reportError("tagModel is required and must be specified")
+	if r.tagModelUpdate == nil {
+		return localVarReturnValue, nil, reportError("tagModelUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1029,7 +895,7 @@ func (a *TagsApiService) UpdateTagExecute(r ApiUpdateTagRequest) (TagSingle, *_n
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1037,7 +903,7 @@ func (a *TagsApiService) UpdateTagExecute(r ApiUpdateTagRequest) (TagSingle, *_n
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.tagModel
+	localVarPostBody = r.tagModelUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -20,23 +20,23 @@ import (
 type Recurrence struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	Type string `json:"type"`
-	Title string `json:"title"`
+	Type *string `json:"type,omitempty"`
+	Title *string `json:"title,omitempty"`
 	// Not to be confused with the description of the actual transaction(s) being created.
 	Description *string `json:"description,omitempty"`
 	// First time the recurring transaction will fire. Must be after today.
-	FirstDate string `json:"first_date"`
-	// First time the recurring transaction will fire. Must be after today.
-	LatestDate *string `json:"latest_date,omitempty"`
+	FirstDate *time.Time `json:"first_date,omitempty"`
+	// Last time the recurring transaction has fired.
+	LatestDate NullableTime `json:"latest_date,omitempty"`
 	// Date until the recurring transaction can fire. Use either this field or repetitions.
-	RepeatUntil *string `json:"repeat_until,omitempty"`
+	RepeatUntil NullableTime `json:"repeat_until,omitempty"`
 	// Max number of created transactions. Use either this field or repeat_until.
-	NrOfRepetitions *int32 `json:"nr_of_repetitions,omitempty"`
+	NrOfRepetitions NullableInt32 `json:"nr_of_repetitions,omitempty"`
 	// Whether or not to fire the rules after the creation of a transaction.
 	ApplyRules *bool `json:"apply_rules,omitempty"`
 	// If the recurrence is even active.
 	Active *bool `json:"active,omitempty"`
-	Notes *string `json:"notes,omitempty"`
+	Notes NullableString `json:"notes,omitempty"`
 	Repetitions *[]RecurrenceRepetition `json:"repetitions,omitempty"`
 	Transactions *[]RecurrenceTransaction `json:"transactions,omitempty"`
 }
@@ -45,11 +45,8 @@ type Recurrence struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRecurrence(type_ string, title string, firstDate string) *Recurrence {
+func NewRecurrence() *Recurrence {
 	this := Recurrence{}
-	this.Type = type_
-	this.Title = title
-	this.FirstDate = firstDate
 	return &this
 }
 
@@ -125,52 +122,68 @@ func (o *Recurrence) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 
-// GetType returns the Type field value
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *Recurrence) GetType() string {
-	if o == nil {
+	if o == nil || o.Type == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Recurrence) GetTypeOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || o.Type == nil {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *Recurrence) HasType() bool {
+	if o != nil && o.Type != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
 func (o *Recurrence) SetType(v string) {
-	o.Type = v
+	o.Type = &v
 }
 
-// GetTitle returns the Title field value
+// GetTitle returns the Title field value if set, zero value otherwise.
 func (o *Recurrence) GetTitle() string {
-	if o == nil {
+	if o == nil || o.Title == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Title
+	return *o.Title
 }
 
-// GetTitleOk returns a tuple with the Title field value
+// GetTitleOk returns a tuple with the Title field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Recurrence) GetTitleOk() (*string, bool) {
-	if o == nil  {
+	if o == nil || o.Title == nil {
 		return nil, false
 	}
-	return &o.Title, true
+	return o.Title, true
 }
 
-// SetTitle sets field value
+// HasTitle returns a boolean if a field has been set.
+func (o *Recurrence) HasTitle() bool {
+	if o != nil && o.Title != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTitle gets a reference to the given string and assigns it to the Title field.
 func (o *Recurrence) SetTitle(v string) {
-	o.Title = v
+	o.Title = &v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -205,124 +218,162 @@ func (o *Recurrence) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetFirstDate returns the FirstDate field value
-func (o *Recurrence) GetFirstDate() string {
-	if o == nil {
-		var ret string
+// GetFirstDate returns the FirstDate field value if set, zero value otherwise.
+func (o *Recurrence) GetFirstDate() time.Time {
+	if o == nil || o.FirstDate == nil {
+		var ret time.Time
 		return ret
 	}
-
-	return o.FirstDate
+	return *o.FirstDate
 }
 
-// GetFirstDateOk returns a tuple with the FirstDate field value
+// GetFirstDateOk returns a tuple with the FirstDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Recurrence) GetFirstDateOk() (*string, bool) {
-	if o == nil  {
+func (o *Recurrence) GetFirstDateOk() (*time.Time, bool) {
+	if o == nil || o.FirstDate == nil {
 		return nil, false
 	}
-	return &o.FirstDate, true
+	return o.FirstDate, true
 }
 
-// SetFirstDate sets field value
-func (o *Recurrence) SetFirstDate(v string) {
-	o.FirstDate = v
+// HasFirstDate returns a boolean if a field has been set.
+func (o *Recurrence) HasFirstDate() bool {
+	if o != nil && o.FirstDate != nil {
+		return true
+	}
+
+	return false
 }
 
-// GetLatestDate returns the LatestDate field value if set, zero value otherwise.
-func (o *Recurrence) GetLatestDate() string {
-	if o == nil || o.LatestDate == nil {
-		var ret string
+// SetFirstDate gets a reference to the given time.Time and assigns it to the FirstDate field.
+func (o *Recurrence) SetFirstDate(v time.Time) {
+	o.FirstDate = &v
+}
+
+// GetLatestDate returns the LatestDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Recurrence) GetLatestDate() time.Time {
+	if o == nil || o.LatestDate.Get() == nil {
+		var ret time.Time
 		return ret
 	}
-	return *o.LatestDate
+	return *o.LatestDate.Get()
 }
 
 // GetLatestDateOk returns a tuple with the LatestDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Recurrence) GetLatestDateOk() (*string, bool) {
-	if o == nil || o.LatestDate == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Recurrence) GetLatestDateOk() (*time.Time, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.LatestDate, true
+	return o.LatestDate.Get(), o.LatestDate.IsSet()
 }
 
 // HasLatestDate returns a boolean if a field has been set.
 func (o *Recurrence) HasLatestDate() bool {
-	if o != nil && o.LatestDate != nil {
+	if o != nil && o.LatestDate.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetLatestDate gets a reference to the given string and assigns it to the LatestDate field.
-func (o *Recurrence) SetLatestDate(v string) {
-	o.LatestDate = &v
+// SetLatestDate gets a reference to the given NullableTime and assigns it to the LatestDate field.
+func (o *Recurrence) SetLatestDate(v time.Time) {
+	o.LatestDate.Set(&v)
+}
+// SetLatestDateNil sets the value for LatestDate to be an explicit nil
+func (o *Recurrence) SetLatestDateNil() {
+	o.LatestDate.Set(nil)
 }
 
-// GetRepeatUntil returns the RepeatUntil field value if set, zero value otherwise.
-func (o *Recurrence) GetRepeatUntil() string {
-	if o == nil || o.RepeatUntil == nil {
-		var ret string
+// UnsetLatestDate ensures that no value is present for LatestDate, not even an explicit nil
+func (o *Recurrence) UnsetLatestDate() {
+	o.LatestDate.Unset()
+}
+
+// GetRepeatUntil returns the RepeatUntil field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Recurrence) GetRepeatUntil() time.Time {
+	if o == nil || o.RepeatUntil.Get() == nil {
+		var ret time.Time
 		return ret
 	}
-	return *o.RepeatUntil
+	return *o.RepeatUntil.Get()
 }
 
 // GetRepeatUntilOk returns a tuple with the RepeatUntil field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Recurrence) GetRepeatUntilOk() (*string, bool) {
-	if o == nil || o.RepeatUntil == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Recurrence) GetRepeatUntilOk() (*time.Time, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.RepeatUntil, true
+	return o.RepeatUntil.Get(), o.RepeatUntil.IsSet()
 }
 
 // HasRepeatUntil returns a boolean if a field has been set.
 func (o *Recurrence) HasRepeatUntil() bool {
-	if o != nil && o.RepeatUntil != nil {
+	if o != nil && o.RepeatUntil.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRepeatUntil gets a reference to the given string and assigns it to the RepeatUntil field.
-func (o *Recurrence) SetRepeatUntil(v string) {
-	o.RepeatUntil = &v
+// SetRepeatUntil gets a reference to the given NullableTime and assigns it to the RepeatUntil field.
+func (o *Recurrence) SetRepeatUntil(v time.Time) {
+	o.RepeatUntil.Set(&v)
+}
+// SetRepeatUntilNil sets the value for RepeatUntil to be an explicit nil
+func (o *Recurrence) SetRepeatUntilNil() {
+	o.RepeatUntil.Set(nil)
 }
 
-// GetNrOfRepetitions returns the NrOfRepetitions field value if set, zero value otherwise.
+// UnsetRepeatUntil ensures that no value is present for RepeatUntil, not even an explicit nil
+func (o *Recurrence) UnsetRepeatUntil() {
+	o.RepeatUntil.Unset()
+}
+
+// GetNrOfRepetitions returns the NrOfRepetitions field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Recurrence) GetNrOfRepetitions() int32 {
-	if o == nil || o.NrOfRepetitions == nil {
+	if o == nil || o.NrOfRepetitions.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.NrOfRepetitions
+	return *o.NrOfRepetitions.Get()
 }
 
 // GetNrOfRepetitionsOk returns a tuple with the NrOfRepetitions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Recurrence) GetNrOfRepetitionsOk() (*int32, bool) {
-	if o == nil || o.NrOfRepetitions == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.NrOfRepetitions, true
+	return o.NrOfRepetitions.Get(), o.NrOfRepetitions.IsSet()
 }
 
 // HasNrOfRepetitions returns a boolean if a field has been set.
 func (o *Recurrence) HasNrOfRepetitions() bool {
-	if o != nil && o.NrOfRepetitions != nil {
+	if o != nil && o.NrOfRepetitions.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNrOfRepetitions gets a reference to the given int32 and assigns it to the NrOfRepetitions field.
+// SetNrOfRepetitions gets a reference to the given NullableInt32 and assigns it to the NrOfRepetitions field.
 func (o *Recurrence) SetNrOfRepetitions(v int32) {
-	o.NrOfRepetitions = &v
+	o.NrOfRepetitions.Set(&v)
+}
+// SetNrOfRepetitionsNil sets the value for NrOfRepetitions to be an explicit nil
+func (o *Recurrence) SetNrOfRepetitionsNil() {
+	o.NrOfRepetitions.Set(nil)
+}
+
+// UnsetNrOfRepetitions ensures that no value is present for NrOfRepetitions, not even an explicit nil
+func (o *Recurrence) UnsetNrOfRepetitions() {
+	o.NrOfRepetitions.Unset()
 }
 
 // GetApplyRules returns the ApplyRules field value if set, zero value otherwise.
@@ -389,36 +440,46 @@ func (o *Recurrence) SetActive(v bool) {
 	o.Active = &v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
+// GetNotes returns the Notes field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Recurrence) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || o.Notes.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Notes
+	return *o.Notes.Get()
 }
 
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Recurrence) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Notes, true
+	return o.Notes.Get(), o.Notes.IsSet()
 }
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Recurrence) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && o.Notes.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNotes gets a reference to the given string and assigns it to the Notes field.
+// SetNotes gets a reference to the given NullableString and assigns it to the Notes field.
 func (o *Recurrence) SetNotes(v string) {
-	o.Notes = &v
+	o.Notes.Set(&v)
+}
+// SetNotesNil sets the value for Notes to be an explicit nil
+func (o *Recurrence) SetNotesNil() {
+	o.Notes.Set(nil)
+}
+
+// UnsetNotes ensures that no value is present for Notes, not even an explicit nil
+func (o *Recurrence) UnsetNotes() {
+	o.Notes.Unset()
 }
 
 // GetRepetitions returns the Repetitions field value if set, zero value otherwise.
@@ -493,26 +554,26 @@ func (o Recurrence) MarshalJSON() ([]byte, error) {
 	if o.UpdatedAt != nil {
 		toSerialize["updated_at"] = o.UpdatedAt
 	}
-	if true {
+	if o.Type != nil {
 		toSerialize["type"] = o.Type
 	}
-	if true {
+	if o.Title != nil {
 		toSerialize["title"] = o.Title
 	}
 	if o.Description != nil {
 		toSerialize["description"] = o.Description
 	}
-	if true {
+	if o.FirstDate != nil {
 		toSerialize["first_date"] = o.FirstDate
 	}
-	if o.LatestDate != nil {
-		toSerialize["latest_date"] = o.LatestDate
+	if o.LatestDate.IsSet() {
+		toSerialize["latest_date"] = o.LatestDate.Get()
 	}
-	if o.RepeatUntil != nil {
-		toSerialize["repeat_until"] = o.RepeatUntil
+	if o.RepeatUntil.IsSet() {
+		toSerialize["repeat_until"] = o.RepeatUntil.Get()
 	}
-	if o.NrOfRepetitions != nil {
-		toSerialize["nr_of_repetitions"] = o.NrOfRepetitions
+	if o.NrOfRepetitions.IsSet() {
+		toSerialize["nr_of_repetitions"] = o.NrOfRepetitions.Get()
 	}
 	if o.ApplyRules != nil {
 		toSerialize["apply_rules"] = o.ApplyRules
@@ -520,8 +581,8 @@ func (o Recurrence) MarshalJSON() ([]byte, error) {
 	if o.Active != nil {
 		toSerialize["active"] = o.Active
 	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	if o.Notes.IsSet() {
+		toSerialize["notes"] = o.Notes.Get()
 	}
 	if o.Repetitions != nil {
 		toSerialize["repetitions"] = o.Repetitions

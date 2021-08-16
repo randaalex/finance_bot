@@ -4,13 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Start** | Pointer to **string** |  | [optional] 
-**End** | Pointer to **string** |  | [optional] 
-**CurrencyId** | Pointer to **int32** |  | [optional] 
+**CurrencyId** | Pointer to **string** |  | [optional] 
 **CurrencyCode** | Pointer to **string** |  | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals supported by the currency | [optional] 
-**Amount** | Pointer to **string** | The amount earned. | [optional] 
+**Sum** | Pointer to **string** | The amount earned. | [optional] 
 
 ## Methods
 
@@ -31,72 +29,22 @@ NewCategoryEarnedWithDefaults instantiates a new CategoryEarned object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetStart
-
-`func (o *CategoryEarned) GetStart() string`
-
-GetStart returns the Start field if non-nil, zero value otherwise.
-
-### GetStartOk
-
-`func (o *CategoryEarned) GetStartOk() (*string, bool)`
-
-GetStartOk returns a tuple with the Start field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStart
-
-`func (o *CategoryEarned) SetStart(v string)`
-
-SetStart sets Start field to given value.
-
-### HasStart
-
-`func (o *CategoryEarned) HasStart() bool`
-
-HasStart returns a boolean if a field has been set.
-
-### GetEnd
-
-`func (o *CategoryEarned) GetEnd() string`
-
-GetEnd returns the End field if non-nil, zero value otherwise.
-
-### GetEndOk
-
-`func (o *CategoryEarned) GetEndOk() (*string, bool)`
-
-GetEndOk returns a tuple with the End field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEnd
-
-`func (o *CategoryEarned) SetEnd(v string)`
-
-SetEnd sets End field to given value.
-
-### HasEnd
-
-`func (o *CategoryEarned) HasEnd() bool`
-
-HasEnd returns a boolean if a field has been set.
-
 ### GetCurrencyId
 
-`func (o *CategoryEarned) GetCurrencyId() int32`
+`func (o *CategoryEarned) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *CategoryEarned) GetCurrencyIdOk() (*int32, bool)`
+`func (o *CategoryEarned) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *CategoryEarned) SetCurrencyId(v int32)`
+`func (o *CategoryEarned) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -181,30 +129,30 @@ SetCurrencyDecimalPlaces sets CurrencyDecimalPlaces field to given value.
 
 HasCurrencyDecimalPlaces returns a boolean if a field has been set.
 
-### GetAmount
+### GetSum
 
-`func (o *CategoryEarned) GetAmount() string`
+`func (o *CategoryEarned) GetSum() string`
 
-GetAmount returns the Amount field if non-nil, zero value otherwise.
+GetSum returns the Sum field if non-nil, zero value otherwise.
 
-### GetAmountOk
+### GetSumOk
 
-`func (o *CategoryEarned) GetAmountOk() (*string, bool)`
+`func (o *CategoryEarned) GetSumOk() (*string, bool)`
 
-GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
+GetSumOk returns a tuple with the Sum field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAmount
+### SetSum
 
-`func (o *CategoryEarned) SetAmount(v string)`
+`func (o *CategoryEarned) SetSum(v string)`
 
-SetAmount sets Amount field to given value.
+SetSum sets Sum field to given value.
 
-### HasAmount
+### HasSum
 
-`func (o *CategoryEarned) HasAmount() bool`
+`func (o *CategoryEarned) HasSum() bool`
 
-HasAmount returns a boolean if a field has been set.
+HasSum returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

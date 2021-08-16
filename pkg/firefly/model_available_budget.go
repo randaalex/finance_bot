@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -21,16 +21,16 @@ type AvailableBudget struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// Use either currency_id or currency_code.
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	// Use either currency_id or currency_code.
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	CurrencyDecimalPlaces *int32 `json:"currency_decimal_places,omitempty"`
 	Amount string `json:"amount"`
 	// Start date of the available budget.
-	Start string `json:"start"`
+	Start time.Time `json:"start"`
 	// End date of the available budget.
-	End string `json:"end"`
+	End time.Time `json:"end"`
 	SpentInBudgets *[]BudgetSpent `json:"spent_in_budgets,omitempty"`
 	SpentOutsideBudget *[]BudgetSpent `json:"spent_outside_budget,omitempty"`
 }
@@ -39,7 +39,7 @@ type AvailableBudget struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAvailableBudget(amount string, start string, end string) *AvailableBudget {
+func NewAvailableBudget(amount string, start time.Time, end time.Time) *AvailableBudget {
 	this := AvailableBudget{}
 	this.Amount = amount
 	this.Start = start
@@ -120,9 +120,9 @@ func (o *AvailableBudget) SetUpdatedAt(v time.Time) {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *AvailableBudget) GetCurrencyId() int32 {
+func (o *AvailableBudget) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -130,7 +130,7 @@ func (o *AvailableBudget) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AvailableBudget) GetCurrencyIdOk() (*int32, bool) {
+func (o *AvailableBudget) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -146,8 +146,8 @@ func (o *AvailableBudget) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *AvailableBudget) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *AvailableBudget) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 
@@ -272,9 +272,9 @@ func (o *AvailableBudget) SetAmount(v string) {
 }
 
 // GetStart returns the Start field value
-func (o *AvailableBudget) GetStart() string {
+func (o *AvailableBudget) GetStart() time.Time {
 	if o == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 
@@ -283,7 +283,7 @@ func (o *AvailableBudget) GetStart() string {
 
 // GetStartOk returns a tuple with the Start field value
 // and a boolean to check if the value has been set.
-func (o *AvailableBudget) GetStartOk() (*string, bool) {
+func (o *AvailableBudget) GetStartOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -291,14 +291,14 @@ func (o *AvailableBudget) GetStartOk() (*string, bool) {
 }
 
 // SetStart sets field value
-func (o *AvailableBudget) SetStart(v string) {
+func (o *AvailableBudget) SetStart(v time.Time) {
 	o.Start = v
 }
 
 // GetEnd returns the End field value
-func (o *AvailableBudget) GetEnd() string {
+func (o *AvailableBudget) GetEnd() time.Time {
 	if o == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 
@@ -307,7 +307,7 @@ func (o *AvailableBudget) GetEnd() string {
 
 // GetEndOk returns a tuple with the End field value
 // and a boolean to check if the value has been set.
-func (o *AvailableBudget) GetEndOk() (*string, bool) {
+func (o *AvailableBudget) GetEndOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -315,7 +315,7 @@ func (o *AvailableBudget) GetEndOk() (*string, bool) {
 }
 
 // SetEnd sets field value
-func (o *AvailableBudget) SetEnd(v string) {
+func (o *AvailableBudget) SetEnd(v time.Time) {
 	o.End = v
 }
 

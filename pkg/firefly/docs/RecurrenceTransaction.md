@@ -7,29 +7,29 @@ Name | Type | Description | Notes
 **Description** | **string** |  | 
 **Amount** | **string** | Amount of the transaction. | 
 **ForeignAmount** | Pointer to **NullableString** | Foreign amount of the transaction. | [optional] 
-**CurrencyId** | Pointer to **int32** | Submit either a currency_id or a currency_code. | [optional] 
+**CurrencyId** | Pointer to **string** | Submit either a currency_id or a currency_code. | [optional] 
 **CurrencyCode** | Pointer to **string** | Submit either a currency_id or a currency_code. | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals in the currency | [optional] [readonly] 
-**ForeignCurrencyId** | Pointer to **NullableInt32** | Submit either a foreign_currency_id or a foreign_currency_code, or neither. | [optional] 
+**ForeignCurrencyId** | Pointer to **NullableString** | Submit either a foreign_currency_id or a foreign_currency_code, or neither. | [optional] 
 **ForeignCurrencyCode** | Pointer to **NullableString** | Submit either a foreign_currency_id or a foreign_currency_code, or neither. | [optional] 
 **ForeignCurrencySymbol** | Pointer to **NullableString** |  | [optional] [readonly] 
 **ForeignCurrencyDecimalPlaces** | Pointer to **NullableInt32** | Number of decimals in the currency | [optional] [readonly] 
-**BudgetId** | Pointer to **int32** | The budget ID for this transaction. | [optional] 
+**BudgetId** | Pointer to **string** | The budget ID for this transaction. | [optional] 
 **BudgetName** | Pointer to **NullableString** | The name of the budget to be used. If the budget name is unknown, the ID will be used or the value will be ignored. | [optional] [readonly] 
-**CategoryId** | Pointer to **int32** | Category ID for this transaction. | [optional] 
+**CategoryId** | Pointer to **string** | Category ID for this transaction. | [optional] 
 **CategoryName** | Pointer to **string** | Category name for this transaction. | [optional] 
-**SourceId** | Pointer to **int32** | ID of the source account. Submit either this or source_name. | [optional] 
+**SourceId** | Pointer to **string** | ID of the source account. Submit either this or source_name. | [optional] 
 **SourceName** | Pointer to **string** | Name of the source account. Submit either this or source_id. | [optional] 
 **SourceIban** | Pointer to **NullableString** |  | [optional] [readonly] 
 **SourceType** | Pointer to [**AccountTypeProperty**](AccountTypeProperty.md) |  | [optional] 
-**DestinationId** | Pointer to **int32** | ID of the destination account. Submit either this or destination_name. | [optional] 
+**DestinationId** | Pointer to **string** | ID of the destination account. Submit either this or destination_name. | [optional] 
 **DestinationName** | Pointer to **string** | Name of the destination account. Submit either this or destination_id. | [optional] 
 **DestinationIban** | Pointer to **NullableString** |  | [optional] [readonly] 
 **DestinationType** | Pointer to [**AccountTypeProperty**](AccountTypeProperty.md) |  | [optional] 
 **Tags** | Pointer to **[]string** | Array of tags. | [optional] 
-**PiggyBankId** | Pointer to **int32** | Optional. Use either this or the piggy_bank_name | [optional] 
-**PiggyBankName** | Pointer to **string** | Optional. Use either this or the piggy_bank_id | [optional] 
+**PiggyBankId** | Pointer to **NullableString** | Optional. Use either this or the piggy_bank_name | [optional] 
+**PiggyBankName** | Pointer to **NullableString** | Optional. Use either this or the piggy_bank_id | [optional] 
 
 ## Methods
 
@@ -127,20 +127,20 @@ HasForeignAmount returns a boolean if a field has been set.
 UnsetForeignAmount ensures that no value is present for ForeignAmount, not even an explicit nil
 ### GetCurrencyId
 
-`func (o *RecurrenceTransaction) GetCurrencyId() int32`
+`func (o *RecurrenceTransaction) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *RecurrenceTransaction) GetCurrencyIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *RecurrenceTransaction) SetCurrencyId(v int32)`
+`func (o *RecurrenceTransaction) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -227,20 +227,20 @@ HasCurrencyDecimalPlaces returns a boolean if a field has been set.
 
 ### GetForeignCurrencyId
 
-`func (o *RecurrenceTransaction) GetForeignCurrencyId() int32`
+`func (o *RecurrenceTransaction) GetForeignCurrencyId() string`
 
 GetForeignCurrencyId returns the ForeignCurrencyId field if non-nil, zero value otherwise.
 
 ### GetForeignCurrencyIdOk
 
-`func (o *RecurrenceTransaction) GetForeignCurrencyIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetForeignCurrencyIdOk() (*string, bool)`
 
 GetForeignCurrencyIdOk returns a tuple with the ForeignCurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetForeignCurrencyId
 
-`func (o *RecurrenceTransaction) SetForeignCurrencyId(v int32)`
+`func (o *RecurrenceTransaction) SetForeignCurrencyId(v string)`
 
 SetForeignCurrencyId sets ForeignCurrencyId field to given value.
 
@@ -367,20 +367,20 @@ HasForeignCurrencyDecimalPlaces returns a boolean if a field has been set.
 UnsetForeignCurrencyDecimalPlaces ensures that no value is present for ForeignCurrencyDecimalPlaces, not even an explicit nil
 ### GetBudgetId
 
-`func (o *RecurrenceTransaction) GetBudgetId() int32`
+`func (o *RecurrenceTransaction) GetBudgetId() string`
 
 GetBudgetId returns the BudgetId field if non-nil, zero value otherwise.
 
 ### GetBudgetIdOk
 
-`func (o *RecurrenceTransaction) GetBudgetIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetBudgetIdOk() (*string, bool)`
 
 GetBudgetIdOk returns a tuple with the BudgetId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBudgetId
 
-`func (o *RecurrenceTransaction) SetBudgetId(v int32)`
+`func (o *RecurrenceTransaction) SetBudgetId(v string)`
 
 SetBudgetId sets BudgetId field to given value.
 
@@ -427,20 +427,20 @@ HasBudgetName returns a boolean if a field has been set.
 UnsetBudgetName ensures that no value is present for BudgetName, not even an explicit nil
 ### GetCategoryId
 
-`func (o *RecurrenceTransaction) GetCategoryId() int32`
+`func (o *RecurrenceTransaction) GetCategoryId() string`
 
 GetCategoryId returns the CategoryId field if non-nil, zero value otherwise.
 
 ### GetCategoryIdOk
 
-`func (o *RecurrenceTransaction) GetCategoryIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetCategoryIdOk() (*string, bool)`
 
 GetCategoryIdOk returns a tuple with the CategoryId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCategoryId
 
-`func (o *RecurrenceTransaction) SetCategoryId(v int32)`
+`func (o *RecurrenceTransaction) SetCategoryId(v string)`
 
 SetCategoryId sets CategoryId field to given value.
 
@@ -477,20 +477,20 @@ HasCategoryName returns a boolean if a field has been set.
 
 ### GetSourceId
 
-`func (o *RecurrenceTransaction) GetSourceId() int32`
+`func (o *RecurrenceTransaction) GetSourceId() string`
 
 GetSourceId returns the SourceId field if non-nil, zero value otherwise.
 
 ### GetSourceIdOk
 
-`func (o *RecurrenceTransaction) GetSourceIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetSourceIdOk() (*string, bool)`
 
 GetSourceIdOk returns a tuple with the SourceId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSourceId
 
-`func (o *RecurrenceTransaction) SetSourceId(v int32)`
+`func (o *RecurrenceTransaction) SetSourceId(v string)`
 
 SetSourceId sets SourceId field to given value.
 
@@ -587,20 +587,20 @@ HasSourceType returns a boolean if a field has been set.
 
 ### GetDestinationId
 
-`func (o *RecurrenceTransaction) GetDestinationId() int32`
+`func (o *RecurrenceTransaction) GetDestinationId() string`
 
 GetDestinationId returns the DestinationId field if non-nil, zero value otherwise.
 
 ### GetDestinationIdOk
 
-`func (o *RecurrenceTransaction) GetDestinationIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetDestinationIdOk() (*string, bool)`
 
 GetDestinationIdOk returns a tuple with the DestinationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDestinationId
 
-`func (o *RecurrenceTransaction) SetDestinationId(v int32)`
+`func (o *RecurrenceTransaction) SetDestinationId(v string)`
 
 SetDestinationId sets DestinationId field to given value.
 
@@ -732,20 +732,20 @@ HasTags returns a boolean if a field has been set.
 UnsetTags ensures that no value is present for Tags, not even an explicit nil
 ### GetPiggyBankId
 
-`func (o *RecurrenceTransaction) GetPiggyBankId() int32`
+`func (o *RecurrenceTransaction) GetPiggyBankId() string`
 
 GetPiggyBankId returns the PiggyBankId field if non-nil, zero value otherwise.
 
 ### GetPiggyBankIdOk
 
-`func (o *RecurrenceTransaction) GetPiggyBankIdOk() (*int32, bool)`
+`func (o *RecurrenceTransaction) GetPiggyBankIdOk() (*string, bool)`
 
 GetPiggyBankIdOk returns a tuple with the PiggyBankId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPiggyBankId
 
-`func (o *RecurrenceTransaction) SetPiggyBankId(v int32)`
+`func (o *RecurrenceTransaction) SetPiggyBankId(v string)`
 
 SetPiggyBankId sets PiggyBankId field to given value.
 
@@ -755,6 +755,16 @@ SetPiggyBankId sets PiggyBankId field to given value.
 
 HasPiggyBankId returns a boolean if a field has been set.
 
+### SetPiggyBankIdNil
+
+`func (o *RecurrenceTransaction) SetPiggyBankIdNil(b bool)`
+
+ SetPiggyBankIdNil sets the value for PiggyBankId to be an explicit nil
+
+### UnsetPiggyBankId
+`func (o *RecurrenceTransaction) UnsetPiggyBankId()`
+
+UnsetPiggyBankId ensures that no value is present for PiggyBankId, not even an explicit nil
 ### GetPiggyBankName
 
 `func (o *RecurrenceTransaction) GetPiggyBankName() string`
@@ -780,6 +790,16 @@ SetPiggyBankName sets PiggyBankName field to given value.
 
 HasPiggyBankName returns a boolean if a field has been set.
 
+### SetPiggyBankNameNil
+
+`func (o *RecurrenceTransaction) SetPiggyBankNameNil(b bool)`
+
+ SetPiggyBankNameNil sets the value for PiggyBankName to be an explicit nil
+
+### UnsetPiggyBankName
+`func (o *RecurrenceTransaction) UnsetPiggyBankName()`
+
+UnsetPiggyBankName ensures that no value is present for PiggyBankName, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

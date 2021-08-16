@@ -4,39 +4,39 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**User** | Pointer to **int32** | User ID | [optional] [readonly] 
+**User** | Pointer to **string** | User ID | [optional] [readonly] 
 **TransactionJournalId** | Pointer to **int32** | ID of the underlying transaction journal. Each transaction consists of a transaction group (see the top ID) and one or more journals making up the splits of the transaction.  | [optional] [readonly] 
 **Type** | **string** | Type of transaction. | 
-**Date** | **string** | Date of the transaction | 
+**Date** | **time.Time** | Date of the transaction | 
 **Amount** | **string** | Amount of the transaction. | 
 **Description** | **string** | Description of the transaction. | 
 **Order** | Pointer to **NullableInt32** | Order of this entry in the list of transactions. | [optional] 
-**CurrencyId** | Pointer to **NullableInt32** | Currency ID. Default is the source account&#39;s currency, or the user&#39;s default currency. Can be used instead of currency_code. | [optional] 
+**CurrencyId** | Pointer to **NullableString** | Currency ID. Default is the source account&#39;s currency, or the user&#39;s default currency. Can be used instead of currency_code. | [optional] 
 **CurrencyCode** | Pointer to **NullableString** | Currency code. Default is the source account&#39;s currency, or the user&#39;s default currency. Can be used instead of currency_id. | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyName** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals used in this currency. | [optional] [readonly] 
 **ForeignAmount** | Pointer to **NullableString** | The amount in a foreign currency. | [optional] 
-**ForeignCurrencyId** | Pointer to **NullableInt32** | Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount. | [optional] 
+**ForeignCurrencyId** | Pointer to **NullableString** | Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount. | [optional] 
 **ForeignCurrencyCode** | Pointer to **NullableString** | Currency code of the foreign currency. Default is NULL. Can be used instead of the foreign_currency_id, but this or the ID is required when submitting a foreign amount. | [optional] 
 **ForeignCurrencySymbol** | Pointer to **NullableString** |  | [optional] [readonly] 
 **ForeignCurrencyDecimalPlaces** | Pointer to **NullableInt32** | Number of decimals in the currency | [optional] [readonly] 
-**BudgetId** | Pointer to **NullableInt32** | The budget ID for this transaction. | [optional] 
+**BudgetId** | Pointer to **NullableString** | The budget ID for this transaction. | [optional] 
 **BudgetName** | Pointer to **NullableString** | The name of the budget to be used. If the budget name is unknown, the ID will be used or the value will be ignored. | [optional] [readonly] 
-**CategoryId** | Pointer to **NullableInt32** | The category ID for this transaction. | [optional] 
-**CategoryName** | Pointer to **string** | The name of the category to be used. If the category is unknown, it will be created. If the ID and the name point to different categories, the ID overrules the name. | [optional] 
-**SourceId** | **NullableInt32** | ID of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account. | 
+**CategoryId** | Pointer to **NullableString** | The category ID for this transaction. | [optional] 
+**CategoryName** | Pointer to **NullableString** | The name of the category to be used. If the category is unknown, it will be created. If the ID and the name point to different categories, the ID overrules the name. | [optional] 
+**SourceId** | **NullableString** | ID of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account. | 
 **SourceName** | Pointer to **NullableString** | Name of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account. Can be used instead of the source_id. If the transaction is a deposit, the source_name can be filled in freely: the account will be created based on the name. | [optional] 
 **SourceIban** | Pointer to **NullableString** |  | [optional] [readonly] 
 **SourceType** | Pointer to [**AccountTypeProperty**](AccountTypeProperty.md) |  | [optional] 
-**DestinationId** | **NullableInt32** | ID of the destination account. For a deposit or a transfer, this must always be an asset account. For withdrawals this must be an expense account. | 
+**DestinationId** | **NullableString** | ID of the destination account. For a deposit or a transfer, this must always be an asset account. For withdrawals this must be an expense account. | 
 **DestinationName** | Pointer to **NullableString** | Name of the destination account. You can submit the name instead of the ID. For everything except transfers, the account will be auto-generated if unknown, so submitting a name is enough. | [optional] 
 **DestinationIban** | Pointer to **NullableString** |  | [optional] [readonly] 
 **DestinationType** | Pointer to [**AccountTypeProperty**](AccountTypeProperty.md) |  | [optional] 
 **Reconciled** | Pointer to **bool** | If the transaction has been reconciled already. When you set this, the amount can no longer be edited by the user. | [optional] 
 **PiggyBankId** | Pointer to **int32** | Optional. Use either this or the piggy_bank_name | [optional] 
 **PiggyBankName** | Pointer to **string** | Optional. Use either this or the piggy_bank_id | [optional] 
-**BillId** | Pointer to **NullableInt32** | Optional. Use either this or the bill_name | [optional] 
+**BillId** | Pointer to **NullableString** | Optional. Use either this or the bill_name | [optional] 
 **BillName** | Pointer to **NullableString** | Optional. Use either this or the bill_id | [optional] 
 **Tags** | Pointer to **[]string** | Array of tags. | [optional] 
 **Notes** | Pointer to **NullableString** |  | [optional] 
@@ -44,30 +44,30 @@ Name | Type | Description | Notes
 **ExternalId** | Pointer to **NullableString** | Reference to external ID in other systems. | [optional] 
 **OriginalSource** | Pointer to **NullableString** | System generated identifier for original creator of transaction. | [optional] [readonly] 
 **RecurrenceId** | Pointer to **NullableInt32** | Reference to recurrence that made the transaction. | [optional] [readonly] 
-**RecurrenceTotal** | Pointer to **int32** | Total number of transactions expected to be created by this recurrence repetition. Will be 0 if infinite. | [optional] [readonly] 
-**RecurrenceCount** | Pointer to **int32** | The # of the current transaction created under this recurrence. | [optional] [readonly] 
+**RecurrenceTotal** | Pointer to **NullableInt32** | Total number of transactions expected to be created by this recurrence repetition. Will be 0 if infinite. | [optional] [readonly] 
+**RecurrenceCount** | Pointer to **NullableInt32** | The # of the current transaction created under this recurrence. | [optional] [readonly] 
 **BunqPaymentId** | Pointer to **NullableString** | Internal ID of bunq transaction. | [optional] 
 **ImportHashV2** | Pointer to **NullableString** | Hash value of original import transaction (for duplicate detection). | [optional] [readonly] 
 **SepaCc** | Pointer to **NullableString** | SEPA Clearing Code | [optional] 
-**SepaCtOp** | Pointer to **string** | SEPA Opposing Account Identifier | [optional] 
+**SepaCtOp** | Pointer to **NullableString** | SEPA Opposing Account Identifier | [optional] 
 **SepaCtId** | Pointer to **NullableString** | SEPA end-to-end Identifier | [optional] 
 **SepaDb** | Pointer to **NullableString** | SEPA mandate identifier | [optional] 
 **SepaCountry** | Pointer to **NullableString** | SEPA Country | [optional] 
 **SepaEp** | Pointer to **NullableString** | SEPA External Purpose indicator | [optional] 
 **SepaCi** | Pointer to **NullableString** | SEPA Creditor Identifier | [optional] 
 **SepaBatchId** | Pointer to **NullableString** | SEPA Batch ID | [optional] 
-**InterestDate** | Pointer to **NullableString** |  | [optional] 
-**BookDate** | Pointer to **NullableString** |  | [optional] 
-**ProcessDate** | Pointer to **NullableString** |  | [optional] 
-**DueDate** | Pointer to **NullableString** |  | [optional] 
-**PaymentDate** | Pointer to **NullableString** |  | [optional] 
-**InvoiceDate** | Pointer to **NullableString** |  | [optional] 
+**InterestDate** | Pointer to **NullableTime** |  | [optional] 
+**BookDate** | Pointer to **NullableTime** |  | [optional] 
+**ProcessDate** | Pointer to **NullableTime** |  | [optional] 
+**DueDate** | Pointer to **NullableTime** |  | [optional] 
+**PaymentDate** | Pointer to **NullableTime** |  | [optional] 
+**InvoiceDate** | Pointer to **NullableTime** |  | [optional] 
 
 ## Methods
 
 ### NewTransactionSplit
 
-`func NewTransactionSplit(type_ string, date string, amount string, description string, sourceId NullableInt32, destinationId NullableInt32, ) *TransactionSplit`
+`func NewTransactionSplit(type_ string, date time.Time, amount string, description string, sourceId NullableString, destinationId NullableString, ) *TransactionSplit`
 
 NewTransactionSplit instantiates a new TransactionSplit object
 This constructor will assign default values to properties that have it defined,
@@ -84,20 +84,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetUser
 
-`func (o *TransactionSplit) GetUser() int32`
+`func (o *TransactionSplit) GetUser() string`
 
 GetUser returns the User field if non-nil, zero value otherwise.
 
 ### GetUserOk
 
-`func (o *TransactionSplit) GetUserOk() (*int32, bool)`
+`func (o *TransactionSplit) GetUserOk() (*string, bool)`
 
 GetUserOk returns a tuple with the User field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUser
 
-`func (o *TransactionSplit) SetUser(v int32)`
+`func (o *TransactionSplit) SetUser(v string)`
 
 SetUser sets User field to given value.
 
@@ -154,20 +154,20 @@ SetType sets Type field to given value.
 
 ### GetDate
 
-`func (o *TransactionSplit) GetDate() string`
+`func (o *TransactionSplit) GetDate() time.Time`
 
 GetDate returns the Date field if non-nil, zero value otherwise.
 
 ### GetDateOk
 
-`func (o *TransactionSplit) GetDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetDateOk() (*time.Time, bool)`
 
 GetDateOk returns a tuple with the Date field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDate
 
-`func (o *TransactionSplit) SetDate(v string)`
+`func (o *TransactionSplit) SetDate(v time.Time)`
 
 SetDate sets Date field to given value.
 
@@ -249,20 +249,20 @@ HasOrder returns a boolean if a field has been set.
 UnsetOrder ensures that no value is present for Order, not even an explicit nil
 ### GetCurrencyId
 
-`func (o *TransactionSplit) GetCurrencyId() int32`
+`func (o *TransactionSplit) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *TransactionSplit) GetCurrencyIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *TransactionSplit) SetCurrencyId(v int32)`
+`func (o *TransactionSplit) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -429,20 +429,20 @@ HasForeignAmount returns a boolean if a field has been set.
 UnsetForeignAmount ensures that no value is present for ForeignAmount, not even an explicit nil
 ### GetForeignCurrencyId
 
-`func (o *TransactionSplit) GetForeignCurrencyId() int32`
+`func (o *TransactionSplit) GetForeignCurrencyId() string`
 
 GetForeignCurrencyId returns the ForeignCurrencyId field if non-nil, zero value otherwise.
 
 ### GetForeignCurrencyIdOk
 
-`func (o *TransactionSplit) GetForeignCurrencyIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetForeignCurrencyIdOk() (*string, bool)`
 
 GetForeignCurrencyIdOk returns a tuple with the ForeignCurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetForeignCurrencyId
 
-`func (o *TransactionSplit) SetForeignCurrencyId(v int32)`
+`func (o *TransactionSplit) SetForeignCurrencyId(v string)`
 
 SetForeignCurrencyId sets ForeignCurrencyId field to given value.
 
@@ -569,20 +569,20 @@ HasForeignCurrencyDecimalPlaces returns a boolean if a field has been set.
 UnsetForeignCurrencyDecimalPlaces ensures that no value is present for ForeignCurrencyDecimalPlaces, not even an explicit nil
 ### GetBudgetId
 
-`func (o *TransactionSplit) GetBudgetId() int32`
+`func (o *TransactionSplit) GetBudgetId() string`
 
 GetBudgetId returns the BudgetId field if non-nil, zero value otherwise.
 
 ### GetBudgetIdOk
 
-`func (o *TransactionSplit) GetBudgetIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetBudgetIdOk() (*string, bool)`
 
 GetBudgetIdOk returns a tuple with the BudgetId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBudgetId
 
-`func (o *TransactionSplit) SetBudgetId(v int32)`
+`func (o *TransactionSplit) SetBudgetId(v string)`
 
 SetBudgetId sets BudgetId field to given value.
 
@@ -639,20 +639,20 @@ HasBudgetName returns a boolean if a field has been set.
 UnsetBudgetName ensures that no value is present for BudgetName, not even an explicit nil
 ### GetCategoryId
 
-`func (o *TransactionSplit) GetCategoryId() int32`
+`func (o *TransactionSplit) GetCategoryId() string`
 
 GetCategoryId returns the CategoryId field if non-nil, zero value otherwise.
 
 ### GetCategoryIdOk
 
-`func (o *TransactionSplit) GetCategoryIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetCategoryIdOk() (*string, bool)`
 
 GetCategoryIdOk returns a tuple with the CategoryId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCategoryId
 
-`func (o *TransactionSplit) SetCategoryId(v int32)`
+`func (o *TransactionSplit) SetCategoryId(v string)`
 
 SetCategoryId sets CategoryId field to given value.
 
@@ -697,22 +697,32 @@ SetCategoryName sets CategoryName field to given value.
 
 HasCategoryName returns a boolean if a field has been set.
 
+### SetCategoryNameNil
+
+`func (o *TransactionSplit) SetCategoryNameNil(b bool)`
+
+ SetCategoryNameNil sets the value for CategoryName to be an explicit nil
+
+### UnsetCategoryName
+`func (o *TransactionSplit) UnsetCategoryName()`
+
+UnsetCategoryName ensures that no value is present for CategoryName, not even an explicit nil
 ### GetSourceId
 
-`func (o *TransactionSplit) GetSourceId() int32`
+`func (o *TransactionSplit) GetSourceId() string`
 
 GetSourceId returns the SourceId field if non-nil, zero value otherwise.
 
 ### GetSourceIdOk
 
-`func (o *TransactionSplit) GetSourceIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetSourceIdOk() (*string, bool)`
 
 GetSourceIdOk returns a tuple with the SourceId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSourceId
 
-`func (o *TransactionSplit) SetSourceId(v int32)`
+`func (o *TransactionSplit) SetSourceId(v string)`
 
 SetSourceId sets SourceId field to given value.
 
@@ -824,20 +834,20 @@ HasSourceType returns a boolean if a field has been set.
 
 ### GetDestinationId
 
-`func (o *TransactionSplit) GetDestinationId() int32`
+`func (o *TransactionSplit) GetDestinationId() string`
 
 GetDestinationId returns the DestinationId field if non-nil, zero value otherwise.
 
 ### GetDestinationIdOk
 
-`func (o *TransactionSplit) GetDestinationIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetDestinationIdOk() (*string, bool)`
 
 GetDestinationIdOk returns a tuple with the DestinationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDestinationId
 
-`func (o *TransactionSplit) SetDestinationId(v int32)`
+`func (o *TransactionSplit) SetDestinationId(v string)`
 
 SetDestinationId sets DestinationId field to given value.
 
@@ -1024,20 +1034,20 @@ HasPiggyBankName returns a boolean if a field has been set.
 
 ### GetBillId
 
-`func (o *TransactionSplit) GetBillId() int32`
+`func (o *TransactionSplit) GetBillId() string`
 
 GetBillId returns the BillId field if non-nil, zero value otherwise.
 
 ### GetBillIdOk
 
-`func (o *TransactionSplit) GetBillIdOk() (*int32, bool)`
+`func (o *TransactionSplit) GetBillIdOk() (*string, bool)`
 
 GetBillIdOk returns a tuple with the BillId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBillId
 
-`func (o *TransactionSplit) SetBillId(v int32)`
+`func (o *TransactionSplit) SetBillId(v string)`
 
 SetBillId sets BillId field to given value.
 
@@ -1327,6 +1337,16 @@ SetRecurrenceTotal sets RecurrenceTotal field to given value.
 
 HasRecurrenceTotal returns a boolean if a field has been set.
 
+### SetRecurrenceTotalNil
+
+`func (o *TransactionSplit) SetRecurrenceTotalNil(b bool)`
+
+ SetRecurrenceTotalNil sets the value for RecurrenceTotal to be an explicit nil
+
+### UnsetRecurrenceTotal
+`func (o *TransactionSplit) UnsetRecurrenceTotal()`
+
+UnsetRecurrenceTotal ensures that no value is present for RecurrenceTotal, not even an explicit nil
 ### GetRecurrenceCount
 
 `func (o *TransactionSplit) GetRecurrenceCount() int32`
@@ -1352,6 +1372,16 @@ SetRecurrenceCount sets RecurrenceCount field to given value.
 
 HasRecurrenceCount returns a boolean if a field has been set.
 
+### SetRecurrenceCountNil
+
+`func (o *TransactionSplit) SetRecurrenceCountNil(b bool)`
+
+ SetRecurrenceCountNil sets the value for RecurrenceCount to be an explicit nil
+
+### UnsetRecurrenceCount
+`func (o *TransactionSplit) UnsetRecurrenceCount()`
+
+UnsetRecurrenceCount ensures that no value is present for RecurrenceCount, not even an explicit nil
 ### GetBunqPaymentId
 
 `func (o *TransactionSplit) GetBunqPaymentId() string`
@@ -1482,6 +1512,16 @@ SetSepaCtOp sets SepaCtOp field to given value.
 
 HasSepaCtOp returns a boolean if a field has been set.
 
+### SetSepaCtOpNil
+
+`func (o *TransactionSplit) SetSepaCtOpNil(b bool)`
+
+ SetSepaCtOpNil sets the value for SepaCtOp to be an explicit nil
+
+### UnsetSepaCtOp
+`func (o *TransactionSplit) UnsetSepaCtOp()`
+
+UnsetSepaCtOp ensures that no value is present for SepaCtOp, not even an explicit nil
 ### GetSepaCtId
 
 `func (o *TransactionSplit) GetSepaCtId() string`
@@ -1694,20 +1734,20 @@ HasSepaBatchId returns a boolean if a field has been set.
 UnsetSepaBatchId ensures that no value is present for SepaBatchId, not even an explicit nil
 ### GetInterestDate
 
-`func (o *TransactionSplit) GetInterestDate() string`
+`func (o *TransactionSplit) GetInterestDate() time.Time`
 
 GetInterestDate returns the InterestDate field if non-nil, zero value otherwise.
 
 ### GetInterestDateOk
 
-`func (o *TransactionSplit) GetInterestDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetInterestDateOk() (*time.Time, bool)`
 
 GetInterestDateOk returns a tuple with the InterestDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInterestDate
 
-`func (o *TransactionSplit) SetInterestDate(v string)`
+`func (o *TransactionSplit) SetInterestDate(v time.Time)`
 
 SetInterestDate sets InterestDate field to given value.
 
@@ -1729,20 +1769,20 @@ HasInterestDate returns a boolean if a field has been set.
 UnsetInterestDate ensures that no value is present for InterestDate, not even an explicit nil
 ### GetBookDate
 
-`func (o *TransactionSplit) GetBookDate() string`
+`func (o *TransactionSplit) GetBookDate() time.Time`
 
 GetBookDate returns the BookDate field if non-nil, zero value otherwise.
 
 ### GetBookDateOk
 
-`func (o *TransactionSplit) GetBookDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetBookDateOk() (*time.Time, bool)`
 
 GetBookDateOk returns a tuple with the BookDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBookDate
 
-`func (o *TransactionSplit) SetBookDate(v string)`
+`func (o *TransactionSplit) SetBookDate(v time.Time)`
 
 SetBookDate sets BookDate field to given value.
 
@@ -1764,20 +1804,20 @@ HasBookDate returns a boolean if a field has been set.
 UnsetBookDate ensures that no value is present for BookDate, not even an explicit nil
 ### GetProcessDate
 
-`func (o *TransactionSplit) GetProcessDate() string`
+`func (o *TransactionSplit) GetProcessDate() time.Time`
 
 GetProcessDate returns the ProcessDate field if non-nil, zero value otherwise.
 
 ### GetProcessDateOk
 
-`func (o *TransactionSplit) GetProcessDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetProcessDateOk() (*time.Time, bool)`
 
 GetProcessDateOk returns a tuple with the ProcessDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProcessDate
 
-`func (o *TransactionSplit) SetProcessDate(v string)`
+`func (o *TransactionSplit) SetProcessDate(v time.Time)`
 
 SetProcessDate sets ProcessDate field to given value.
 
@@ -1799,20 +1839,20 @@ HasProcessDate returns a boolean if a field has been set.
 UnsetProcessDate ensures that no value is present for ProcessDate, not even an explicit nil
 ### GetDueDate
 
-`func (o *TransactionSplit) GetDueDate() string`
+`func (o *TransactionSplit) GetDueDate() time.Time`
 
 GetDueDate returns the DueDate field if non-nil, zero value otherwise.
 
 ### GetDueDateOk
 
-`func (o *TransactionSplit) GetDueDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetDueDateOk() (*time.Time, bool)`
 
 GetDueDateOk returns a tuple with the DueDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDueDate
 
-`func (o *TransactionSplit) SetDueDate(v string)`
+`func (o *TransactionSplit) SetDueDate(v time.Time)`
 
 SetDueDate sets DueDate field to given value.
 
@@ -1834,20 +1874,20 @@ HasDueDate returns a boolean if a field has been set.
 UnsetDueDate ensures that no value is present for DueDate, not even an explicit nil
 ### GetPaymentDate
 
-`func (o *TransactionSplit) GetPaymentDate() string`
+`func (o *TransactionSplit) GetPaymentDate() time.Time`
 
 GetPaymentDate returns the PaymentDate field if non-nil, zero value otherwise.
 
 ### GetPaymentDateOk
 
-`func (o *TransactionSplit) GetPaymentDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetPaymentDateOk() (*time.Time, bool)`
 
 GetPaymentDateOk returns a tuple with the PaymentDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPaymentDate
 
-`func (o *TransactionSplit) SetPaymentDate(v string)`
+`func (o *TransactionSplit) SetPaymentDate(v time.Time)`
 
 SetPaymentDate sets PaymentDate field to given value.
 
@@ -1869,20 +1909,20 @@ HasPaymentDate returns a boolean if a field has been set.
 UnsetPaymentDate ensures that no value is present for PaymentDate, not even an explicit nil
 ### GetInvoiceDate
 
-`func (o *TransactionSplit) GetInvoiceDate() string`
+`func (o *TransactionSplit) GetInvoiceDate() time.Time`
 
 GetInvoiceDate returns the InvoiceDate field if non-nil, zero value otherwise.
 
 ### GetInvoiceDateOk
 
-`func (o *TransactionSplit) GetInvoiceDateOk() (*string, bool)`
+`func (o *TransactionSplit) GetInvoiceDateOk() (*time.Time, bool)`
 
 GetInvoiceDateOk returns a tuple with the InvoiceDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInvoiceDate
 
-`func (o *TransactionSplit) SetInvoiceDate(v string)`
+`func (o *TransactionSplit) SetInvoiceDate(v time.Time)`
 
 SetInvoiceDate sets InvoiceDate field to given value.
 

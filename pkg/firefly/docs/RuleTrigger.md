@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **Type** | **string** | The type of thing this trigger responds to. A limited set is possible | 
 **Value** | **string** | The accompanying value the trigger responds to. This value is often mandatory, but this depends on the trigger. | 
 **Order** | Pointer to **int32** | Order of the trigger | [optional] [readonly] 
-**Active** | Pointer to **bool** | If the trigger is active. | [optional] 
-**StopProcessing** | Pointer to **bool** | When true, other triggers will not be checked if this trigger was triggered. | [optional] 
+**Active** | Pointer to **bool** | If the trigger is active. Defaults to true. | [optional] 
+**StopProcessing** | Pointer to **bool** | When true, other triggers will not be checked if this trigger was triggered. Defaults to false. | [optional] 
 
 ## Methods
 

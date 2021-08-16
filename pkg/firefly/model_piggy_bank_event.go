@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -20,14 +20,15 @@ import (
 type PiggyBankEvent struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	CurrencyDecimalPlaces *int32 `json:"currency_decimal_places,omitempty"`
 	Amount *string `json:"amount,omitempty"`
 	// The journal associated with the event.
-	JournalId *int32 `json:"journal_id,omitempty"`
-	TransactionId *int32 `json:"transaction_id,omitempty"`
+	TransactionJournalId *string `json:"transaction_journal_id,omitempty"`
+	// The transaction group associated with the event.
+	TransactionGroupId *string `json:"transaction_group_id,omitempty"`
 }
 
 // NewPiggyBankEvent instantiates a new PiggyBankEvent object
@@ -112,9 +113,9 @@ func (o *PiggyBankEvent) SetUpdatedAt(v time.Time) {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *PiggyBankEvent) GetCurrencyId() int32 {
+func (o *PiggyBankEvent) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -122,7 +123,7 @@ func (o *PiggyBankEvent) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBankEvent) GetCurrencyIdOk() (*int32, bool) {
+func (o *PiggyBankEvent) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -138,8 +139,8 @@ func (o *PiggyBankEvent) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *PiggyBankEvent) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *PiggyBankEvent) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 
@@ -271,68 +272,68 @@ func (o *PiggyBankEvent) SetAmount(v string) {
 	o.Amount = &v
 }
 
-// GetJournalId returns the JournalId field value if set, zero value otherwise.
-func (o *PiggyBankEvent) GetJournalId() int32 {
-	if o == nil || o.JournalId == nil {
-		var ret int32
+// GetTransactionJournalId returns the TransactionJournalId field value if set, zero value otherwise.
+func (o *PiggyBankEvent) GetTransactionJournalId() string {
+	if o == nil || o.TransactionJournalId == nil {
+		var ret string
 		return ret
 	}
-	return *o.JournalId
+	return *o.TransactionJournalId
 }
 
-// GetJournalIdOk returns a tuple with the JournalId field value if set, nil otherwise
+// GetTransactionJournalIdOk returns a tuple with the TransactionJournalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBankEvent) GetJournalIdOk() (*int32, bool) {
-	if o == nil || o.JournalId == nil {
+func (o *PiggyBankEvent) GetTransactionJournalIdOk() (*string, bool) {
+	if o == nil || o.TransactionJournalId == nil {
 		return nil, false
 	}
-	return o.JournalId, true
+	return o.TransactionJournalId, true
 }
 
-// HasJournalId returns a boolean if a field has been set.
-func (o *PiggyBankEvent) HasJournalId() bool {
-	if o != nil && o.JournalId != nil {
+// HasTransactionJournalId returns a boolean if a field has been set.
+func (o *PiggyBankEvent) HasTransactionJournalId() bool {
+	if o != nil && o.TransactionJournalId != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetJournalId gets a reference to the given int32 and assigns it to the JournalId field.
-func (o *PiggyBankEvent) SetJournalId(v int32) {
-	o.JournalId = &v
+// SetTransactionJournalId gets a reference to the given string and assigns it to the TransactionJournalId field.
+func (o *PiggyBankEvent) SetTransactionJournalId(v string) {
+	o.TransactionJournalId = &v
 }
 
-// GetTransactionId returns the TransactionId field value if set, zero value otherwise.
-func (o *PiggyBankEvent) GetTransactionId() int32 {
-	if o == nil || o.TransactionId == nil {
-		var ret int32
+// GetTransactionGroupId returns the TransactionGroupId field value if set, zero value otherwise.
+func (o *PiggyBankEvent) GetTransactionGroupId() string {
+	if o == nil || o.TransactionGroupId == nil {
+		var ret string
 		return ret
 	}
-	return *o.TransactionId
+	return *o.TransactionGroupId
 }
 
-// GetTransactionIdOk returns a tuple with the TransactionId field value if set, nil otherwise
+// GetTransactionGroupIdOk returns a tuple with the TransactionGroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBankEvent) GetTransactionIdOk() (*int32, bool) {
-	if o == nil || o.TransactionId == nil {
+func (o *PiggyBankEvent) GetTransactionGroupIdOk() (*string, bool) {
+	if o == nil || o.TransactionGroupId == nil {
 		return nil, false
 	}
-	return o.TransactionId, true
+	return o.TransactionGroupId, true
 }
 
-// HasTransactionId returns a boolean if a field has been set.
-func (o *PiggyBankEvent) HasTransactionId() bool {
-	if o != nil && o.TransactionId != nil {
+// HasTransactionGroupId returns a boolean if a field has been set.
+func (o *PiggyBankEvent) HasTransactionGroupId() bool {
+	if o != nil && o.TransactionGroupId != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetTransactionId gets a reference to the given int32 and assigns it to the TransactionId field.
-func (o *PiggyBankEvent) SetTransactionId(v int32) {
-	o.TransactionId = &v
+// SetTransactionGroupId gets a reference to the given string and assigns it to the TransactionGroupId field.
+func (o *PiggyBankEvent) SetTransactionGroupId(v string) {
+	o.TransactionGroupId = &v
 }
 
 func (o PiggyBankEvent) MarshalJSON() ([]byte, error) {
@@ -358,11 +359,11 @@ func (o PiggyBankEvent) MarshalJSON() ([]byte, error) {
 	if o.Amount != nil {
 		toSerialize["amount"] = o.Amount
 	}
-	if o.JournalId != nil {
-		toSerialize["journal_id"] = o.JournalId
+	if o.TransactionJournalId != nil {
+		toSerialize["transaction_journal_id"] = o.TransactionJournalId
 	}
-	if o.TransactionId != nil {
-		toSerialize["transaction_id"] = o.TransactionId
+	if o.TransactionGroupId != nil {
+		toSerialize["transaction_group_id"] = o.TransactionGroupId
 	}
 	return json.Marshal(toSerialize)
 }

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -17,14 +17,14 @@ import (
 
 // BasicSummaryEntry struct for BasicSummaryEntry
 type BasicSummaryEntry struct {
-	// This is a reference to the type of info shared, not influenced by translations or user preferences.
+	// This is a reference to the type of info shared, not influenced by translations or user preferences. The EUR value is a reference to the currency code. Possibilities are: balance-in-ABC, spent-in-ABC, earned-in-ABC, bills-paid-in-ABC, bills-unpaid-in-ABC, left-to-spend-in-ABC and net-worth-in-ABC.
 	Key *string `json:"key,omitempty"`
 	// A translated title for the information shared.
 	Title *string `json:"title,omitempty"`
 	// The amount as a float.
 	MonetaryValue *float64 `json:"monetary_value,omitempty"`
 	// The currency ID of the associated currency.
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	// Number of decimals for the associated currency.
@@ -151,9 +151,9 @@ func (o *BasicSummaryEntry) SetMonetaryValue(v float64) {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *BasicSummaryEntry) GetCurrencyId() int32 {
+func (o *BasicSummaryEntry) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -161,7 +161,7 @@ func (o *BasicSummaryEntry) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BasicSummaryEntry) GetCurrencyIdOk() (*int32, bool) {
+func (o *BasicSummaryEntry) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -177,8 +177,8 @@ func (o *BasicSummaryEntry) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *BasicSummaryEntry) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *BasicSummaryEntry) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 

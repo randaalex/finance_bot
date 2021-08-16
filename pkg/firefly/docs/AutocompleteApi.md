@@ -4,21 +4,22 @@ All URIs are relative to *https://demo.firefly-iii.org*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetAccountsAC**](AutocompleteApi.md#GetAccountsAC) | **Get** /api/v1/autocomplete/accounts | All accounts of the user returned in a basic auto-complete array.
-[**GetBillsAC**](AutocompleteApi.md#GetBillsAC) | **Get** /api/v1/autocomplete/bills | All bills of the user returned in a basic auto-complete array.
-[**GetBudgetsAC**](AutocompleteApi.md#GetBudgetsAC) | **Get** /api/v1/autocomplete/budgets | All budgets of the user returned in a basic auto-complete array.
-[**GetCategoriesAC**](AutocompleteApi.md#GetCategoriesAC) | **Get** /api/v1/autocomplete/categories | All categories of the user returned in a basic auto-complete array.
-[**GetCurrenciesAC**](AutocompleteApi.md#GetCurrenciesAC) | **Get** /api/v1/autocomplete/currencies | All currencies of the user returned in a basic auto-complete array.
-[**GetCurrenciesCodeAC**](AutocompleteApi.md#GetCurrenciesCodeAC) | **Get** /api/v1/autocomplete/currencies-with-code | All currencies of the user returned in a basic auto-complete array.
-[**GetObjectGroupsAC**](AutocompleteApi.md#GetObjectGroupsAC) | **Get** /api/v1/autocomplete/object-groups | All object groups of the user returned in a basic auto-complete array.
-[**GetPiggiesAC**](AutocompleteApi.md#GetPiggiesAC) | **Get** /api/v1/autocomplete/piggy-banks | All piggy banks of the user returned in a basic auto-complete array.
-[**GetPiggiesBalanceAC**](AutocompleteApi.md#GetPiggiesBalanceAC) | **Get** /api/v1/autocomplete/piggy-banks-with-balance | All piggy banks of the user returned in a basic auto-complete array complemented with balance information.
-[**GetRuleGroupsAC**](AutocompleteApi.md#GetRuleGroupsAC) | **Get** /api/v1/autocomplete/rule-groups | All rule groups of the user returned in a basic auto-complete array.
-[**GetRulesAC**](AutocompleteApi.md#GetRulesAC) | **Get** /api/v1/autocomplete/rules | All rules of the user returned in a basic auto-complete array.
-[**GetTagAC**](AutocompleteApi.md#GetTagAC) | **Get** /api/v1/autocomplete/tags | All tags of the user returned in a basic auto-complete array.
-[**GetTransactionTypesAC**](AutocompleteApi.md#GetTransactionTypesAC) | **Get** /api/v1/autocomplete/transaction-types | All transaction types returned in a basic auto-complete array. English only.
-[**GetTransactionsAC**](AutocompleteApi.md#GetTransactionsAC) | **Get** /api/v1/autocomplete/transactions | All transaction descriptions of the user returned in a basic auto-complete array.
-[**GetTransactionsIDAC**](AutocompleteApi.md#GetTransactionsIDAC) | **Get** /api/v1/autocomplete/transactions-with-id | All transactions, complemented with their ID, of the user returned in a basic auto-complete array.
+[**GetAccountsAC**](AutocompleteApi.md#GetAccountsAC) | **Get** /api/v1/autocomplete/accounts | Returns all accounts of the user returned in a basic auto-complete array.
+[**GetBillsAC**](AutocompleteApi.md#GetBillsAC) | **Get** /api/v1/autocomplete/bills | Returns all bills of the user returned in a basic auto-complete array.
+[**GetBudgetsAC**](AutocompleteApi.md#GetBudgetsAC) | **Get** /api/v1/autocomplete/budgets | Returns all budgets of the user returned in a basic auto-complete array.
+[**GetCategoriesAC**](AutocompleteApi.md#GetCategoriesAC) | **Get** /api/v1/autocomplete/categories | Returns all categories of the user returned in a basic auto-complete array.
+[**GetCurrenciesAC**](AutocompleteApi.md#GetCurrenciesAC) | **Get** /api/v1/autocomplete/currencies | Returns all currencies of the user returned in a basic auto-complete array.
+[**GetCurrenciesCodeAC**](AutocompleteApi.md#GetCurrenciesCodeAC) | **Get** /api/v1/autocomplete/currencies-with-code | Returns all currencies of the user returned in a basic auto-complete array.
+[**GetObjectGroupsAC**](AutocompleteApi.md#GetObjectGroupsAC) | **Get** /api/v1/autocomplete/object-groups | Returns all object groups of the user returned in a basic auto-complete array.
+[**GetPiggiesAC**](AutocompleteApi.md#GetPiggiesAC) | **Get** /api/v1/autocomplete/piggy-banks | Returns all piggy banks of the user returned in a basic auto-complete array.
+[**GetPiggiesBalanceAC**](AutocompleteApi.md#GetPiggiesBalanceAC) | **Get** /api/v1/autocomplete/piggy-banks-with-balance | Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
+[**GetRecurringAC**](AutocompleteApi.md#GetRecurringAC) | **Get** /api/v1/autocomplete/recurring | Returns all recurring transactions of the user returned in a basic auto-complete array.
+[**GetRuleGroupsAC**](AutocompleteApi.md#GetRuleGroupsAC) | **Get** /api/v1/autocomplete/rule-groups | Returns all rule groups of the user returned in a basic auto-complete array.
+[**GetRulesAC**](AutocompleteApi.md#GetRulesAC) | **Get** /api/v1/autocomplete/rules | Returns all rules of the user returned in a basic auto-complete array.
+[**GetTagAC**](AutocompleteApi.md#GetTagAC) | **Get** /api/v1/autocomplete/tags | Returns all tags of the user returned in a basic auto-complete array.
+[**GetTransactionTypesAC**](AutocompleteApi.md#GetTransactionTypesAC) | **Get** /api/v1/autocomplete/transaction-types | Returns all transaction types returned in a basic auto-complete array. English only.
+[**GetTransactionsAC**](AutocompleteApi.md#GetTransactionsAC) | **Get** /api/v1/autocomplete/transactions | Returns all transaction descriptions of the user returned in a basic auto-complete array.
+[**GetTransactionsIDAC**](AutocompleteApi.md#GetTransactionsIDAC) | **Get** /api/v1/autocomplete/transactions-with-id | Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array.
 
 
 
@@ -26,7 +27,7 @@ Method | HTTP request | Description
 
 > []AutocompleteAccount GetAccountsAC(ctx).Query(query).Limit(limit).Date(date).Type_(type_).Execute()
 
-All accounts of the user returned in a basic auto-complete array.
+Returns all accounts of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -41,10 +42,10 @@ import (
 )
 
 func main() {
-    query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
-    date := "2020-09-17" // string | For asset accounts, returns the balance on this date. (optional)
-    type_ := openapiclient.AccountTypeFilter("all") // AccountTypeFilter | Optional filter on the account type(s) returned (optional)
+    query := "query-string" // string | The autocomplete search query for accounts. (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
+    date := "2020-09-17" // string | If the account is an asset account or a liability, the autocomplete will also return the balance of the account on this date. (optional)
+    type_ := openapiclient.AccountTypeFilter("all") // AccountTypeFilter | Optional filter on the account type(s) used in the autocomplete. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -69,10 +70,10 @@ Other parameters are passed through a pointer to a apiGetAccountsACRequest struc
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
- **date** | **string** | For asset accounts, returns the balance on this date. | 
- **type_** | [**AccountTypeFilter**](AccountTypeFilter.md) | Optional filter on the account type(s) returned | 
+ **query** | **string** | The autocomplete search query for accounts. | 
+ **limit** | **int32** | The number of items returned. | 
+ **date** | **string** | If the account is an asset account or a liability, the autocomplete will also return the balance of the account on this date. | 
+ **type_** | [**AccountTypeFilter**](AccountTypeFilter.md) | Optional filter on the account type(s) used in the autocomplete. | 
 
 ### Return type
 
@@ -96,7 +97,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteBill GetBillsAC(ctx).Query(query).Limit(limit).Execute()
 
-All bills of the user returned in a basic auto-complete array.
+Returns all bills of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -111,8 +112,8 @@ import (
 )
 
 func main() {
-    query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    query := "query-string" // string | The autocomplete search query for bills. (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -137,8 +138,8 @@ Other parameters are passed through a pointer to a apiGetBillsACRequest struct v
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **query** | **string** | The autocomplete search query for bills. | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -162,7 +163,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteBudget GetBudgetsAC(ctx).Query(query).Limit(limit).Execute()
 
-All budgets of the user returned in a basic auto-complete array.
+Returns all budgets of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -178,7 +179,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -204,7 +205,7 @@ Other parameters are passed through a pointer to a apiGetBudgetsACRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned | 
 
 ### Return type
 
@@ -228,7 +229,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteCategory GetCategoriesAC(ctx).Query(query).Limit(limit).Execute()
 
-All categories of the user returned in a basic auto-complete array.
+Returns all categories of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -244,7 +245,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -270,7 +271,7 @@ Other parameters are passed through a pointer to a apiGetCategoriesACRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -294,7 +295,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteCurrency GetCurrenciesAC(ctx).Query(query).Limit(limit).Execute()
 
-All currencies of the user returned in a basic auto-complete array.
+Returns all currencies of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -310,7 +311,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -336,7 +337,7 @@ Other parameters are passed through a pointer to a apiGetCurrenciesACRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -360,7 +361,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteCurrencyCode GetCurrenciesCodeAC(ctx).Query(query).Limit(limit).Execute()
 
-All currencies of the user returned in a basic auto-complete array.
+Returns all currencies of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -376,7 +377,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -402,7 +403,7 @@ Other parameters are passed through a pointer to a apiGetCurrenciesCodeACRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -426,7 +427,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteObjectGroup GetObjectGroupsAC(ctx).Query(query).Limit(limit).Execute()
 
-All object groups of the user returned in a basic auto-complete array.
+Returns all object groups of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -442,7 +443,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -468,7 +469,7 @@ Other parameters are passed through a pointer to a apiGetObjectGroupsACRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -492,7 +493,7 @@ Name | Type | Description  | Notes
 
 > []AutocompletePiggy GetPiggiesAC(ctx).Query(query).Limit(limit).Execute()
 
-All piggy banks of the user returned in a basic auto-complete array.
+Returns all piggy banks of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -508,7 +509,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -534,7 +535,7 @@ Other parameters are passed through a pointer to a apiGetPiggiesACRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -558,7 +559,7 @@ Name | Type | Description  | Notes
 
 > []AutocompletePiggyBalance GetPiggiesBalanceAC(ctx).Query(query).Limit(limit).Execute()
 
-All piggy banks of the user returned in a basic auto-complete array complemented with balance information.
+Returns all piggy banks of the user returned in a basic auto-complete array complemented with balance information.
 
 ### Example
 
@@ -574,7 +575,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -600,7 +601,7 @@ Other parameters are passed through a pointer to a apiGetPiggiesBalanceACRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -620,11 +621,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetRuleGroupsAC
+## GetRecurringAC
 
-> []AutocompleteRuleGroup GetRuleGroupsAC(ctx).Query(query).Limit(limit).Execute()
+> []AutocompleteRecurrence GetRecurringAC(ctx).Query(query).Limit(limit).Execute()
 
-All rule groups of the user returned in a basic auto-complete array.
+Returns all recurring transactions of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -640,7 +641,73 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.AutocompleteApi.GetRecurringAC(context.Background()).Query(query).Limit(limit).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AutocompleteApi.GetRecurringAC``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetRecurringAC`: []AutocompleteRecurrence
+    fmt.Fprintf(os.Stdout, "Response from `AutocompleteApi.GetRecurringAC`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRecurringACRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | **string** | The autocomplete search query. | 
+ **limit** | **int32** | The number of items returned. | 
+
+### Return type
+
+[**[]AutocompleteRecurrence**](AutocompleteRecurrence.md)
+
+### Authorization
+
+[firefly_iii_auth](../README.md#firefly_iii_auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRuleGroupsAC
+
+> []AutocompleteRuleGroup GetRuleGroupsAC(ctx).Query(query).Limit(limit).Execute()
+
+Returns all rule groups of the user returned in a basic auto-complete array.
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    query := "str" // string | The autocomplete search query. (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -666,7 +733,7 @@ Other parameters are passed through a pointer to a apiGetRuleGroupsACRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -690,7 +757,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteRule GetRulesAC(ctx).Query(query).Limit(limit).Execute()
 
-All rules of the user returned in a basic auto-complete array.
+Returns all rules of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -706,7 +773,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -732,7 +799,7 @@ Other parameters are passed through a pointer to a apiGetRulesACRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -756,7 +823,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteTag GetTagAC(ctx).Query(query).Limit(limit).Execute()
 
-All tags of the user returned in a basic auto-complete array.
+Returns all tags of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -772,7 +839,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -798,7 +865,7 @@ Other parameters are passed through a pointer to a apiGetTagACRequest struct via
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -822,7 +889,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteTransactionType GetTransactionTypesAC(ctx).Query(query).Limit(limit).Execute()
 
-All transaction types returned in a basic auto-complete array. English only.
+Returns all transaction types returned in a basic auto-complete array. English only.
 
 ### Example
 
@@ -838,7 +905,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -864,7 +931,7 @@ Other parameters are passed through a pointer to a apiGetTransactionTypesACReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -888,7 +955,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteTransaction GetTransactionsAC(ctx).Query(query).Limit(limit).Execute()
 
-All transaction descriptions of the user returned in a basic auto-complete array.
+Returns all transaction descriptions of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -904,7 +971,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -930,7 +997,7 @@ Other parameters are passed through a pointer to a apiGetTransactionsACRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 
@@ -954,7 +1021,7 @@ Name | Type | Description  | Notes
 
 > []AutocompleteTransactionID GetTransactionsIDAC(ctx).Query(query).Limit(limit).Execute()
 
-All transactions, complemented with their ID, of the user returned in a basic auto-complete array.
+Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array.
 
 ### Example
 
@@ -970,7 +1037,7 @@ import (
 
 func main() {
     query := "str" // string | The autocomplete search query. (optional)
-    limit := int32(10) // int32 | The autocomplete number of items returned (optional)
+    limit := int32(10) // int32 | The number of items returned. (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -996,7 +1063,7 @@ Other parameters are passed through a pointer to a apiGetTransactionsIDACRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | The autocomplete search query. | 
- **limit** | **int32** | The autocomplete number of items returned | 
+ **limit** | **int32** | The number of items returned. | 
 
 ### Return type
 

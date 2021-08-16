@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
-**CurrencyId** | Pointer to **int32** | Use either currency_id or currency_code. | [optional] 
+**CurrencyId** | Pointer to **string** | Use either currency_id or currency_code. | [optional] 
 **CurrencyCode** | Pointer to **string** | Use either currency_id or currency_code. | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] [readonly] 
 **Amount** | **string** |  | 
-**Start** | **string** | Start date of the available budget. | 
-**End** | **string** | End date of the available budget. | 
+**Start** | **time.Time** | Start date of the available budget. | 
+**End** | **time.Time** | End date of the available budget. | 
 **SpentInBudgets** | Pointer to [**[]BudgetSpent**](BudgetSpent.md) |  | [optional] [readonly] 
 **SpentOutsideBudget** | Pointer to [**[]BudgetSpent**](BudgetSpent.md) |  | [optional] [readonly] 
 
@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewAvailableBudget
 
-`func NewAvailableBudget(amount string, start string, end string, ) *AvailableBudget`
+`func NewAvailableBudget(amount string, start time.Time, end time.Time, ) *AvailableBudget`
 
 NewAvailableBudget instantiates a new AvailableBudget object
 This constructor will assign default values to properties that have it defined,
@@ -87,20 +87,20 @@ HasUpdatedAt returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *AvailableBudget) GetCurrencyId() int32`
+`func (o *AvailableBudget) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *AvailableBudget) GetCurrencyIdOk() (*int32, bool)`
+`func (o *AvailableBudget) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *AvailableBudget) SetCurrencyId(v int32)`
+`func (o *AvailableBudget) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -207,40 +207,40 @@ SetAmount sets Amount field to given value.
 
 ### GetStart
 
-`func (o *AvailableBudget) GetStart() string`
+`func (o *AvailableBudget) GetStart() time.Time`
 
 GetStart returns the Start field if non-nil, zero value otherwise.
 
 ### GetStartOk
 
-`func (o *AvailableBudget) GetStartOk() (*string, bool)`
+`func (o *AvailableBudget) GetStartOk() (*time.Time, bool)`
 
 GetStartOk returns a tuple with the Start field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStart
 
-`func (o *AvailableBudget) SetStart(v string)`
+`func (o *AvailableBudget) SetStart(v time.Time)`
 
 SetStart sets Start field to given value.
 
 
 ### GetEnd
 
-`func (o *AvailableBudget) GetEnd() string`
+`func (o *AvailableBudget) GetEnd() time.Time`
 
 GetEnd returns the End field if non-nil, zero value otherwise.
 
 ### GetEndOk
 
-`func (o *AvailableBudget) GetEndOk() (*string, bool)`
+`func (o *AvailableBudget) GetEndOk() (*time.Time, bool)`
 
 GetEndOk returns a tuple with the End field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEnd
 
-`func (o *AvailableBudget) SetEnd(v string)`
+`func (o *AvailableBudget) SetEnd(v time.Time)`
 
 SetEnd sets End field to given value.
 

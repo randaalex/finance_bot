@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
-**Enabled** | Pointer to **bool** | defaults to true | [optional] 
+**Enabled** | Pointer to **bool** | Defaults to true | [optional] 
 **Default** | Pointer to **bool** | Make this currency the default currency. | [optional] 
 **Code** | **string** |  | 
 **Name** | **string** |  | 

@@ -9,11 +9,11 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Active** | Pointer to **bool** |  | [optional] 
 **Order** | Pointer to **int32** |  | [optional] [readonly] 
-**AutoBudgetType** | Pointer to **string** | The type of auto-budget that Firefly III must create. | [optional] 
-**AutoBudgetCurrencyId** | Pointer to **int32** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
-**AutoBudgetCurrencyCode** | Pointer to **string** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
-**AutoBudgetAmount** | Pointer to **string** |  | [optional] 
-**AutoBudgetPeriod** | Pointer to **string** | Period for the auto budget | [optional] 
+**AutoBudgetType** | Pointer to **NullableString** | The type of auto-budget that Firefly III must create. | [optional] 
+**AutoBudgetCurrencyId** | Pointer to **NullableString** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
+**AutoBudgetCurrencyCode** | Pointer to **NullableString** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
+**AutoBudgetAmount** | Pointer to **NullableString** |  | [optional] 
+**AutoBudgetPeriod** | Pointer to **NullableString** | Period for the auto budget | [optional] 
 **Spent** | Pointer to [**[]BudgetSpent**](BudgetSpent.md) | Information on how much was spent in this budget. Is only filled in when the start and end date are submitted. | [optional] [readonly] 
 
 ## Methods
@@ -180,22 +180,32 @@ SetAutoBudgetType sets AutoBudgetType field to given value.
 
 HasAutoBudgetType returns a boolean if a field has been set.
 
+### SetAutoBudgetTypeNil
+
+`func (o *Budget) SetAutoBudgetTypeNil(b bool)`
+
+ SetAutoBudgetTypeNil sets the value for AutoBudgetType to be an explicit nil
+
+### UnsetAutoBudgetType
+`func (o *Budget) UnsetAutoBudgetType()`
+
+UnsetAutoBudgetType ensures that no value is present for AutoBudgetType, not even an explicit nil
 ### GetAutoBudgetCurrencyId
 
-`func (o *Budget) GetAutoBudgetCurrencyId() int32`
+`func (o *Budget) GetAutoBudgetCurrencyId() string`
 
 GetAutoBudgetCurrencyId returns the AutoBudgetCurrencyId field if non-nil, zero value otherwise.
 
 ### GetAutoBudgetCurrencyIdOk
 
-`func (o *Budget) GetAutoBudgetCurrencyIdOk() (*int32, bool)`
+`func (o *Budget) GetAutoBudgetCurrencyIdOk() (*string, bool)`
 
 GetAutoBudgetCurrencyIdOk returns a tuple with the AutoBudgetCurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAutoBudgetCurrencyId
 
-`func (o *Budget) SetAutoBudgetCurrencyId(v int32)`
+`func (o *Budget) SetAutoBudgetCurrencyId(v string)`
 
 SetAutoBudgetCurrencyId sets AutoBudgetCurrencyId field to given value.
 
@@ -205,6 +215,16 @@ SetAutoBudgetCurrencyId sets AutoBudgetCurrencyId field to given value.
 
 HasAutoBudgetCurrencyId returns a boolean if a field has been set.
 
+### SetAutoBudgetCurrencyIdNil
+
+`func (o *Budget) SetAutoBudgetCurrencyIdNil(b bool)`
+
+ SetAutoBudgetCurrencyIdNil sets the value for AutoBudgetCurrencyId to be an explicit nil
+
+### UnsetAutoBudgetCurrencyId
+`func (o *Budget) UnsetAutoBudgetCurrencyId()`
+
+UnsetAutoBudgetCurrencyId ensures that no value is present for AutoBudgetCurrencyId, not even an explicit nil
 ### GetAutoBudgetCurrencyCode
 
 `func (o *Budget) GetAutoBudgetCurrencyCode() string`
@@ -230,6 +250,16 @@ SetAutoBudgetCurrencyCode sets AutoBudgetCurrencyCode field to given value.
 
 HasAutoBudgetCurrencyCode returns a boolean if a field has been set.
 
+### SetAutoBudgetCurrencyCodeNil
+
+`func (o *Budget) SetAutoBudgetCurrencyCodeNil(b bool)`
+
+ SetAutoBudgetCurrencyCodeNil sets the value for AutoBudgetCurrencyCode to be an explicit nil
+
+### UnsetAutoBudgetCurrencyCode
+`func (o *Budget) UnsetAutoBudgetCurrencyCode()`
+
+UnsetAutoBudgetCurrencyCode ensures that no value is present for AutoBudgetCurrencyCode, not even an explicit nil
 ### GetAutoBudgetAmount
 
 `func (o *Budget) GetAutoBudgetAmount() string`
@@ -255,6 +285,16 @@ SetAutoBudgetAmount sets AutoBudgetAmount field to given value.
 
 HasAutoBudgetAmount returns a boolean if a field has been set.
 
+### SetAutoBudgetAmountNil
+
+`func (o *Budget) SetAutoBudgetAmountNil(b bool)`
+
+ SetAutoBudgetAmountNil sets the value for AutoBudgetAmount to be an explicit nil
+
+### UnsetAutoBudgetAmount
+`func (o *Budget) UnsetAutoBudgetAmount()`
+
+UnsetAutoBudgetAmount ensures that no value is present for AutoBudgetAmount, not even an explicit nil
 ### GetAutoBudgetPeriod
 
 `func (o *Budget) GetAutoBudgetPeriod() string`
@@ -280,6 +320,16 @@ SetAutoBudgetPeriod sets AutoBudgetPeriod field to given value.
 
 HasAutoBudgetPeriod returns a boolean if a field has been set.
 
+### SetAutoBudgetPeriodNil
+
+`func (o *Budget) SetAutoBudgetPeriodNil(b bool)`
+
+ SetAutoBudgetPeriodNil sets the value for AutoBudgetPeriod to be an explicit nil
+
+### UnsetAutoBudgetPeriod
+`func (o *Budget) UnsetAutoBudgetPeriod()`
+
+UnsetAutoBudgetPeriod ensures that no value is present for AutoBudgetPeriod, not even an explicit nil
 ### GetSpent
 
 `func (o *Budget) GetSpent() []BudgetSpent`

@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 
-**CurrencyId** | Pointer to **int32** |  | [optional] 
+**CurrencyId** | Pointer to **string** |  | [optional] 
 **CurrencyCode** | Pointer to **string** |  | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] 
 **CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] 
 **Amount** | Pointer to **string** |  | [optional] 
-**JournalId** | Pointer to **int32** | The journal associated with the event. | [optional] 
-**TransactionId** | Pointer to **int32** |  | [optional] 
+**TransactionJournalId** | Pointer to **string** | The journal associated with the event. | [optional] 
+**TransactionGroupId** | Pointer to **string** | The transaction group associated with the event. | [optional] 
 
 ## Methods
 
@@ -85,20 +85,20 @@ HasUpdatedAt returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *PiggyBankEvent) GetCurrencyId() int32`
+`func (o *PiggyBankEvent) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *PiggyBankEvent) GetCurrencyIdOk() (*int32, bool)`
+`func (o *PiggyBankEvent) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *PiggyBankEvent) SetCurrencyId(v int32)`
+`func (o *PiggyBankEvent) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -208,55 +208,55 @@ SetAmount sets Amount field to given value.
 
 HasAmount returns a boolean if a field has been set.
 
-### GetJournalId
+### GetTransactionJournalId
 
-`func (o *PiggyBankEvent) GetJournalId() int32`
+`func (o *PiggyBankEvent) GetTransactionJournalId() string`
 
-GetJournalId returns the JournalId field if non-nil, zero value otherwise.
+GetTransactionJournalId returns the TransactionJournalId field if non-nil, zero value otherwise.
 
-### GetJournalIdOk
+### GetTransactionJournalIdOk
 
-`func (o *PiggyBankEvent) GetJournalIdOk() (*int32, bool)`
+`func (o *PiggyBankEvent) GetTransactionJournalIdOk() (*string, bool)`
 
-GetJournalIdOk returns a tuple with the JournalId field if it's non-nil, zero value otherwise
+GetTransactionJournalIdOk returns a tuple with the TransactionJournalId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJournalId
+### SetTransactionJournalId
 
-`func (o *PiggyBankEvent) SetJournalId(v int32)`
+`func (o *PiggyBankEvent) SetTransactionJournalId(v string)`
 
-SetJournalId sets JournalId field to given value.
+SetTransactionJournalId sets TransactionJournalId field to given value.
 
-### HasJournalId
+### HasTransactionJournalId
 
-`func (o *PiggyBankEvent) HasJournalId() bool`
+`func (o *PiggyBankEvent) HasTransactionJournalId() bool`
 
-HasJournalId returns a boolean if a field has been set.
+HasTransactionJournalId returns a boolean if a field has been set.
 
-### GetTransactionId
+### GetTransactionGroupId
 
-`func (o *PiggyBankEvent) GetTransactionId() int32`
+`func (o *PiggyBankEvent) GetTransactionGroupId() string`
 
-GetTransactionId returns the TransactionId field if non-nil, zero value otherwise.
+GetTransactionGroupId returns the TransactionGroupId field if non-nil, zero value otherwise.
 
-### GetTransactionIdOk
+### GetTransactionGroupIdOk
 
-`func (o *PiggyBankEvent) GetTransactionIdOk() (*int32, bool)`
+`func (o *PiggyBankEvent) GetTransactionGroupIdOk() (*string, bool)`
 
-GetTransactionIdOk returns a tuple with the TransactionId field if it's non-nil, zero value otherwise
+GetTransactionGroupIdOk returns a tuple with the TransactionGroupId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTransactionId
+### SetTransactionGroupId
 
-`func (o *PiggyBankEvent) SetTransactionId(v int32)`
+`func (o *PiggyBankEvent) SetTransactionGroupId(v string)`
 
-SetTransactionId sets TransactionId field to given value.
+SetTransactionGroupId sets TransactionGroupId field to given value.
 
-### HasTransactionId
+### HasTransactionGroupId
 
-`func (o *PiggyBankEvent) HasTransactionId() bool`
+`func (o *PiggyBankEvent) HasTransactionGroupId() bool`
 
-HasTransactionId returns a boolean if a field has been set.
+HasTransactionGroupId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

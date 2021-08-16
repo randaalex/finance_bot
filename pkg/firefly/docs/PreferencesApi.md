@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GetPreference**](PreferencesApi.md#GetPreference) | **Get** /api/v1/preferences/{name} | Return a single preference.
 [**ListPreference**](PreferencesApi.md#ListPreference) | **Get** /api/v1/preferences | List all users preferences.
+[**StorePreference**](PreferencesApi.md#StorePreference) | **Post** /api/v1/preferences | Store a new preference for this user.
 [**UpdatePreference**](PreferencesApi.md#UpdatePreference) | **Put** /api/v1/preferences/{name} | Update preference
 
 
@@ -73,7 +74,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -139,7 +140,73 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## StorePreference
+
+> PreferenceSingle StorePreference(ctx).Preference(preference).Execute()
+
+Store a new preference for this user.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    preference := *openapiclient.NewPreference("currencyPreference", "TODO") // Preference | JSON array with the necessary preference information or key=value pairs. See the model for the exact specifications.
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.PreferencesApi.StorePreference(context.Background()).Preference(preference).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `PreferencesApi.StorePreference``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `StorePreference`: PreferenceSingle
+    fmt.Fprintf(os.Stdout, "Response from `PreferencesApi.StorePreference`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiStorePreferenceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **preference** | [**Preference**](Preference.md) | JSON array with the necessary preference information or key&#x3D;value pairs. See the model for the exact specifications. | 
+
+### Return type
+
+[**PreferenceSingle**](PreferenceSingle.md)
+
+### Authorization
+
+[firefly_iii_auth](../README.md#firefly_iii_auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json, application/x-www-form-urlencoded
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -148,7 +215,7 @@ Name | Type | Description  | Notes
 
 ## UpdatePreference
 
-> PreferenceSingle UpdatePreference(ctx, name).Preference(preference).Execute()
+> PreferenceSingle UpdatePreference(ctx, name).PreferenceUpdate(preferenceUpdate).Execute()
 
 Update preference
 
@@ -168,11 +235,11 @@ import (
 
 func main() {
     name := "currencyPreference" // string | The name of the preference. Will always overwrite. Will be created if it does not exist.
-    preference := *openapiclient.NewPreference("EUR") // Preference | JSON array or key=value pairs with the necessary preference information. See the model for the exact specifications.
+    preferenceUpdate := *openapiclient.NewPreferenceUpdate("TODO") // PreferenceUpdate | JSON array or key=value pairs with the necessary preference information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.PreferencesApi.UpdatePreference(context.Background(), name).Preference(preference).Execute()
+    resp, r, err := api_client.PreferencesApi.UpdatePreference(context.Background(), name).PreferenceUpdate(preferenceUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `PreferencesApi.UpdatePreference``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -198,7 +265,7 @@ Other parameters are passed through a pointer to a apiUpdatePreferenceRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **preference** | [**Preference**](Preference.md) | JSON array or key&#x3D;value pairs with the necessary preference information. See the model for the exact specifications. | 
+ **preferenceUpdate** | [**PreferenceUpdate**](PreferenceUpdate.md) | JSON array or key&#x3D;value pairs with the necessary preference information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -211,7 +278,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

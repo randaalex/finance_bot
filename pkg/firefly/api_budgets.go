@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -45,10 +45,11 @@ type BudgetsApi interface {
 	 * DeleteBudgetLimit Delete a budget limit.
 	 * Delete a budget limit.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param id The ID of the requested budget limit.
+	 * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+	 * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
 	 * @return ApiDeleteBudgetLimitRequest
 	 */
-	DeleteBudgetLimit(ctx _context.Context, id int32) ApiDeleteBudgetLimitRequest
+	DeleteBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiDeleteBudgetLimitRequest
 
 	/*
 	 * DeleteBudgetLimitExecute executes the request
@@ -73,10 +74,11 @@ type BudgetsApi interface {
 	/*
 	 * GetBudgetLimit Get single budget limit.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param id The ID of the requested budget limit.
+	 * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+	 * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
 	 * @return ApiGetBudgetLimitRequest
 	 */
-	GetBudgetLimit(ctx _context.Context, id int32) ApiGetBudgetLimitRequest
+	GetBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiGetBudgetLimitRequest
 
 	/*
 	 * GetBudgetLimitExecute executes the request
@@ -85,7 +87,7 @@ type BudgetsApi interface {
 	GetBudgetLimitExecute(r ApiGetBudgetLimitRequest) (BudgetLimitSingle, *_nethttp.Response, error)
 
 	/*
-	 * ListAttachmentByBudget Lists all attachments.
+	 * ListAttachmentByBudget Lists all attachments of a budget.
 	 * Lists all attachments.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @param id The ID of the budget.
@@ -114,7 +116,22 @@ type BudgetsApi interface {
 	ListBudgetExecute(r ApiListBudgetRequest) (BudgetArray, *_nethttp.Response, error)
 
 	/*
-	 * ListBudgetLimitByBudget Get all limits
+	 * ListBudgetLimit Get list of budget limits by date
+	 * Get all budget limits for for this date range.
+
+	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	 * @return ApiListBudgetLimitRequest
+	 */
+	ListBudgetLimit(ctx _context.Context) ApiListBudgetLimitRequest
+
+	/*
+	 * ListBudgetLimitExecute executes the request
+	 * @return BudgetLimitArray
+	 */
+	ListBudgetLimitExecute(r ApiListBudgetLimitRequest) (BudgetLimitArray, *_nethttp.Response, error)
+
+	/*
+	 * ListBudgetLimitByBudget Get all limits for a budget.
 	 * Get all budget limits for this budget and the money spent, and money left. You can limit the list by submitting a date range as well. The "spent" array for each budget limit is NOT influenced by the start and end date of your query, but by the start and end date of the budget limit itself.
 
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -148,10 +165,11 @@ type BudgetsApi interface {
 	 * ListTransactionByBudgetLimit List all transactions by a budget limit ID.
 	 * List all the transactions within one budget limit. The start and end date are dictated by the budget limit.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param id The ID of the requested budget limit.
+	 * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+	 * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
 	 * @return ApiListTransactionByBudgetLimitRequest
 	 */
-	ListTransactionByBudgetLimit(ctx _context.Context, id int32) ApiListTransactionByBudgetLimitRequest
+	ListTransactionByBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiListTransactionByBudgetLimitRequest
 
 	/*
 	 * ListTransactionByBudgetLimitExecute executes the request
@@ -175,7 +193,7 @@ type BudgetsApi interface {
 
 	/*
 	 * StoreBudgetLimit Store new budget limit.
-	 * Store a new budget limit.
+	 * Store a new budget limit under this budget.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @param id The ID of the budget.
 	 * @return ApiStoreBudgetLimitRequest
@@ -207,10 +225,11 @@ type BudgetsApi interface {
 	 * UpdateBudgetLimit Update existing budget limit.
 	 * Update existing budget limit.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param id The ID of the requested budget limit. The budget limit MUST be associated to the budget ID.
+	 * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+	 * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
 	 * @return ApiUpdateBudgetLimitRequest
 	 */
-	UpdateBudgetLimit(ctx _context.Context, id int32) ApiUpdateBudgetLimitRequest
+	UpdateBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiUpdateBudgetLimitRequest
 
 	/*
 	 * UpdateBudgetLimitExecute executes the request
@@ -324,6 +343,7 @@ type ApiDeleteBudgetLimitRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
 	id int32
+	limitId int32
 }
 
 
@@ -335,14 +355,16 @@ func (r ApiDeleteBudgetLimitRequest) Execute() (*_nethttp.Response, error) {
  * DeleteBudgetLimit Delete a budget limit.
  * Delete a budget limit.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id The ID of the requested budget limit.
+ * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+ * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
  * @return ApiDeleteBudgetLimitRequest
  */
-func (a *BudgetsApiService) DeleteBudgetLimit(ctx _context.Context, id int32) ApiDeleteBudgetLimitRequest {
+func (a *BudgetsApiService) DeleteBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiDeleteBudgetLimitRequest {
 	return ApiDeleteBudgetLimitRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
+		limitId: limitId,
 	}
 }
 
@@ -363,14 +385,18 @@ func (a *BudgetsApiService) DeleteBudgetLimitExecute(r ApiDeleteBudgetLimitReque
 		return nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/budgets/limits/{id}"
+	localVarPath := localBasePath + "/api/v1/budgets/{id}/limits/{limitId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"limitId"+"}", _neturl.PathEscape(parameterToString(r.limitId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 	if r.id < 1 {
 		return nil, reportError("id must be greater than 1")
+	}
+	if r.limitId < 1 {
+		return nil, reportError("limitId must be greater than 1")
 	}
 
 	// to determine the Content-Type header
@@ -496,7 +522,7 @@ func (a *BudgetsApiService) GetBudgetExecute(r ApiGetBudgetRequest) (BudgetSingl
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -544,6 +570,7 @@ type ApiGetBudgetLimitRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
 	id int32
+	limitId int32
 }
 
 
@@ -554,14 +581,16 @@ func (r ApiGetBudgetLimitRequest) Execute() (BudgetLimitSingle, *_nethttp.Respon
 /*
  * GetBudgetLimit Get single budget limit.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id The ID of the requested budget limit.
+ * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+ * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
  * @return ApiGetBudgetLimitRequest
  */
-func (a *BudgetsApiService) GetBudgetLimit(ctx _context.Context, id int32) ApiGetBudgetLimitRequest {
+func (a *BudgetsApiService) GetBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiGetBudgetLimitRequest {
 	return ApiGetBudgetLimitRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
+		limitId: limitId,
 	}
 }
 
@@ -584,14 +613,18 @@ func (a *BudgetsApiService) GetBudgetLimitExecute(r ApiGetBudgetLimitRequest) (B
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/budgets/limits/{id}"
+	localVarPath := localBasePath + "/api/v1/budgets/{id}/limits/{limitId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"limitId"+"}", _neturl.PathEscape(parameterToString(r.limitId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 	if r.id < 1 {
 		return localVarReturnValue, nil, reportError("id must be greater than 1")
+	}
+	if r.limitId < 1 {
+		return localVarReturnValue, nil, reportError("limitId must be greater than 1")
 	}
 
 	// to determine the Content-Type header
@@ -604,7 +637,7 @@ func (a *BudgetsApiService) GetBudgetLimitExecute(r ApiGetBudgetLimitRequest) (B
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -665,7 +698,7 @@ func (r ApiListAttachmentByBudgetRequest) Execute() (AttachmentArray, *_nethttp.
 }
 
 /*
- * ListAttachmentByBudget Lists all attachments.
+ * ListAttachmentByBudget Lists all attachments of a budget.
  * Lists all attachments.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param id The ID of the budget.
@@ -718,7 +751,7 @@ func (a *BudgetsApiService) ListAttachmentByBudgetExecute(r ApiListAttachmentByB
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -844,7 +877,128 @@ func (a *BudgetsApiService) ListBudgetExecute(r ApiListBudgetRequest) (BudgetArr
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListBudgetLimitRequest struct {
+	ctx _context.Context
+	ApiService BudgetsApi
+	start *string
+	end *string
+}
+
+func (r ApiListBudgetLimitRequest) Start(start string) ApiListBudgetLimitRequest {
+	r.start = &start
+	return r
+}
+func (r ApiListBudgetLimitRequest) End(end string) ApiListBudgetLimitRequest {
+	r.end = &end
+	return r
+}
+
+func (r ApiListBudgetLimitRequest) Execute() (BudgetLimitArray, *_nethttp.Response, error) {
+	return r.ApiService.ListBudgetLimitExecute(r)
+}
+
+/*
+ * ListBudgetLimit Get list of budget limits by date
+ * Get all budget limits for for this date range.
+
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @return ApiListBudgetLimitRequest
+ */
+func (a *BudgetsApiService) ListBudgetLimit(ctx _context.Context) ApiListBudgetLimitRequest {
+	return ApiListBudgetLimitRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return BudgetLimitArray
+ */
+func (a *BudgetsApiService) ListBudgetLimitExecute(r ApiListBudgetLimitRequest) (BudgetLimitArray, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  BudgetLimitArray
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BudgetsApiService.ListBudgetLimit")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/budget-limits"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+	if r.start == nil {
+		return localVarReturnValue, nil, reportError("start is required and must be specified")
+	}
+	if r.end == nil {
+		return localVarReturnValue, nil, reportError("end is required and must be specified")
+	}
+
+	localVarQueryParams.Add("start", parameterToString(*r.start, ""))
+	localVarQueryParams.Add("end", parameterToString(*r.end, ""))
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -910,7 +1064,7 @@ func (r ApiListBudgetLimitByBudgetRequest) Execute() (BudgetLimitArray, *_nethtt
 }
 
 /*
- * ListBudgetLimitByBudget Get all limits
+ * ListBudgetLimitByBudget Get all limits for a budget.
  * Get all budget limits for this budget and the money spent, and money left. You can limit the list by submitting a date range as well. The "spent" array for each budget limit is NOT influenced by the start and end date of your query, but by the start and end date of the budget limit itself.
 
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -970,7 +1124,7 @@ func (a *BudgetsApiService) ListBudgetLimitByBudgetExecute(r ApiListBudgetLimitB
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1116,7 +1270,7 @@ func (a *BudgetsApiService) ListTransactionByBudgetExecute(r ApiListTransactionB
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1164,6 +1318,7 @@ type ApiListTransactionByBudgetLimitRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
 	id int32
+	limitId int32
 	page *int32
 	type_ *TransactionTypeFilter
 }
@@ -1185,14 +1340,16 @@ func (r ApiListTransactionByBudgetLimitRequest) Execute() (TransactionArray, *_n
  * ListTransactionByBudgetLimit List all transactions by a budget limit ID.
  * List all the transactions within one budget limit. The start and end date are dictated by the budget limit.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id The ID of the requested budget limit.
+ * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+ * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
  * @return ApiListTransactionByBudgetLimitRequest
  */
-func (a *BudgetsApiService) ListTransactionByBudgetLimit(ctx _context.Context, id int32) ApiListTransactionByBudgetLimitRequest {
+func (a *BudgetsApiService) ListTransactionByBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiListTransactionByBudgetLimitRequest {
 	return ApiListTransactionByBudgetLimitRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
+		limitId: limitId,
 	}
 }
 
@@ -1215,14 +1372,18 @@ func (a *BudgetsApiService) ListTransactionByBudgetLimitExecute(r ApiListTransac
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/budgets/limits/{id}/transactions"
+	localVarPath := localBasePath + "/api/v1/budgets/{id}/limits/{limitId}/transactions"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"limitId"+"}", _neturl.PathEscape(parameterToString(r.limitId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 	if r.id < 1 {
 		return localVarReturnValue, nil, reportError("id must be greater than 1")
+	}
+	if r.limitId < 1 {
+		return localVarReturnValue, nil, reportError("limitId must be greater than 1")
 	}
 
 	if r.page != nil {
@@ -1241,7 +1402,7 @@ func (a *BudgetsApiService) ListTransactionByBudgetLimitExecute(r ApiListTransac
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1288,11 +1449,11 @@ func (a *BudgetsApiService) ListTransactionByBudgetLimitExecute(r ApiListTransac
 type ApiStoreBudgetRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
-	budget *Budget
+	budgetStore *BudgetStore
 }
 
-func (r ApiStoreBudgetRequest) Budget(budget Budget) ApiStoreBudgetRequest {
-	r.budget = &budget
+func (r ApiStoreBudgetRequest) BudgetStore(budgetStore BudgetStore) ApiStoreBudgetRequest {
+	r.budgetStore = &budgetStore
 	return r
 }
 
@@ -1337,8 +1498,8 @@ func (a *BudgetsApiService) StoreBudgetExecute(r ApiStoreBudgetRequest) (BudgetS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.budget == nil {
-		return localVarReturnValue, nil, reportError("budget is required and must be specified")
+	if r.budgetStore == nil {
+		return localVarReturnValue, nil, reportError("budgetStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1351,7 +1512,7 @@ func (a *BudgetsApiService) StoreBudgetExecute(r ApiStoreBudgetRequest) (BudgetS
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1359,7 +1520,7 @@ func (a *BudgetsApiService) StoreBudgetExecute(r ApiStoreBudgetRequest) (BudgetS
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.budget
+	localVarPostBody = r.budgetStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1410,11 +1571,11 @@ type ApiStoreBudgetLimitRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
 	id int32
-	budgetLimit *BudgetLimit
+	budgetLimitStore *BudgetLimitStore
 }
 
-func (r ApiStoreBudgetLimitRequest) BudgetLimit(budgetLimit BudgetLimit) ApiStoreBudgetLimitRequest {
-	r.budgetLimit = &budgetLimit
+func (r ApiStoreBudgetLimitRequest) BudgetLimitStore(budgetLimitStore BudgetLimitStore) ApiStoreBudgetLimitRequest {
+	r.budgetLimitStore = &budgetLimitStore
 	return r
 }
 
@@ -1424,7 +1585,7 @@ func (r ApiStoreBudgetLimitRequest) Execute() (BudgetLimitSingle, *_nethttp.Resp
 
 /*
  * StoreBudgetLimit Store new budget limit.
- * Store a new budget limit.
+ * Store a new budget limit under this budget.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param id The ID of the budget.
  * @return ApiStoreBudgetLimitRequest
@@ -1465,8 +1626,8 @@ func (a *BudgetsApiService) StoreBudgetLimitExecute(r ApiStoreBudgetLimitRequest
 	if r.id < 1 {
 		return localVarReturnValue, nil, reportError("id must be greater than 1")
 	}
-	if r.budgetLimit == nil {
-		return localVarReturnValue, nil, reportError("budgetLimit is required and must be specified")
+	if r.budgetLimitStore == nil {
+		return localVarReturnValue, nil, reportError("budgetLimitStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1479,7 +1640,7 @@ func (a *BudgetsApiService) StoreBudgetLimitExecute(r ApiStoreBudgetLimitRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1487,7 +1648,7 @@ func (a *BudgetsApiService) StoreBudgetLimitExecute(r ApiStoreBudgetLimitRequest
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.budgetLimit
+	localVarPostBody = r.budgetLimitStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1538,11 +1699,11 @@ type ApiUpdateBudgetRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
 	id int32
-	budget *Budget
+	budgetUpdate *BudgetUpdate
 }
 
-func (r ApiUpdateBudgetRequest) Budget(budget Budget) ApiUpdateBudgetRequest {
-	r.budget = &budget
+func (r ApiUpdateBudgetRequest) BudgetUpdate(budgetUpdate BudgetUpdate) ApiUpdateBudgetRequest {
+	r.budgetUpdate = &budgetUpdate
 	return r
 }
 
@@ -1593,8 +1754,8 @@ func (a *BudgetsApiService) UpdateBudgetExecute(r ApiUpdateBudgetRequest) (Budge
 	if r.id < 1 {
 		return localVarReturnValue, nil, reportError("id must be greater than 1")
 	}
-	if r.budget == nil {
-		return localVarReturnValue, nil, reportError("budget is required and must be specified")
+	if r.budgetUpdate == nil {
+		return localVarReturnValue, nil, reportError("budgetUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1607,7 +1768,7 @@ func (a *BudgetsApiService) UpdateBudgetExecute(r ApiUpdateBudgetRequest) (Budge
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1615,7 +1776,7 @@ func (a *BudgetsApiService) UpdateBudgetExecute(r ApiUpdateBudgetRequest) (Budge
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.budget
+	localVarPostBody = r.budgetUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1666,6 +1827,7 @@ type ApiUpdateBudgetLimitRequest struct {
 	ctx _context.Context
 	ApiService BudgetsApi
 	id int32
+	limitId int32
 	budgetLimit *BudgetLimit
 }
 
@@ -1682,14 +1844,16 @@ func (r ApiUpdateBudgetLimitRequest) Execute() (BudgetLimitSingle, *_nethttp.Res
  * UpdateBudgetLimit Update existing budget limit.
  * Update existing budget limit.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id The ID of the requested budget limit. The budget limit MUST be associated to the budget ID.
+ * @param id The ID of the budget. The budget limit MUST be associated to the budget ID.
+ * @param limitId The ID of the budget limit. The budget limit MUST be associated to the budget ID.
  * @return ApiUpdateBudgetLimitRequest
  */
-func (a *BudgetsApiService) UpdateBudgetLimit(ctx _context.Context, id int32) ApiUpdateBudgetLimitRequest {
+func (a *BudgetsApiService) UpdateBudgetLimit(ctx _context.Context, id int32, limitId int32) ApiUpdateBudgetLimitRequest {
 	return ApiUpdateBudgetLimitRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
+		limitId: limitId,
 	}
 }
 
@@ -1712,14 +1876,18 @@ func (a *BudgetsApiService) UpdateBudgetLimitExecute(r ApiUpdateBudgetLimitReque
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/budgets/limits/{id}"
+	localVarPath := localBasePath + "/api/v1/budgets/{id}/limits/{limitId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"limitId"+"}", _neturl.PathEscape(parameterToString(r.limitId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 	if r.id < 1 {
 		return localVarReturnValue, nil, reportError("id must be greater than 1")
+	}
+	if r.limitId < 1 {
+		return localVarReturnValue, nil, reportError("limitId must be greater than 1")
 	}
 	if r.budgetLimit == nil {
 		return localVarReturnValue, nil, reportError("budgetLimit is required and must be specified")
@@ -1735,7 +1903,7 @@ func (a *BudgetsApiService) UpdateBudgetLimitExecute(r ApiUpdateBudgetLimitReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

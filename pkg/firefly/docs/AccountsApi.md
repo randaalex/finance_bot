@@ -149,7 +149,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -220,7 +220,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -292,7 +292,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -364,7 +364,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -445,7 +445,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -454,7 +454,7 @@ Name | Type | Description  | Notes
 
 ## StoreAccount
 
-> AccountSingle StoreAccount(ctx).Account(account).Execute()
+> AccountSingle StoreAccount(ctx).AccountStore(accountStore).Execute()
 
 Create new account.
 
@@ -473,11 +473,11 @@ import (
 )
 
 func main() {
-    account := *openapiclient.NewAccount("My checking account", "asset") // Account | JSON array with the necessary account information or key=value pairs. See the model for the exact specifications.
+    accountStore := *openapiclient.NewAccountStore("My checking account", "asset") // AccountStore | JSON array with the necessary account information or key=value pairs. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.AccountsApi.StoreAccount(context.Background()).Account(account).Execute()
+    resp, r, err := api_client.AccountsApi.StoreAccount(context.Background()).AccountStore(accountStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AccountsApi.StoreAccount``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -498,7 +498,7 @@ Other parameters are passed through a pointer to a apiStoreAccountRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account** | [**Account**](Account.md) | JSON array with the necessary account information or key&#x3D;value pairs. See the model for the exact specifications. | 
+ **accountStore** | [**AccountStore**](AccountStore.md) | JSON array with the necessary account information or key&#x3D;value pairs. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -511,7 +511,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -520,7 +520,7 @@ Name | Type | Description  | Notes
 
 ## UpdateAccount
 
-> AccountSingle UpdateAccount(ctx, id).Account(account).Execute()
+> AccountSingle UpdateAccount(ctx, id).AccountUpdate(accountUpdate).Execute()
 
 Update existing account.
 
@@ -540,11 +540,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the account.
-    account := *openapiclient.NewAccount("My checking account", "asset") // Account | JSON array or formdata with updated account information. See the model for the exact specifications.
+    accountUpdate := *openapiclient.NewAccountUpdate("My checking account") // AccountUpdate | JSON array or formdata with updated account information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.AccountsApi.UpdateAccount(context.Background(), id).Account(account).Execute()
+    resp, r, err := api_client.AccountsApi.UpdateAccount(context.Background(), id).AccountUpdate(accountUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AccountsApi.UpdateAccount``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -570,7 +570,7 @@ Other parameters are passed through a pointer to a apiUpdateAccountRequest struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **account** | [**Account**](Account.md) | JSON array or formdata with updated account information. See the model for the exact specifications. | 
+ **accountUpdate** | [**AccountUpdate**](AccountUpdate.md) | JSON array or formdata with updated account information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -583,7 +583,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
