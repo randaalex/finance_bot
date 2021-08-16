@@ -84,7 +84,7 @@ func (p *Processor) ProcessEmail(ctx context.Context, email *parsedImapMessage) 
 			sentry.CaptureException(err)
 		})
 
-		panic(err)
+		return nil
 	}
 
 	return p.processTransaction(ctx, transactionReq)
