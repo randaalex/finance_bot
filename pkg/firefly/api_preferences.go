@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -29,7 +29,7 @@ type PreferencesApi interface {
 
 	/*
 	 * GetPreference Return a single preference.
-	 * Return a single preference.
+	 * Return a single preference and the value.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @param name The name of the preference.
 	 * @return ApiGetPreferenceRequest
@@ -44,7 +44,7 @@ type PreferencesApi interface {
 
 	/*
 	 * ListPreference List all users preferences.
-	 * List all preferences of the user.
+	 * List all of the preferences of the user.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @return ApiListPreferenceRequest
 	 */
@@ -55,6 +55,20 @@ type PreferencesApi interface {
 	 * @return PreferenceArray
 	 */
 	ListPreferenceExecute(r ApiListPreferenceRequest) (PreferenceArray, *_nethttp.Response, error)
+
+	/*
+	 * StorePreference Store a new preference for this user.
+	 * This endpoint creates a new preference. The name and data are free-format, and entirely up to you. If the preference is not used in Firefly III itself it may not be configurable through the user interface, but you can use this endpoint to persist custom data for your own app.
+	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	 * @return ApiStorePreferenceRequest
+	 */
+	StorePreference(ctx _context.Context) ApiStorePreferenceRequest
+
+	/*
+	 * StorePreferenceExecute executes the request
+	 * @return PreferenceSingle
+	 */
+	StorePreferenceExecute(r ApiStorePreferenceRequest) (PreferenceSingle, *_nethttp.Response, error)
 
 	/*
 	 * UpdatePreference Update preference
@@ -88,7 +102,7 @@ func (r ApiGetPreferenceRequest) Execute() (PreferenceSingle, *_nethttp.Response
 
 /*
  * GetPreference Return a single preference.
- * Return a single preference.
+ * Return a single preference and the value.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param name The name of the preference.
  * @return ApiGetPreferenceRequest
@@ -137,7 +151,7 @@ func (a *PreferencesApiService) GetPreferenceExecute(r ApiGetPreferenceRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -198,7 +212,7 @@ func (r ApiListPreferenceRequest) Execute() (PreferenceArray, *_nethttp.Response
 
 /*
  * ListPreference List all users preferences.
- * List all preferences of the user.
+ * List all of the preferences of the user.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiListPreferenceRequest
  */
@@ -247,7 +261,7 @@ func (a *PreferencesApiService) ListPreferenceExecute(r ApiListPreferenceRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -291,15 +305,136 @@ func (a *PreferencesApiService) ListPreferenceExecute(r ApiListPreferenceRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiStorePreferenceRequest struct {
+	ctx _context.Context
+	ApiService PreferencesApi
+	preference *Preference
+}
+
+func (r ApiStorePreferenceRequest) Preference(preference Preference) ApiStorePreferenceRequest {
+	r.preference = &preference
+	return r
+}
+
+func (r ApiStorePreferenceRequest) Execute() (PreferenceSingle, *_nethttp.Response, error) {
+	return r.ApiService.StorePreferenceExecute(r)
+}
+
+/*
+ * StorePreference Store a new preference for this user.
+ * This endpoint creates a new preference. The name and data are free-format, and entirely up to you. If the preference is not used in Firefly III itself it may not be configurable through the user interface, but you can use this endpoint to persist custom data for your own app.
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @return ApiStorePreferenceRequest
+ */
+func (a *PreferencesApiService) StorePreference(ctx _context.Context) ApiStorePreferenceRequest {
+	return ApiStorePreferenceRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return PreferenceSingle
+ */
+func (a *PreferencesApiService) StorePreferenceExecute(r ApiStorePreferenceRequest) (PreferenceSingle, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodPost
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  PreferenceSingle
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PreferencesApiService.StorePreference")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/preferences"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+	if r.preference == nil {
+		return localVarReturnValue, nil, reportError("preference is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.preference
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdatePreferenceRequest struct {
 	ctx _context.Context
 	ApiService PreferencesApi
 	name string
-	preference *Preference
+	preferenceUpdate *PreferenceUpdate
 }
 
-func (r ApiUpdatePreferenceRequest) Preference(preference Preference) ApiUpdatePreferenceRequest {
-	r.preference = &preference
+func (r ApiUpdatePreferenceRequest) PreferenceUpdate(preferenceUpdate PreferenceUpdate) ApiUpdatePreferenceRequest {
+	r.preferenceUpdate = &preferenceUpdate
 	return r
 }
 
@@ -347,8 +482,8 @@ func (a *PreferencesApiService) UpdatePreferenceExecute(r ApiUpdatePreferenceReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.preference == nil {
-		return localVarReturnValue, nil, reportError("preference is required and must be specified")
+	if r.preferenceUpdate == nil {
+		return localVarReturnValue, nil, reportError("preferenceUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -361,7 +496,7 @@ func (a *PreferencesApiService) UpdatePreferenceExecute(r ApiUpdatePreferenceReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -369,7 +504,7 @@ func (a *PreferencesApiService) UpdatePreferenceExecute(r ApiUpdatePreferenceReq
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.preference
+	localVarPostBody = r.preferenceUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

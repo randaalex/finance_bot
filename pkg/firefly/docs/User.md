@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Email** | **string** | The new users email address. | 
 **Blocked** | Pointer to **bool** | Boolean to indicate if the user is blocked. | [optional] 
-**BlockedCode** | Pointer to **NullableString** | If you say the user must be blocked, this will be the reason code. | [optional] 
-**Role** | Pointer to **NullableString** | Role for the new user. Can be empty or omitted. | [optional] 
+**BlockedCode** | Pointer to **string** | If you say the user must be blocked, this will be the reason code. | [optional] 
+**Role** | Pointer to **string** | Role for the new user. Can be empty or omitted. | [optional] 
 
 ## Methods
 
@@ -150,16 +150,6 @@ SetBlockedCode sets BlockedCode field to given value.
 
 HasBlockedCode returns a boolean if a field has been set.
 
-### SetBlockedCodeNil
-
-`func (o *User) SetBlockedCodeNil(b bool)`
-
- SetBlockedCodeNil sets the value for BlockedCode to be an explicit nil
-
-### UnsetBlockedCode
-`func (o *User) UnsetBlockedCode()`
-
-UnsetBlockedCode ensures that no value is present for BlockedCode, not even an explicit nil
 ### GetRole
 
 `func (o *User) GetRole() string`
@@ -185,16 +175,6 @@ SetRole sets Role field to given value.
 
 HasRole returns a boolean if a field has been set.
 
-### SetRoleNil
-
-`func (o *User) SetRoleNil(b bool)`
-
- SetRoleNil sets the value for Role to be an explicit nil
-
-### UnsetRole
-`func (o *User) UnsetRole()`
-
-UnsetRole ensures that no value is present for Role, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -23,35 +23,35 @@ type RecurrenceTransaction struct {
 	// Foreign amount of the transaction.
 	ForeignAmount NullableString `json:"foreign_amount,omitempty"`
 	// Submit either a currency_id or a currency_code.
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	// Submit either a currency_id or a currency_code.
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	// Number of decimals in the currency
 	CurrencyDecimalPlaces *int32 `json:"currency_decimal_places,omitempty"`
 	// Submit either a foreign_currency_id or a foreign_currency_code, or neither.
-	ForeignCurrencyId NullableInt32 `json:"foreign_currency_id,omitempty"`
+	ForeignCurrencyId NullableString `json:"foreign_currency_id,omitempty"`
 	// Submit either a foreign_currency_id or a foreign_currency_code, or neither.
 	ForeignCurrencyCode NullableString `json:"foreign_currency_code,omitempty"`
 	ForeignCurrencySymbol NullableString `json:"foreign_currency_symbol,omitempty"`
 	// Number of decimals in the currency
 	ForeignCurrencyDecimalPlaces NullableInt32 `json:"foreign_currency_decimal_places,omitempty"`
 	// The budget ID for this transaction.
-	BudgetId *int32 `json:"budget_id,omitempty"`
+	BudgetId *string `json:"budget_id,omitempty"`
 	// The name of the budget to be used. If the budget name is unknown, the ID will be used or the value will be ignored.
 	BudgetName NullableString `json:"budget_name,omitempty"`
 	// Category ID for this transaction.
-	CategoryId *int32 `json:"category_id,omitempty"`
+	CategoryId *string `json:"category_id,omitempty"`
 	// Category name for this transaction.
 	CategoryName *string `json:"category_name,omitempty"`
 	// ID of the source account. Submit either this or source_name.
-	SourceId *int32 `json:"source_id,omitempty"`
+	SourceId *string `json:"source_id,omitempty"`
 	// Name of the source account. Submit either this or source_id.
 	SourceName *string `json:"source_name,omitempty"`
 	SourceIban NullableString `json:"source_iban,omitempty"`
 	SourceType *AccountTypeProperty `json:"source_type,omitempty"`
 	// ID of the destination account. Submit either this or destination_name.
-	DestinationId *int32 `json:"destination_id,omitempty"`
+	DestinationId *string `json:"destination_id,omitempty"`
 	// Name of the destination account. Submit either this or destination_id.
 	DestinationName *string `json:"destination_name,omitempty"`
 	DestinationIban NullableString `json:"destination_iban,omitempty"`
@@ -59,9 +59,9 @@ type RecurrenceTransaction struct {
 	// Array of tags.
 	Tags []string `json:"tags,omitempty"`
 	// Optional. Use either this or the piggy_bank_name
-	PiggyBankId *int32 `json:"piggy_bank_id,omitempty"`
+	PiggyBankId NullableString `json:"piggy_bank_id,omitempty"`
 	// Optional. Use either this or the piggy_bank_id
-	PiggyBankName *string `json:"piggy_bank_name,omitempty"`
+	PiggyBankName NullableString `json:"piggy_bank_name,omitempty"`
 }
 
 // NewRecurrenceTransaction instantiates a new RecurrenceTransaction object
@@ -174,9 +174,9 @@ func (o *RecurrenceTransaction) UnsetForeignAmount() {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *RecurrenceTransaction) GetCurrencyId() int32 {
+func (o *RecurrenceTransaction) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -184,7 +184,7 @@ func (o *RecurrenceTransaction) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceTransaction) GetCurrencyIdOk() (*int32, bool) {
+func (o *RecurrenceTransaction) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -200,8 +200,8 @@ func (o *RecurrenceTransaction) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *RecurrenceTransaction) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *RecurrenceTransaction) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 
@@ -302,9 +302,9 @@ func (o *RecurrenceTransaction) SetCurrencyDecimalPlaces(v int32) {
 }
 
 // GetForeignCurrencyId returns the ForeignCurrencyId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RecurrenceTransaction) GetForeignCurrencyId() int32 {
+func (o *RecurrenceTransaction) GetForeignCurrencyId() string {
 	if o == nil || o.ForeignCurrencyId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.ForeignCurrencyId.Get()
@@ -313,7 +313,7 @@ func (o *RecurrenceTransaction) GetForeignCurrencyId() int32 {
 // GetForeignCurrencyIdOk returns a tuple with the ForeignCurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RecurrenceTransaction) GetForeignCurrencyIdOk() (*int32, bool) {
+func (o *RecurrenceTransaction) GetForeignCurrencyIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -329,8 +329,8 @@ func (o *RecurrenceTransaction) HasForeignCurrencyId() bool {
 	return false
 }
 
-// SetForeignCurrencyId gets a reference to the given NullableInt32 and assigns it to the ForeignCurrencyId field.
-func (o *RecurrenceTransaction) SetForeignCurrencyId(v int32) {
+// SetForeignCurrencyId gets a reference to the given NullableString and assigns it to the ForeignCurrencyId field.
+func (o *RecurrenceTransaction) SetForeignCurrencyId(v string) {
 	o.ForeignCurrencyId.Set(&v)
 }
 // SetForeignCurrencyIdNil sets the value for ForeignCurrencyId to be an explicit nil
@@ -470,9 +470,9 @@ func (o *RecurrenceTransaction) UnsetForeignCurrencyDecimalPlaces() {
 }
 
 // GetBudgetId returns the BudgetId field value if set, zero value otherwise.
-func (o *RecurrenceTransaction) GetBudgetId() int32 {
+func (o *RecurrenceTransaction) GetBudgetId() string {
 	if o == nil || o.BudgetId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.BudgetId
@@ -480,7 +480,7 @@ func (o *RecurrenceTransaction) GetBudgetId() int32 {
 
 // GetBudgetIdOk returns a tuple with the BudgetId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceTransaction) GetBudgetIdOk() (*int32, bool) {
+func (o *RecurrenceTransaction) GetBudgetIdOk() (*string, bool) {
 	if o == nil || o.BudgetId == nil {
 		return nil, false
 	}
@@ -496,8 +496,8 @@ func (o *RecurrenceTransaction) HasBudgetId() bool {
 	return false
 }
 
-// SetBudgetId gets a reference to the given int32 and assigns it to the BudgetId field.
-func (o *RecurrenceTransaction) SetBudgetId(v int32) {
+// SetBudgetId gets a reference to the given string and assigns it to the BudgetId field.
+func (o *RecurrenceTransaction) SetBudgetId(v string) {
 	o.BudgetId = &v
 }
 
@@ -544,9 +544,9 @@ func (o *RecurrenceTransaction) UnsetBudgetName() {
 }
 
 // GetCategoryId returns the CategoryId field value if set, zero value otherwise.
-func (o *RecurrenceTransaction) GetCategoryId() int32 {
+func (o *RecurrenceTransaction) GetCategoryId() string {
 	if o == nil || o.CategoryId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CategoryId
@@ -554,7 +554,7 @@ func (o *RecurrenceTransaction) GetCategoryId() int32 {
 
 // GetCategoryIdOk returns a tuple with the CategoryId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceTransaction) GetCategoryIdOk() (*int32, bool) {
+func (o *RecurrenceTransaction) GetCategoryIdOk() (*string, bool) {
 	if o == nil || o.CategoryId == nil {
 		return nil, false
 	}
@@ -570,8 +570,8 @@ func (o *RecurrenceTransaction) HasCategoryId() bool {
 	return false
 }
 
-// SetCategoryId gets a reference to the given int32 and assigns it to the CategoryId field.
-func (o *RecurrenceTransaction) SetCategoryId(v int32) {
+// SetCategoryId gets a reference to the given string and assigns it to the CategoryId field.
+func (o *RecurrenceTransaction) SetCategoryId(v string) {
 	o.CategoryId = &v
 }
 
@@ -608,9 +608,9 @@ func (o *RecurrenceTransaction) SetCategoryName(v string) {
 }
 
 // GetSourceId returns the SourceId field value if set, zero value otherwise.
-func (o *RecurrenceTransaction) GetSourceId() int32 {
+func (o *RecurrenceTransaction) GetSourceId() string {
 	if o == nil || o.SourceId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.SourceId
@@ -618,7 +618,7 @@ func (o *RecurrenceTransaction) GetSourceId() int32 {
 
 // GetSourceIdOk returns a tuple with the SourceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceTransaction) GetSourceIdOk() (*int32, bool) {
+func (o *RecurrenceTransaction) GetSourceIdOk() (*string, bool) {
 	if o == nil || o.SourceId == nil {
 		return nil, false
 	}
@@ -634,8 +634,8 @@ func (o *RecurrenceTransaction) HasSourceId() bool {
 	return false
 }
 
-// SetSourceId gets a reference to the given int32 and assigns it to the SourceId field.
-func (o *RecurrenceTransaction) SetSourceId(v int32) {
+// SetSourceId gets a reference to the given string and assigns it to the SourceId field.
+func (o *RecurrenceTransaction) SetSourceId(v string) {
 	o.SourceId = &v
 }
 
@@ -746,9 +746,9 @@ func (o *RecurrenceTransaction) SetSourceType(v AccountTypeProperty) {
 }
 
 // GetDestinationId returns the DestinationId field value if set, zero value otherwise.
-func (o *RecurrenceTransaction) GetDestinationId() int32 {
+func (o *RecurrenceTransaction) GetDestinationId() string {
 	if o == nil || o.DestinationId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.DestinationId
@@ -756,7 +756,7 @@ func (o *RecurrenceTransaction) GetDestinationId() int32 {
 
 // GetDestinationIdOk returns a tuple with the DestinationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceTransaction) GetDestinationIdOk() (*int32, bool) {
+func (o *RecurrenceTransaction) GetDestinationIdOk() (*string, bool) {
 	if o == nil || o.DestinationId == nil {
 		return nil, false
 	}
@@ -772,8 +772,8 @@ func (o *RecurrenceTransaction) HasDestinationId() bool {
 	return false
 }
 
-// SetDestinationId gets a reference to the given int32 and assigns it to the DestinationId field.
-func (o *RecurrenceTransaction) SetDestinationId(v int32) {
+// SetDestinationId gets a reference to the given string and assigns it to the DestinationId field.
+func (o *RecurrenceTransaction) SetDestinationId(v string) {
 	o.DestinationId = &v
 }
 
@@ -916,68 +916,88 @@ func (o *RecurrenceTransaction) SetTags(v []string) {
 	o.Tags = v
 }
 
-// GetPiggyBankId returns the PiggyBankId field value if set, zero value otherwise.
-func (o *RecurrenceTransaction) GetPiggyBankId() int32 {
-	if o == nil || o.PiggyBankId == nil {
-		var ret int32
+// GetPiggyBankId returns the PiggyBankId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RecurrenceTransaction) GetPiggyBankId() string {
+	if o == nil || o.PiggyBankId.Get() == nil {
+		var ret string
 		return ret
 	}
-	return *o.PiggyBankId
+	return *o.PiggyBankId.Get()
 }
 
 // GetPiggyBankIdOk returns a tuple with the PiggyBankId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceTransaction) GetPiggyBankIdOk() (*int32, bool) {
-	if o == nil || o.PiggyBankId == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RecurrenceTransaction) GetPiggyBankIdOk() (*string, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.PiggyBankId, true
+	return o.PiggyBankId.Get(), o.PiggyBankId.IsSet()
 }
 
 // HasPiggyBankId returns a boolean if a field has been set.
 func (o *RecurrenceTransaction) HasPiggyBankId() bool {
-	if o != nil && o.PiggyBankId != nil {
+	if o != nil && o.PiggyBankId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPiggyBankId gets a reference to the given int32 and assigns it to the PiggyBankId field.
-func (o *RecurrenceTransaction) SetPiggyBankId(v int32) {
-	o.PiggyBankId = &v
+// SetPiggyBankId gets a reference to the given NullableString and assigns it to the PiggyBankId field.
+func (o *RecurrenceTransaction) SetPiggyBankId(v string) {
+	o.PiggyBankId.Set(&v)
+}
+// SetPiggyBankIdNil sets the value for PiggyBankId to be an explicit nil
+func (o *RecurrenceTransaction) SetPiggyBankIdNil() {
+	o.PiggyBankId.Set(nil)
 }
 
-// GetPiggyBankName returns the PiggyBankName field value if set, zero value otherwise.
+// UnsetPiggyBankId ensures that no value is present for PiggyBankId, not even an explicit nil
+func (o *RecurrenceTransaction) UnsetPiggyBankId() {
+	o.PiggyBankId.Unset()
+}
+
+// GetPiggyBankName returns the PiggyBankName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RecurrenceTransaction) GetPiggyBankName() string {
-	if o == nil || o.PiggyBankName == nil {
+	if o == nil || o.PiggyBankName.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.PiggyBankName
+	return *o.PiggyBankName.Get()
 }
 
 // GetPiggyBankNameOk returns a tuple with the PiggyBankName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RecurrenceTransaction) GetPiggyBankNameOk() (*string, bool) {
-	if o == nil || o.PiggyBankName == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.PiggyBankName, true
+	return o.PiggyBankName.Get(), o.PiggyBankName.IsSet()
 }
 
 // HasPiggyBankName returns a boolean if a field has been set.
 func (o *RecurrenceTransaction) HasPiggyBankName() bool {
-	if o != nil && o.PiggyBankName != nil {
+	if o != nil && o.PiggyBankName.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPiggyBankName gets a reference to the given string and assigns it to the PiggyBankName field.
+// SetPiggyBankName gets a reference to the given NullableString and assigns it to the PiggyBankName field.
 func (o *RecurrenceTransaction) SetPiggyBankName(v string) {
-	o.PiggyBankName = &v
+	o.PiggyBankName.Set(&v)
+}
+// SetPiggyBankNameNil sets the value for PiggyBankName to be an explicit nil
+func (o *RecurrenceTransaction) SetPiggyBankNameNil() {
+	o.PiggyBankName.Set(nil)
+}
+
+// UnsetPiggyBankName ensures that no value is present for PiggyBankName, not even an explicit nil
+func (o *RecurrenceTransaction) UnsetPiggyBankName() {
+	o.PiggyBankName.Unset()
 }
 
 func (o RecurrenceTransaction) MarshalJSON() ([]byte, error) {
@@ -1054,11 +1074,11 @@ func (o RecurrenceTransaction) MarshalJSON() ([]byte, error) {
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
 	}
-	if o.PiggyBankId != nil {
-		toSerialize["piggy_bank_id"] = o.PiggyBankId
+	if o.PiggyBankId.IsSet() {
+		toSerialize["piggy_bank_id"] = o.PiggyBankId.Get()
 	}
-	if o.PiggyBankName != nil {
-		toSerialize["piggy_bank_name"] = o.PiggyBankName
+	if o.PiggyBankName.IsSet() {
+		toSerialize["piggy_bank_name"] = o.PiggyBankName.Get()
 	}
 	return json.Marshal(toSerialize)
 }

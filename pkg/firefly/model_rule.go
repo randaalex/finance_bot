@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -23,7 +23,7 @@ type Rule struct {
 	Title string `json:"title"`
 	Description *string `json:"description,omitempty"`
 	// ID of the rule group under which the rule must be stored. Either this field or rule_group_title is mandatory.
-	RuleGroupId int32 `json:"rule_group_id"`
+	RuleGroupId string `json:"rule_group_id"`
 	// Title of the rule group under which the rule must be stored. Either this field or rule_group_id is mandatory.
 	RuleGroupTitle *string `json:"rule_group_title,omitempty"`
 	Order *int32 `json:"order,omitempty"`
@@ -43,7 +43,7 @@ type Rule struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRule(title string, ruleGroupId int32, trigger string, triggers []RuleTrigger, actions []RuleAction) *Rule {
+func NewRule(title string, ruleGroupId string, trigger string, triggers []RuleTrigger, actions []RuleAction) *Rule {
 	this := Rule{}
 	this.Title = title
 	this.RuleGroupId = ruleGroupId
@@ -182,9 +182,9 @@ func (o *Rule) SetDescription(v string) {
 }
 
 // GetRuleGroupId returns the RuleGroupId field value
-func (o *Rule) GetRuleGroupId() int32 {
+func (o *Rule) GetRuleGroupId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -193,7 +193,7 @@ func (o *Rule) GetRuleGroupId() int32 {
 
 // GetRuleGroupIdOk returns a tuple with the RuleGroupId field value
 // and a boolean to check if the value has been set.
-func (o *Rule) GetRuleGroupIdOk() (*int32, bool) {
+func (o *Rule) GetRuleGroupIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -201,7 +201,7 @@ func (o *Rule) GetRuleGroupIdOk() (*int32, bool) {
 }
 
 // SetRuleGroupId sets field value
-func (o *Rule) SetRuleGroupId(v int32) {
+func (o *Rule) SetRuleGroupId(v string) {
 	o.RuleGroupId = v
 }
 

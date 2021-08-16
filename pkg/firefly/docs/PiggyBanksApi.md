@@ -145,7 +145,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -217,7 +217,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -289,7 +289,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -364,7 +364,7 @@ Name | Type | Description  | Notes
 
 ## StorePiggyBank
 
-> PiggyBankSingle StorePiggyBank(ctx).PiggyBank(piggyBank).Execute()
+> PiggyBankSingle StorePiggyBank(ctx).PiggyBankStore(piggyBankStore).Execute()
 
 Store a new piggy bank
 
@@ -383,11 +383,11 @@ import (
 )
 
 func main() {
-    piggyBank := *openapiclient.NewPiggyBank("New digital camera", int32(13), "123.45") // PiggyBank | JSON array or key=value pairs with the necessary piggy bank information. See the model for the exact specifications.
+    piggyBankStore := *openapiclient.NewPiggyBankStore("New digital camera", "13", "123.45") // PiggyBankStore | JSON array or key=value pairs with the necessary piggy bank information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.PiggyBanksApi.StorePiggyBank(context.Background()).PiggyBank(piggyBank).Execute()
+    resp, r, err := api_client.PiggyBanksApi.StorePiggyBank(context.Background()).PiggyBankStore(piggyBankStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `PiggyBanksApi.StorePiggyBank``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -408,7 +408,7 @@ Other parameters are passed through a pointer to a apiStorePiggyBankRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **piggyBank** | [**PiggyBank**](PiggyBank.md) | JSON array or key&#x3D;value pairs with the necessary piggy bank information. See the model for the exact specifications. | 
+ **piggyBankStore** | [**PiggyBankStore**](PiggyBankStore.md) | JSON array or key&#x3D;value pairs with the necessary piggy bank information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -421,7 +421,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -430,7 +430,7 @@ Name | Type | Description  | Notes
 
 ## UpdatePiggyBank
 
-> PiggyBankSingle UpdatePiggyBank(ctx, id).PiggyBank(piggyBank).Execute()
+> PiggyBankSingle UpdatePiggyBank(ctx, id).PiggyBankUpdate(piggyBankUpdate).Execute()
 
 Update existing piggy bank.
 
@@ -450,11 +450,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the piggy bank
-    piggyBank := *openapiclient.NewPiggyBank("New digital camera", int32(13), "123.45") // PiggyBank | JSON array with updated piggy bank information. See the model for the exact specifications.
+    piggyBankUpdate := *openapiclient.NewPiggyBankUpdate() // PiggyBankUpdate | JSON array with updated piggy bank information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.PiggyBanksApi.UpdatePiggyBank(context.Background(), id).PiggyBank(piggyBank).Execute()
+    resp, r, err := api_client.PiggyBanksApi.UpdatePiggyBank(context.Background(), id).PiggyBankUpdate(piggyBankUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `PiggyBanksApi.UpdatePiggyBank``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -480,7 +480,7 @@ Other parameters are passed through a pointer to a apiUpdatePiggyBankRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **piggyBank** | [**PiggyBank**](PiggyBank.md) | JSON array with updated piggy bank information. See the model for the exact specifications. | 
+ **piggyBankUpdate** | [**PiggyBankUpdate**](PiggyBankUpdate.md) | JSON array with updated piggy bank information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -493,7 +493,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

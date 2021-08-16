@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -20,7 +20,7 @@ type AutocompleteCurrencyCode struct {
 	Id string `json:"id"`
 	// Currency name with the code between brackets.
 	Name string `json:"name"`
-	// Currency code for this account.
+	// Currency code.
 	Code string `json:"code"`
 	Symbol string `json:"symbol"`
 	DecimalPlaces int32 `json:"decimal_places"`

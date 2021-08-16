@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -22,10 +22,10 @@ type PiggyBank struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	Name string `json:"name"`
 	// The ID of the asset account this piggy bank is connected to.
-	AccountId int32 `json:"account_id"`
+	AccountId string `json:"account_id"`
 	// The name of the asset account this piggy bank is connected to.
 	AccountName *string `json:"account_name,omitempty"`
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	// Number of decimals supported by the currency
@@ -33,28 +33,28 @@ type PiggyBank struct {
 	TargetAmount string `json:"target_amount"`
 	Percentage *float32 `json:"percentage,omitempty"`
 	CurrentAmount *string `json:"current_amount,omitempty"`
-	LeftToSave *float64 `json:"left_to_save,omitempty"`
-	SavePerMonth *float64 `json:"save_per_month,omitempty"`
+	LeftToSave *string `json:"left_to_save,omitempty"`
+	SavePerMonth *string `json:"save_per_month,omitempty"`
 	// The date you started with this piggy bank.
-	StartDate *string `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 	// The date you intend to finish saving money.
-	TargetDate *string `json:"target_date,omitempty"`
+	TargetDate NullableTime `json:"target_date,omitempty"`
 	Order *int32 `json:"order,omitempty"`
 	Active *bool `json:"active,omitempty"`
-	Notes *string `json:"notes,omitempty"`
+	Notes NullableString `json:"notes,omitempty"`
 	// The group ID of the group this object is part of. NULL if no group.
-	ObjectGroupId *int32 `json:"object_group_id,omitempty"`
+	ObjectGroupId NullableString `json:"object_group_id,omitempty"`
 	// The order of the group. At least 1, for the highest sorting.
-	ObjectGroupOrder *int32 `json:"object_group_order,omitempty"`
+	ObjectGroupOrder NullableInt32 `json:"object_group_order,omitempty"`
 	// The name of the group. NULL if no group.
-	ObjectGroupTitle *string `json:"object_group_title,omitempty"`
+	ObjectGroupTitle NullableString `json:"object_group_title,omitempty"`
 }
 
 // NewPiggyBank instantiates a new PiggyBank object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPiggyBank(name string, accountId int32, targetAmount string) *PiggyBank {
+func NewPiggyBank(name string, accountId string, targetAmount string) *PiggyBank {
 	this := PiggyBank{}
 	this.Name = name
 	this.AccountId = accountId
@@ -159,9 +159,9 @@ func (o *PiggyBank) SetName(v string) {
 }
 
 // GetAccountId returns the AccountId field value
-func (o *PiggyBank) GetAccountId() int32 {
+func (o *PiggyBank) GetAccountId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -170,7 +170,7 @@ func (o *PiggyBank) GetAccountId() int32 {
 
 // GetAccountIdOk returns a tuple with the AccountId field value
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetAccountIdOk() (*int32, bool) {
+func (o *PiggyBank) GetAccountIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -178,7 +178,7 @@ func (o *PiggyBank) GetAccountIdOk() (*int32, bool) {
 }
 
 // SetAccountId sets field value
-func (o *PiggyBank) SetAccountId(v int32) {
+func (o *PiggyBank) SetAccountId(v string) {
 	o.AccountId = v
 }
 
@@ -215,9 +215,9 @@ func (o *PiggyBank) SetAccountName(v string) {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *PiggyBank) GetCurrencyId() int32 {
+func (o *PiggyBank) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -225,7 +225,7 @@ func (o *PiggyBank) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetCurrencyIdOk() (*int32, bool) {
+func (o *PiggyBank) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -241,8 +241,8 @@ func (o *PiggyBank) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *PiggyBank) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *PiggyBank) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 
@@ -431,9 +431,9 @@ func (o *PiggyBank) SetCurrentAmount(v string) {
 }
 
 // GetLeftToSave returns the LeftToSave field value if set, zero value otherwise.
-func (o *PiggyBank) GetLeftToSave() float64 {
+func (o *PiggyBank) GetLeftToSave() string {
 	if o == nil || o.LeftToSave == nil {
-		var ret float64
+		var ret string
 		return ret
 	}
 	return *o.LeftToSave
@@ -441,7 +441,7 @@ func (o *PiggyBank) GetLeftToSave() float64 {
 
 // GetLeftToSaveOk returns a tuple with the LeftToSave field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetLeftToSaveOk() (*float64, bool) {
+func (o *PiggyBank) GetLeftToSaveOk() (*string, bool) {
 	if o == nil || o.LeftToSave == nil {
 		return nil, false
 	}
@@ -457,15 +457,15 @@ func (o *PiggyBank) HasLeftToSave() bool {
 	return false
 }
 
-// SetLeftToSave gets a reference to the given float64 and assigns it to the LeftToSave field.
-func (o *PiggyBank) SetLeftToSave(v float64) {
+// SetLeftToSave gets a reference to the given string and assigns it to the LeftToSave field.
+func (o *PiggyBank) SetLeftToSave(v string) {
 	o.LeftToSave = &v
 }
 
 // GetSavePerMonth returns the SavePerMonth field value if set, zero value otherwise.
-func (o *PiggyBank) GetSavePerMonth() float64 {
+func (o *PiggyBank) GetSavePerMonth() string {
 	if o == nil || o.SavePerMonth == nil {
-		var ret float64
+		var ret string
 		return ret
 	}
 	return *o.SavePerMonth
@@ -473,7 +473,7 @@ func (o *PiggyBank) GetSavePerMonth() float64 {
 
 // GetSavePerMonthOk returns a tuple with the SavePerMonth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetSavePerMonthOk() (*float64, bool) {
+func (o *PiggyBank) GetSavePerMonthOk() (*string, bool) {
 	if o == nil || o.SavePerMonth == nil {
 		return nil, false
 	}
@@ -489,15 +489,15 @@ func (o *PiggyBank) HasSavePerMonth() bool {
 	return false
 }
 
-// SetSavePerMonth gets a reference to the given float64 and assigns it to the SavePerMonth field.
-func (o *PiggyBank) SetSavePerMonth(v float64) {
+// SetSavePerMonth gets a reference to the given string and assigns it to the SavePerMonth field.
+func (o *PiggyBank) SetSavePerMonth(v string) {
 	o.SavePerMonth = &v
 }
 
 // GetStartDate returns the StartDate field value if set, zero value otherwise.
-func (o *PiggyBank) GetStartDate() string {
+func (o *PiggyBank) GetStartDate() time.Time {
 	if o == nil || o.StartDate == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.StartDate
@@ -505,7 +505,7 @@ func (o *PiggyBank) GetStartDate() string {
 
 // GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetStartDateOk() (*string, bool) {
+func (o *PiggyBank) GetStartDateOk() (*time.Time, bool) {
 	if o == nil || o.StartDate == nil {
 		return nil, false
 	}
@@ -521,41 +521,51 @@ func (o *PiggyBank) HasStartDate() bool {
 	return false
 }
 
-// SetStartDate gets a reference to the given string and assigns it to the StartDate field.
-func (o *PiggyBank) SetStartDate(v string) {
+// SetStartDate gets a reference to the given time.Time and assigns it to the StartDate field.
+func (o *PiggyBank) SetStartDate(v time.Time) {
 	o.StartDate = &v
 }
 
-// GetTargetDate returns the TargetDate field value if set, zero value otherwise.
-func (o *PiggyBank) GetTargetDate() string {
-	if o == nil || o.TargetDate == nil {
-		var ret string
+// GetTargetDate returns the TargetDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PiggyBank) GetTargetDate() time.Time {
+	if o == nil || o.TargetDate.Get() == nil {
+		var ret time.Time
 		return ret
 	}
-	return *o.TargetDate
+	return *o.TargetDate.Get()
 }
 
 // GetTargetDateOk returns a tuple with the TargetDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetTargetDateOk() (*string, bool) {
-	if o == nil || o.TargetDate == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PiggyBank) GetTargetDateOk() (*time.Time, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.TargetDate, true
+	return o.TargetDate.Get(), o.TargetDate.IsSet()
 }
 
 // HasTargetDate returns a boolean if a field has been set.
 func (o *PiggyBank) HasTargetDate() bool {
-	if o != nil && o.TargetDate != nil {
+	if o != nil && o.TargetDate.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTargetDate gets a reference to the given string and assigns it to the TargetDate field.
-func (o *PiggyBank) SetTargetDate(v string) {
-	o.TargetDate = &v
+// SetTargetDate gets a reference to the given NullableTime and assigns it to the TargetDate field.
+func (o *PiggyBank) SetTargetDate(v time.Time) {
+	o.TargetDate.Set(&v)
+}
+// SetTargetDateNil sets the value for TargetDate to be an explicit nil
+func (o *PiggyBank) SetTargetDateNil() {
+	o.TargetDate.Set(nil)
+}
+
+// UnsetTargetDate ensures that no value is present for TargetDate, not even an explicit nil
+func (o *PiggyBank) UnsetTargetDate() {
+	o.TargetDate.Unset()
 }
 
 // GetOrder returns the Order field value if set, zero value otherwise.
@@ -622,132 +632,172 @@ func (o *PiggyBank) SetActive(v bool) {
 	o.Active = &v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
+// GetNotes returns the Notes field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PiggyBank) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || o.Notes.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Notes
+	return *o.Notes.Get()
 }
 
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PiggyBank) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Notes, true
+	return o.Notes.Get(), o.Notes.IsSet()
 }
 
 // HasNotes returns a boolean if a field has been set.
 func (o *PiggyBank) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && o.Notes.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNotes gets a reference to the given string and assigns it to the Notes field.
+// SetNotes gets a reference to the given NullableString and assigns it to the Notes field.
 func (o *PiggyBank) SetNotes(v string) {
-	o.Notes = &v
+	o.Notes.Set(&v)
+}
+// SetNotesNil sets the value for Notes to be an explicit nil
+func (o *PiggyBank) SetNotesNil() {
+	o.Notes.Set(nil)
 }
 
-// GetObjectGroupId returns the ObjectGroupId field value if set, zero value otherwise.
-func (o *PiggyBank) GetObjectGroupId() int32 {
-	if o == nil || o.ObjectGroupId == nil {
-		var ret int32
+// UnsetNotes ensures that no value is present for Notes, not even an explicit nil
+func (o *PiggyBank) UnsetNotes() {
+	o.Notes.Unset()
+}
+
+// GetObjectGroupId returns the ObjectGroupId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PiggyBank) GetObjectGroupId() string {
+	if o == nil || o.ObjectGroupId.Get() == nil {
+		var ret string
 		return ret
 	}
-	return *o.ObjectGroupId
+	return *o.ObjectGroupId.Get()
 }
 
 // GetObjectGroupIdOk returns a tuple with the ObjectGroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PiggyBank) GetObjectGroupIdOk() (*int32, bool) {
-	if o == nil || o.ObjectGroupId == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PiggyBank) GetObjectGroupIdOk() (*string, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.ObjectGroupId, true
+	return o.ObjectGroupId.Get(), o.ObjectGroupId.IsSet()
 }
 
 // HasObjectGroupId returns a boolean if a field has been set.
 func (o *PiggyBank) HasObjectGroupId() bool {
-	if o != nil && o.ObjectGroupId != nil {
+	if o != nil && o.ObjectGroupId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetObjectGroupId gets a reference to the given int32 and assigns it to the ObjectGroupId field.
-func (o *PiggyBank) SetObjectGroupId(v int32) {
-	o.ObjectGroupId = &v
+// SetObjectGroupId gets a reference to the given NullableString and assigns it to the ObjectGroupId field.
+func (o *PiggyBank) SetObjectGroupId(v string) {
+	o.ObjectGroupId.Set(&v)
+}
+// SetObjectGroupIdNil sets the value for ObjectGroupId to be an explicit nil
+func (o *PiggyBank) SetObjectGroupIdNil() {
+	o.ObjectGroupId.Set(nil)
 }
 
-// GetObjectGroupOrder returns the ObjectGroupOrder field value if set, zero value otherwise.
+// UnsetObjectGroupId ensures that no value is present for ObjectGroupId, not even an explicit nil
+func (o *PiggyBank) UnsetObjectGroupId() {
+	o.ObjectGroupId.Unset()
+}
+
+// GetObjectGroupOrder returns the ObjectGroupOrder field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PiggyBank) GetObjectGroupOrder() int32 {
-	if o == nil || o.ObjectGroupOrder == nil {
+	if o == nil || o.ObjectGroupOrder.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.ObjectGroupOrder
+	return *o.ObjectGroupOrder.Get()
 }
 
 // GetObjectGroupOrderOk returns a tuple with the ObjectGroupOrder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PiggyBank) GetObjectGroupOrderOk() (*int32, bool) {
-	if o == nil || o.ObjectGroupOrder == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.ObjectGroupOrder, true
+	return o.ObjectGroupOrder.Get(), o.ObjectGroupOrder.IsSet()
 }
 
 // HasObjectGroupOrder returns a boolean if a field has been set.
 func (o *PiggyBank) HasObjectGroupOrder() bool {
-	if o != nil && o.ObjectGroupOrder != nil {
+	if o != nil && o.ObjectGroupOrder.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetObjectGroupOrder gets a reference to the given int32 and assigns it to the ObjectGroupOrder field.
+// SetObjectGroupOrder gets a reference to the given NullableInt32 and assigns it to the ObjectGroupOrder field.
 func (o *PiggyBank) SetObjectGroupOrder(v int32) {
-	o.ObjectGroupOrder = &v
+	o.ObjectGroupOrder.Set(&v)
+}
+// SetObjectGroupOrderNil sets the value for ObjectGroupOrder to be an explicit nil
+func (o *PiggyBank) SetObjectGroupOrderNil() {
+	o.ObjectGroupOrder.Set(nil)
 }
 
-// GetObjectGroupTitle returns the ObjectGroupTitle field value if set, zero value otherwise.
+// UnsetObjectGroupOrder ensures that no value is present for ObjectGroupOrder, not even an explicit nil
+func (o *PiggyBank) UnsetObjectGroupOrder() {
+	o.ObjectGroupOrder.Unset()
+}
+
+// GetObjectGroupTitle returns the ObjectGroupTitle field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PiggyBank) GetObjectGroupTitle() string {
-	if o == nil || o.ObjectGroupTitle == nil {
+	if o == nil || o.ObjectGroupTitle.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.ObjectGroupTitle
+	return *o.ObjectGroupTitle.Get()
 }
 
 // GetObjectGroupTitleOk returns a tuple with the ObjectGroupTitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PiggyBank) GetObjectGroupTitleOk() (*string, bool) {
-	if o == nil || o.ObjectGroupTitle == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.ObjectGroupTitle, true
+	return o.ObjectGroupTitle.Get(), o.ObjectGroupTitle.IsSet()
 }
 
 // HasObjectGroupTitle returns a boolean if a field has been set.
 func (o *PiggyBank) HasObjectGroupTitle() bool {
-	if o != nil && o.ObjectGroupTitle != nil {
+	if o != nil && o.ObjectGroupTitle.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetObjectGroupTitle gets a reference to the given string and assigns it to the ObjectGroupTitle field.
+// SetObjectGroupTitle gets a reference to the given NullableString and assigns it to the ObjectGroupTitle field.
 func (o *PiggyBank) SetObjectGroupTitle(v string) {
-	o.ObjectGroupTitle = &v
+	o.ObjectGroupTitle.Set(&v)
+}
+// SetObjectGroupTitleNil sets the value for ObjectGroupTitle to be an explicit nil
+func (o *PiggyBank) SetObjectGroupTitleNil() {
+	o.ObjectGroupTitle.Set(nil)
+}
+
+// UnsetObjectGroupTitle ensures that no value is present for ObjectGroupTitle, not even an explicit nil
+func (o *PiggyBank) UnsetObjectGroupTitle() {
+	o.ObjectGroupTitle.Unset()
 }
 
 func (o PiggyBank) MarshalJSON() ([]byte, error) {
@@ -797,8 +847,8 @@ func (o PiggyBank) MarshalJSON() ([]byte, error) {
 	if o.StartDate != nil {
 		toSerialize["start_date"] = o.StartDate
 	}
-	if o.TargetDate != nil {
-		toSerialize["target_date"] = o.TargetDate
+	if o.TargetDate.IsSet() {
+		toSerialize["target_date"] = o.TargetDate.Get()
 	}
 	if o.Order != nil {
 		toSerialize["order"] = o.Order
@@ -806,17 +856,17 @@ func (o PiggyBank) MarshalJSON() ([]byte, error) {
 	if o.Active != nil {
 		toSerialize["active"] = o.Active
 	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	if o.Notes.IsSet() {
+		toSerialize["notes"] = o.Notes.Get()
 	}
-	if o.ObjectGroupId != nil {
-		toSerialize["object_group_id"] = o.ObjectGroupId
+	if o.ObjectGroupId.IsSet() {
+		toSerialize["object_group_id"] = o.ObjectGroupId.Get()
 	}
-	if o.ObjectGroupOrder != nil {
-		toSerialize["object_group_order"] = o.ObjectGroupOrder
+	if o.ObjectGroupOrder.IsSet() {
+		toSerialize["object_group_order"] = o.ObjectGroupOrder.Get()
 	}
-	if o.ObjectGroupTitle != nil {
-		toSerialize["object_group_title"] = o.ObjectGroupTitle
+	if o.ObjectGroupTitle.IsSet() {
+		toSerialize["object_group_title"] = o.ObjectGroupTitle.Get()
 	}
 	return json.Marshal(toSerialize)
 }

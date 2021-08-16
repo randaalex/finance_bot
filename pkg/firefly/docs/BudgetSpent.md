@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Sum** | Pointer to **string** | The amount spent. | [optional] 
-**CurrencyId** | Pointer to **int32** |  | [optional] 
+**CurrencyId** | Pointer to **string** |  | [optional] 
 **CurrencyCode** | Pointer to **string** |  | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals supported by the currency | [optional] 
@@ -56,20 +56,20 @@ HasSum returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *BudgetSpent) GetCurrencyId() int32`
+`func (o *BudgetSpent) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *BudgetSpent) GetCurrencyIdOk() (*int32, bool)`
+`func (o *BudgetSpent) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *BudgetSpent) SetCurrencyId(v int32)`
+`func (o *BudgetSpent) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 

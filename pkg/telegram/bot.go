@@ -3,6 +3,7 @@ package telegram
 import (
 	"context"
 	"github.com/randaalex/finance_bot/pkg/entities"
+	"github.com/sirupsen/logrus"
 	"time"
 
 	"gopkg.in/tucnak/telebot.v2"
@@ -21,12 +22,14 @@ type Bot struct {
 	FireflyClient *firefly.APIClient
 	Telebot       *telebot.Bot
 	User          *telebot.User
+	logger        *logrus.Logger
 	accounts      *[]entities.Account
 	categories    *[]entities.Category
 }
 
 func NewBot(
 	storage Storage,
+	logger *logrus.Logger,
 	fireflyClient *firefly.APIClient,
 	settings *entities.Settings,
 	accounts *[]entities.Account,
@@ -50,6 +53,7 @@ func NewBot(
 		FireflyClient: fireflyClient,
 		Telebot:       bot,
 		User:          &telebot.User{ID: settings.TelegramUserId},
+		logger:        logger,
 		accounts:      accounts,
 		categories:    categories,
 	}

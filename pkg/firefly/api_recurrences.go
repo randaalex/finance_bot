@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -29,7 +29,7 @@ type RecurrencesApi interface {
 
 	/*
 	 * DeleteRecurrence Delete a recurring transaction.
-	 * Delete a recurring transaction. Transactions created will not be deleted.
+	 * Delete a recurring transaction. Transactions created by the recurring transaction will not be deleted.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @param id The ID of the recurring transaction.
 	 * @return ApiDeleteRecurrenceRequest
@@ -100,20 +100,6 @@ type RecurrencesApi interface {
 	StoreRecurrenceExecute(r ApiStoreRecurrenceRequest) (RecurrenceSingle, *_nethttp.Response, error)
 
 	/*
-	 * TriggerRecurrence Trigger the creation of recurring transactions (like a cron job).
-	 * Triggers the recurring transactions, like a cron job would. If the schedule does not call for a new transaction to be created, nothing will happen.
-
-	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @return ApiTriggerRecurrenceRequest
-	 */
-	TriggerRecurrence(ctx _context.Context) ApiTriggerRecurrenceRequest
-
-	/*
-	 * TriggerRecurrenceExecute executes the request
-	 */
-	TriggerRecurrenceExecute(r ApiTriggerRecurrenceRequest) (*_nethttp.Response, error)
-
-	/*
 	 * UpdateRecurrence Update existing recurring transaction.
 	 * Update existing recurring transaction.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -145,7 +131,7 @@ func (r ApiDeleteRecurrenceRequest) Execute() (*_nethttp.Response, error) {
 
 /*
  * DeleteRecurrence Delete a recurring transaction.
- * Delete a recurring transaction. Transactions created will not be deleted.
+ * Delete a recurring transaction. Transactions created by the recurring transaction will not be deleted.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param id The ID of the recurring transaction.
  * @return ApiDeleteRecurrenceRequest
@@ -289,7 +275,7 @@ func (a *RecurrencesApiService) GetRecurrenceExecute(r ApiGetRecurrenceRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -399,7 +385,7 @@ func (a *RecurrencesApiService) ListRecurrenceExecute(r ApiListRecurrenceRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -537,7 +523,7 @@ func (a *RecurrencesApiService) ListTransactionByRecurrenceExecute(r ApiListTran
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -584,11 +570,11 @@ func (a *RecurrencesApiService) ListTransactionByRecurrenceExecute(r ApiListTran
 type ApiStoreRecurrenceRequest struct {
 	ctx _context.Context
 	ApiService RecurrencesApi
-	recurrence *Recurrence
+	recurrenceStore *RecurrenceStore
 }
 
-func (r ApiStoreRecurrenceRequest) Recurrence(recurrence Recurrence) ApiStoreRecurrenceRequest {
-	r.recurrence = &recurrence
+func (r ApiStoreRecurrenceRequest) RecurrenceStore(recurrenceStore RecurrenceStore) ApiStoreRecurrenceRequest {
+	r.recurrenceStore = &recurrenceStore
 	return r
 }
 
@@ -633,8 +619,8 @@ func (a *RecurrencesApiService) StoreRecurrenceExecute(r ApiStoreRecurrenceReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.recurrence == nil {
-		return localVarReturnValue, nil, reportError("recurrence is required and must be specified")
+	if r.recurrenceStore == nil {
+		return localVarReturnValue, nil, reportError("recurrenceStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -647,7 +633,7 @@ func (a *RecurrencesApiService) StoreRecurrenceExecute(r ApiStoreRecurrenceReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -655,7 +641,7 @@ func (a *RecurrencesApiService) StoreRecurrenceExecute(r ApiStoreRecurrenceReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.recurrence
+	localVarPostBody = r.recurrenceStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -702,107 +688,15 @@ func (a *RecurrencesApiService) StoreRecurrenceExecute(r ApiStoreRecurrenceReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiTriggerRecurrenceRequest struct {
-	ctx _context.Context
-	ApiService RecurrencesApi
-}
-
-
-func (r ApiTriggerRecurrenceRequest) Execute() (*_nethttp.Response, error) {
-	return r.ApiService.TriggerRecurrenceExecute(r)
-}
-
-/*
- * TriggerRecurrence Trigger the creation of recurring transactions (like a cron job).
- * Triggers the recurring transactions, like a cron job would. If the schedule does not call for a new transaction to be created, nothing will happen.
-
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiTriggerRecurrenceRequest
- */
-func (a *RecurrencesApiService) TriggerRecurrence(ctx _context.Context) ApiTriggerRecurrenceRequest {
-	return ApiTriggerRecurrenceRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-/*
- * Execute executes the request
- */
-func (a *RecurrencesApiService) TriggerRecurrenceExecute(r ApiTriggerRecurrenceRequest) (*_nethttp.Response, error) {
-	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecurrencesApiService.TriggerRecurrence")
-	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/recurrences/trigger"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
 type ApiUpdateRecurrenceRequest struct {
 	ctx _context.Context
 	ApiService RecurrencesApi
 	id int32
-	recurrence *Recurrence
+	recurrenceUpdate *RecurrenceUpdate
 }
 
-func (r ApiUpdateRecurrenceRequest) Recurrence(recurrence Recurrence) ApiUpdateRecurrenceRequest {
-	r.recurrence = &recurrence
+func (r ApiUpdateRecurrenceRequest) RecurrenceUpdate(recurrenceUpdate RecurrenceUpdate) ApiUpdateRecurrenceRequest {
+	r.recurrenceUpdate = &recurrenceUpdate
 	return r
 }
 
@@ -850,8 +744,8 @@ func (a *RecurrencesApiService) UpdateRecurrenceExecute(r ApiUpdateRecurrenceReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.recurrence == nil {
-		return localVarReturnValue, nil, reportError("recurrence is required and must be specified")
+	if r.recurrenceUpdate == nil {
+		return localVarReturnValue, nil, reportError("recurrenceUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -864,7 +758,7 @@ func (a *RecurrencesApiService) UpdateRecurrenceExecute(r ApiUpdateRecurrenceReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -872,7 +766,7 @@ func (a *RecurrencesApiService) UpdateRecurrenceExecute(r ApiUpdateRecurrenceReq
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.recurrence
+	localVarPostBody = r.recurrenceUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

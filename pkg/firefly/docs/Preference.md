@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
-**Name** | Pointer to **string** |  | [optional] [readonly] 
-**Data** | **string** | This field can also be an array | 
+**Name** | **string** |  | 
+**Data** | [**string**](oneOf&lt;boolean,string,object,array&gt;.md) | The actual preference content. | 
 
 ## Methods
 
 ### NewPreference
 
-`func NewPreference(data string, ) *Preference`
+`func NewPreference(name string, data string, ) *Preference`
 
 NewPreference instantiates a new Preference object
 This constructor will assign default values to properties that have it defined,
@@ -97,11 +97,6 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
-### HasName
-
-`func (o *Preference) HasName() bool`
-
-HasName returns a boolean if a field has been set.
 
 ### GetData
 

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -21,7 +21,7 @@ type Category struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	Name string `json:"name"`
-	Notes *string `json:"notes,omitempty"`
+	Notes NullableString `json:"notes,omitempty"`
 	Spent *[]CategorySpent `json:"spent,omitempty"`
 	Earned *[]CategoryEarned `json:"earned,omitempty"`
 }
@@ -132,36 +132,46 @@ func (o *Category) SetName(v string) {
 	o.Name = v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
+// GetNotes returns the Notes field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Category) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || o.Notes.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Notes
+	return *o.Notes.Get()
 }
 
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Category) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Notes, true
+	return o.Notes.Get(), o.Notes.IsSet()
 }
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Category) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && o.Notes.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNotes gets a reference to the given string and assigns it to the Notes field.
+// SetNotes gets a reference to the given NullableString and assigns it to the Notes field.
 func (o *Category) SetNotes(v string) {
-	o.Notes = &v
+	o.Notes.Set(&v)
+}
+// SetNotesNil sets the value for Notes to be an explicit nil
+func (o *Category) SetNotesNil() {
+	o.Notes.Set(nil)
+}
+
+// UnsetNotes ensures that no value is present for Notes, not even an explicit nil
+func (o *Category) UnsetNotes() {
+	o.Notes.Unset()
 }
 
 // GetSpent returns the Spent field value if set, zero value otherwise.
@@ -239,8 +249,8 @@ func (o Category) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["name"] = o.Name
 	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	if o.Notes.IsSet() {
+		toSerialize["notes"] = o.Notes.Get()
 	}
 	if o.Spent != nil {
 		toSerialize["spent"] = o.Spent

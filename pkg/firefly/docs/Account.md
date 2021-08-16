@@ -8,30 +8,31 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Name** | **string** |  | 
 **Type** | **string** | Can only be one one these account types. import, initial-balance and reconciliation cannot be set manually. | 
-**Iban** | Pointer to **string** |  | [optional] 
-**Bic** | Pointer to **string** |  | [optional] 
-**AccountNumber** | Pointer to **string** |  | [optional] 
-**OpeningBalance** | Pointer to **string** |  | [optional] 
-**OpeningBalanceDate** | Pointer to **string** |  | [optional] 
+**Iban** | Pointer to **NullableString** |  | [optional] 
+**Bic** | Pointer to **NullableString** |  | [optional] 
+**AccountNumber** | Pointer to **NullableString** |  | [optional] 
+**OpeningBalance** | Pointer to **string** | Represents the opening balance, the initial amount this account holds. | [optional] 
+**OpeningBalanceDate** | Pointer to **NullableTime** | Represents the date of the opening balance. | [optional] 
 **VirtualBalance** | Pointer to **string** |  | [optional] 
 **CurrentBalance** | Pointer to **string** |  | [optional] [readonly] 
-**CurrentBalanceDate** | Pointer to **string** |  | [optional] [readonly] 
-**CurrencyId** | Pointer to **int32** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
+**CurrentBalanceDate** | Pointer to **time.Time** |  | [optional] [readonly] 
+**CurrencyId** | Pointer to **string** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
 **CurrencyCode** | Pointer to **string** | Use either currency_id or currency_code. Defaults to the user&#39;s default currency. | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] [readonly] 
 **Active** | Pointer to **bool** | If omitted, defaults to true. | [optional] 
-**Order** | Pointer to **int32** | Order of the account | [optional] 
+**Order** | Pointer to **NullableInt32** | Order of the account. Is NULL if account is not asset or liability. | [optional] 
 **IncludeNetWorth** | Pointer to **bool** | If omitted, defaults to true. | [optional] 
-**AccountRole** | Pointer to **string** | Is only mandatory when the type is asset. | [optional] 
-**CreditCardType** | Pointer to **NullableString** | Mandatory when the account_role is ccAsset. Can only be monthlyFull. | [optional] 
-**MonthlyPaymentDate** | Pointer to **NullableString** | Mandatory when the account_role is ccAsset. Moment at which CC payment installments are asked for by the bank. | [optional] 
-**LiabilityType** | Pointer to **string** | Mandatory when type is liability. Specifies the exact type. | [optional] 
-**LiabilityAmount** | Pointer to **string** | Mandatory when type is liability. Amount of money in the liability. Must be positive. | [optional] 
-**LiabilityStartDate** | Pointer to **string** | Mandatory when type is liability. Start date for the liability. | [optional] 
-**Interest** | Pointer to **string** | Mandatory when type is liability. Interest percentage. | [optional] 
-**InterestPeriod** | Pointer to **string** | Mandatory when type is liability. Period over which the interest is calculated. | [optional] 
-**Notes** | Pointer to **string** |  | [optional] 
+**AccountRole** | Pointer to **NullableString** | Is only mandatory when the type is asset. | [optional] 
+**CreditCardType** | Pointer to **NullableString** | Mandatory when the account_role is ccAsset. Can only be monthlyFull or null. | [optional] 
+**MonthlyPaymentDate** | Pointer to **NullableTime** | Mandatory when the account_role is ccAsset. Moment at which CC payment installments are asked for by the bank. | [optional] 
+**LiabilityType** | Pointer to **NullableString** | Mandatory when type is liability. Specifies the exact type. | [optional] 
+**Interest** | Pointer to **NullableString** | Mandatory when type is liability. Interest percentage. | [optional] 
+**InterestPeriod** | Pointer to **NullableString** | Mandatory when type is liability. Period over which the interest is calculated. | [optional] 
+**Notes** | Pointer to **NullableString** |  | [optional] 
+**Latitude** | Pointer to **NullableFloat64** | Latitude of the accounts&#39;s location, if applicable. Can be used to draw a map. | [optional] 
+**Longitude** | Pointer to **NullableFloat64** | Latitude of the accounts&#39;s location, if applicable. Can be used to draw a map. | [optional] 
+**ZoomLevel** | Pointer to **NullableInt32** | Zoom level for the map, if drawn. This to set the box right. Unfortunately this is a proprietary value because each map provider has different zoom levels. | [optional] 
 
 ## Methods
 
@@ -167,6 +168,16 @@ SetIban sets Iban field to given value.
 
 HasIban returns a boolean if a field has been set.
 
+### SetIbanNil
+
+`func (o *Account) SetIbanNil(b bool)`
+
+ SetIbanNil sets the value for Iban to be an explicit nil
+
+### UnsetIban
+`func (o *Account) UnsetIban()`
+
+UnsetIban ensures that no value is present for Iban, not even an explicit nil
 ### GetBic
 
 `func (o *Account) GetBic() string`
@@ -192,6 +203,16 @@ SetBic sets Bic field to given value.
 
 HasBic returns a boolean if a field has been set.
 
+### SetBicNil
+
+`func (o *Account) SetBicNil(b bool)`
+
+ SetBicNil sets the value for Bic to be an explicit nil
+
+### UnsetBic
+`func (o *Account) UnsetBic()`
+
+UnsetBic ensures that no value is present for Bic, not even an explicit nil
 ### GetAccountNumber
 
 `func (o *Account) GetAccountNumber() string`
@@ -217,6 +238,16 @@ SetAccountNumber sets AccountNumber field to given value.
 
 HasAccountNumber returns a boolean if a field has been set.
 
+### SetAccountNumberNil
+
+`func (o *Account) SetAccountNumberNil(b bool)`
+
+ SetAccountNumberNil sets the value for AccountNumber to be an explicit nil
+
+### UnsetAccountNumber
+`func (o *Account) UnsetAccountNumber()`
+
+UnsetAccountNumber ensures that no value is present for AccountNumber, not even an explicit nil
 ### GetOpeningBalance
 
 `func (o *Account) GetOpeningBalance() string`
@@ -244,20 +275,20 @@ HasOpeningBalance returns a boolean if a field has been set.
 
 ### GetOpeningBalanceDate
 
-`func (o *Account) GetOpeningBalanceDate() string`
+`func (o *Account) GetOpeningBalanceDate() time.Time`
 
 GetOpeningBalanceDate returns the OpeningBalanceDate field if non-nil, zero value otherwise.
 
 ### GetOpeningBalanceDateOk
 
-`func (o *Account) GetOpeningBalanceDateOk() (*string, bool)`
+`func (o *Account) GetOpeningBalanceDateOk() (*time.Time, bool)`
 
 GetOpeningBalanceDateOk returns a tuple with the OpeningBalanceDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOpeningBalanceDate
 
-`func (o *Account) SetOpeningBalanceDate(v string)`
+`func (o *Account) SetOpeningBalanceDate(v time.Time)`
 
 SetOpeningBalanceDate sets OpeningBalanceDate field to given value.
 
@@ -267,6 +298,16 @@ SetOpeningBalanceDate sets OpeningBalanceDate field to given value.
 
 HasOpeningBalanceDate returns a boolean if a field has been set.
 
+### SetOpeningBalanceDateNil
+
+`func (o *Account) SetOpeningBalanceDateNil(b bool)`
+
+ SetOpeningBalanceDateNil sets the value for OpeningBalanceDate to be an explicit nil
+
+### UnsetOpeningBalanceDate
+`func (o *Account) UnsetOpeningBalanceDate()`
+
+UnsetOpeningBalanceDate ensures that no value is present for OpeningBalanceDate, not even an explicit nil
 ### GetVirtualBalance
 
 `func (o *Account) GetVirtualBalance() string`
@@ -319,20 +360,20 @@ HasCurrentBalance returns a boolean if a field has been set.
 
 ### GetCurrentBalanceDate
 
-`func (o *Account) GetCurrentBalanceDate() string`
+`func (o *Account) GetCurrentBalanceDate() time.Time`
 
 GetCurrentBalanceDate returns the CurrentBalanceDate field if non-nil, zero value otherwise.
 
 ### GetCurrentBalanceDateOk
 
-`func (o *Account) GetCurrentBalanceDateOk() (*string, bool)`
+`func (o *Account) GetCurrentBalanceDateOk() (*time.Time, bool)`
 
 GetCurrentBalanceDateOk returns a tuple with the CurrentBalanceDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrentBalanceDate
 
-`func (o *Account) SetCurrentBalanceDate(v string)`
+`func (o *Account) SetCurrentBalanceDate(v time.Time)`
 
 SetCurrentBalanceDate sets CurrentBalanceDate field to given value.
 
@@ -344,20 +385,20 @@ HasCurrentBalanceDate returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *Account) GetCurrencyId() int32`
+`func (o *Account) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *Account) GetCurrencyIdOk() (*int32, bool)`
+`func (o *Account) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *Account) SetCurrencyId(v int32)`
+`func (o *Account) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -492,6 +533,16 @@ SetOrder sets Order field to given value.
 
 HasOrder returns a boolean if a field has been set.
 
+### SetOrderNil
+
+`func (o *Account) SetOrderNil(b bool)`
+
+ SetOrderNil sets the value for Order to be an explicit nil
+
+### UnsetOrder
+`func (o *Account) UnsetOrder()`
+
+UnsetOrder ensures that no value is present for Order, not even an explicit nil
 ### GetIncludeNetWorth
 
 `func (o *Account) GetIncludeNetWorth() bool`
@@ -542,6 +593,16 @@ SetAccountRole sets AccountRole field to given value.
 
 HasAccountRole returns a boolean if a field has been set.
 
+### SetAccountRoleNil
+
+`func (o *Account) SetAccountRoleNil(b bool)`
+
+ SetAccountRoleNil sets the value for AccountRole to be an explicit nil
+
+### UnsetAccountRole
+`func (o *Account) UnsetAccountRole()`
+
+UnsetAccountRole ensures that no value is present for AccountRole, not even an explicit nil
 ### GetCreditCardType
 
 `func (o *Account) GetCreditCardType() string`
@@ -579,20 +640,20 @@ HasCreditCardType returns a boolean if a field has been set.
 UnsetCreditCardType ensures that no value is present for CreditCardType, not even an explicit nil
 ### GetMonthlyPaymentDate
 
-`func (o *Account) GetMonthlyPaymentDate() string`
+`func (o *Account) GetMonthlyPaymentDate() time.Time`
 
 GetMonthlyPaymentDate returns the MonthlyPaymentDate field if non-nil, zero value otherwise.
 
 ### GetMonthlyPaymentDateOk
 
-`func (o *Account) GetMonthlyPaymentDateOk() (*string, bool)`
+`func (o *Account) GetMonthlyPaymentDateOk() (*time.Time, bool)`
 
 GetMonthlyPaymentDateOk returns a tuple with the MonthlyPaymentDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMonthlyPaymentDate
 
-`func (o *Account) SetMonthlyPaymentDate(v string)`
+`func (o *Account) SetMonthlyPaymentDate(v time.Time)`
 
 SetMonthlyPaymentDate sets MonthlyPaymentDate field to given value.
 
@@ -637,56 +698,16 @@ SetLiabilityType sets LiabilityType field to given value.
 
 HasLiabilityType returns a boolean if a field has been set.
 
-### GetLiabilityAmount
+### SetLiabilityTypeNil
 
-`func (o *Account) GetLiabilityAmount() string`
+`func (o *Account) SetLiabilityTypeNil(b bool)`
 
-GetLiabilityAmount returns the LiabilityAmount field if non-nil, zero value otherwise.
+ SetLiabilityTypeNil sets the value for LiabilityType to be an explicit nil
 
-### GetLiabilityAmountOk
+### UnsetLiabilityType
+`func (o *Account) UnsetLiabilityType()`
 
-`func (o *Account) GetLiabilityAmountOk() (*string, bool)`
-
-GetLiabilityAmountOk returns a tuple with the LiabilityAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLiabilityAmount
-
-`func (o *Account) SetLiabilityAmount(v string)`
-
-SetLiabilityAmount sets LiabilityAmount field to given value.
-
-### HasLiabilityAmount
-
-`func (o *Account) HasLiabilityAmount() bool`
-
-HasLiabilityAmount returns a boolean if a field has been set.
-
-### GetLiabilityStartDate
-
-`func (o *Account) GetLiabilityStartDate() string`
-
-GetLiabilityStartDate returns the LiabilityStartDate field if non-nil, zero value otherwise.
-
-### GetLiabilityStartDateOk
-
-`func (o *Account) GetLiabilityStartDateOk() (*string, bool)`
-
-GetLiabilityStartDateOk returns a tuple with the LiabilityStartDate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLiabilityStartDate
-
-`func (o *Account) SetLiabilityStartDate(v string)`
-
-SetLiabilityStartDate sets LiabilityStartDate field to given value.
-
-### HasLiabilityStartDate
-
-`func (o *Account) HasLiabilityStartDate() bool`
-
-HasLiabilityStartDate returns a boolean if a field has been set.
-
+UnsetLiabilityType ensures that no value is present for LiabilityType, not even an explicit nil
 ### GetInterest
 
 `func (o *Account) GetInterest() string`
@@ -712,6 +733,16 @@ SetInterest sets Interest field to given value.
 
 HasInterest returns a boolean if a field has been set.
 
+### SetInterestNil
+
+`func (o *Account) SetInterestNil(b bool)`
+
+ SetInterestNil sets the value for Interest to be an explicit nil
+
+### UnsetInterest
+`func (o *Account) UnsetInterest()`
+
+UnsetInterest ensures that no value is present for Interest, not even an explicit nil
 ### GetInterestPeriod
 
 `func (o *Account) GetInterestPeriod() string`
@@ -737,6 +768,16 @@ SetInterestPeriod sets InterestPeriod field to given value.
 
 HasInterestPeriod returns a boolean if a field has been set.
 
+### SetInterestPeriodNil
+
+`func (o *Account) SetInterestPeriodNil(b bool)`
+
+ SetInterestPeriodNil sets the value for InterestPeriod to be an explicit nil
+
+### UnsetInterestPeriod
+`func (o *Account) UnsetInterestPeriod()`
+
+UnsetInterestPeriod ensures that no value is present for InterestPeriod, not even an explicit nil
 ### GetNotes
 
 `func (o *Account) GetNotes() string`
@@ -762,6 +803,121 @@ SetNotes sets Notes field to given value.
 
 HasNotes returns a boolean if a field has been set.
 
+### SetNotesNil
+
+`func (o *Account) SetNotesNil(b bool)`
+
+ SetNotesNil sets the value for Notes to be an explicit nil
+
+### UnsetNotes
+`func (o *Account) UnsetNotes()`
+
+UnsetNotes ensures that no value is present for Notes, not even an explicit nil
+### GetLatitude
+
+`func (o *Account) GetLatitude() float64`
+
+GetLatitude returns the Latitude field if non-nil, zero value otherwise.
+
+### GetLatitudeOk
+
+`func (o *Account) GetLatitudeOk() (*float64, bool)`
+
+GetLatitudeOk returns a tuple with the Latitude field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatitude
+
+`func (o *Account) SetLatitude(v float64)`
+
+SetLatitude sets Latitude field to given value.
+
+### HasLatitude
+
+`func (o *Account) HasLatitude() bool`
+
+HasLatitude returns a boolean if a field has been set.
+
+### SetLatitudeNil
+
+`func (o *Account) SetLatitudeNil(b bool)`
+
+ SetLatitudeNil sets the value for Latitude to be an explicit nil
+
+### UnsetLatitude
+`func (o *Account) UnsetLatitude()`
+
+UnsetLatitude ensures that no value is present for Latitude, not even an explicit nil
+### GetLongitude
+
+`func (o *Account) GetLongitude() float64`
+
+GetLongitude returns the Longitude field if non-nil, zero value otherwise.
+
+### GetLongitudeOk
+
+`func (o *Account) GetLongitudeOk() (*float64, bool)`
+
+GetLongitudeOk returns a tuple with the Longitude field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLongitude
+
+`func (o *Account) SetLongitude(v float64)`
+
+SetLongitude sets Longitude field to given value.
+
+### HasLongitude
+
+`func (o *Account) HasLongitude() bool`
+
+HasLongitude returns a boolean if a field has been set.
+
+### SetLongitudeNil
+
+`func (o *Account) SetLongitudeNil(b bool)`
+
+ SetLongitudeNil sets the value for Longitude to be an explicit nil
+
+### UnsetLongitude
+`func (o *Account) UnsetLongitude()`
+
+UnsetLongitude ensures that no value is present for Longitude, not even an explicit nil
+### GetZoomLevel
+
+`func (o *Account) GetZoomLevel() int32`
+
+GetZoomLevel returns the ZoomLevel field if non-nil, zero value otherwise.
+
+### GetZoomLevelOk
+
+`func (o *Account) GetZoomLevelOk() (*int32, bool)`
+
+GetZoomLevelOk returns a tuple with the ZoomLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetZoomLevel
+
+`func (o *Account) SetZoomLevel(v int32)`
+
+SetZoomLevel sets ZoomLevel field to given value.
+
+### HasZoomLevel
+
+`func (o *Account) HasZoomLevel() bool`
+
+HasZoomLevel returns a boolean if a field has been set.
+
+### SetZoomLevelNil
+
+`func (o *Account) SetZoomLevelNil(b bool)`
+
+ SetZoomLevelNil sets the value for ZoomLevel to be an explicit nil
+
+### UnsetZoomLevel
+`func (o *Account) UnsetZoomLevel()`
+
+UnsetZoomLevel ensures that no value is present for ZoomLevel, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

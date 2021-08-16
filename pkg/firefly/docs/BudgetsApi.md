@@ -5,18 +5,19 @@ All URIs are relative to *https://demo.firefly-iii.org*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteBudget**](BudgetsApi.md#DeleteBudget) | **Delete** /api/v1/budgets/{id} | Delete a budget.
-[**DeleteBudgetLimit**](BudgetsApi.md#DeleteBudgetLimit) | **Delete** /api/v1/budgets/limits/{id} | Delete a budget limit.
+[**DeleteBudgetLimit**](BudgetsApi.md#DeleteBudgetLimit) | **Delete** /api/v1/budgets/{id}/limits/{limitId} | Delete a budget limit.
 [**GetBudget**](BudgetsApi.md#GetBudget) | **Get** /api/v1/budgets/{id} | Get a single budget.
-[**GetBudgetLimit**](BudgetsApi.md#GetBudgetLimit) | **Get** /api/v1/budgets/limits/{id} | Get single budget limit.
-[**ListAttachmentByBudget**](BudgetsApi.md#ListAttachmentByBudget) | **Get** /api/v1/budgets/{id}/attachments | Lists all attachments.
+[**GetBudgetLimit**](BudgetsApi.md#GetBudgetLimit) | **Get** /api/v1/budgets/{id}/limits/{limitId} | Get single budget limit.
+[**ListAttachmentByBudget**](BudgetsApi.md#ListAttachmentByBudget) | **Get** /api/v1/budgets/{id}/attachments | Lists all attachments of a budget.
 [**ListBudget**](BudgetsApi.md#ListBudget) | **Get** /api/v1/budgets | List all budgets.
-[**ListBudgetLimitByBudget**](BudgetsApi.md#ListBudgetLimitByBudget) | **Get** /api/v1/budgets/{id}/limits | Get all limits
+[**ListBudgetLimit**](BudgetsApi.md#ListBudgetLimit) | **Get** /api/v1/budget-limits | Get list of budget limits by date
+[**ListBudgetLimitByBudget**](BudgetsApi.md#ListBudgetLimitByBudget) | **Get** /api/v1/budgets/{id}/limits | Get all limits for a budget.
 [**ListTransactionByBudget**](BudgetsApi.md#ListTransactionByBudget) | **Get** /api/v1/budgets/{id}/transactions | All transactions to a budget.
-[**ListTransactionByBudgetLimit**](BudgetsApi.md#ListTransactionByBudgetLimit) | **Get** /api/v1/budgets/limits/{id}/transactions | List all transactions by a budget limit ID.
+[**ListTransactionByBudgetLimit**](BudgetsApi.md#ListTransactionByBudgetLimit) | **Get** /api/v1/budgets/{id}/limits/{limitId}/transactions | List all transactions by a budget limit ID.
 [**StoreBudget**](BudgetsApi.md#StoreBudget) | **Post** /api/v1/budgets | Store a new budget
 [**StoreBudgetLimit**](BudgetsApi.md#StoreBudgetLimit) | **Post** /api/v1/budgets/{id}/limits | Store new budget limit.
 [**UpdateBudget**](BudgetsApi.md#UpdateBudget) | **Put** /api/v1/budgets/{id} | Update existing budget.
-[**UpdateBudgetLimit**](BudgetsApi.md#UpdateBudgetLimit) | **Put** /api/v1/budgets/limits/{id} | Update existing budget limit.
+[**UpdateBudgetLimit**](BudgetsApi.md#UpdateBudgetLimit) | **Put** /api/v1/budgets/{id}/limits/{limitId} | Update existing budget limit.
 
 
 
@@ -90,7 +91,7 @@ Name | Type | Description  | Notes
 
 ## DeleteBudgetLimit
 
-> DeleteBudgetLimit(ctx, id).Execute()
+> DeleteBudgetLimit(ctx, id, limitId).Execute()
 
 Delete a budget limit.
 
@@ -109,11 +110,12 @@ import (
 )
 
 func main() {
-    id := int32(1) // int32 | The ID of the requested budget limit.
+    id := int32(1) // int32 | The ID of the budget. The budget limit MUST be associated to the budget ID.
+    limitId := int32(1) // int32 | The ID of the budget limit. The budget limit MUST be associated to the budget ID.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.DeleteBudgetLimit(context.Background(), id).Execute()
+    resp, r, err := api_client.BudgetsApi.DeleteBudgetLimit(context.Background(), id, limitId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.DeleteBudgetLimit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -127,7 +129,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | The ID of the requested budget limit. | 
+**id** | **int32** | The ID of the budget. The budget limit MUST be associated to the budget ID. | 
+**limitId** | **int32** | The ID of the budget limit. The budget limit MUST be associated to the budget ID. | 
 
 ### Other Parameters
 
@@ -136,6 +139,7 @@ Other parameters are passed through a pointer to a apiDeleteBudgetLimitRequest s
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
 
 
 ### Return type
@@ -224,7 +228,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -233,7 +237,7 @@ Name | Type | Description  | Notes
 
 ## GetBudgetLimit
 
-> BudgetLimitSingle GetBudgetLimit(ctx, id).Execute()
+> BudgetLimitSingle GetBudgetLimit(ctx, id, limitId).Execute()
 
 Get single budget limit.
 
@@ -250,11 +254,12 @@ import (
 )
 
 func main() {
-    id := int32(1) // int32 | The ID of the requested budget limit.
+    id := int32(1) // int32 | The ID of the budget. The budget limit MUST be associated to the budget ID.
+    limitId := int32(1) // int32 | The ID of the budget limit. The budget limit MUST be associated to the budget ID.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.GetBudgetLimit(context.Background(), id).Execute()
+    resp, r, err := api_client.BudgetsApi.GetBudgetLimit(context.Background(), id, limitId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.GetBudgetLimit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -270,7 +275,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | The ID of the requested budget limit. | 
+**id** | **int32** | The ID of the budget. The budget limit MUST be associated to the budget ID. | 
+**limitId** | **int32** | The ID of the budget limit. The budget limit MUST be associated to the budget ID. | 
 
 ### Other Parameters
 
@@ -279,6 +285,7 @@ Other parameters are passed through a pointer to a apiGetBudgetLimitRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
 
 
 ### Return type
@@ -292,7 +299,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -303,7 +310,7 @@ Name | Type | Description  | Notes
 
 > AttachmentArray ListAttachmentByBudget(ctx, id).Page(page).Execute()
 
-Lists all attachments.
+Lists all attachments of a budget.
 
 
 
@@ -364,7 +371,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -435,7 +442,76 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListBudgetLimit
+
+> BudgetLimitArray ListBudgetLimit(ctx).Start(start).End(end).Execute()
+
+Get list of budget limits by date
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    "time"
+    openapiclient "./openapi"
+)
+
+func main() {
+    start := time.Now() // string | A date formatted YYYY-MM-DD. 
+    end := time.Now() // string | A date formatted YYYY-MM-DD. 
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.BudgetsApi.ListBudgetLimit(context.Background()).Start(start).End(end).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.ListBudgetLimit``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ListBudgetLimit`: BudgetLimitArray
+    fmt.Fprintf(os.Stdout, "Response from `BudgetsApi.ListBudgetLimit`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBudgetLimitRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **start** | **string** | A date formatted YYYY-MM-DD.  | 
+ **end** | **string** | A date formatted YYYY-MM-DD.  | 
+
+### Return type
+
+[**BudgetLimitArray**](BudgetLimitArray.md)
+
+### Authorization
+
+[firefly_iii_auth](../README.md#firefly_iii_auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -446,7 +522,7 @@ Name | Type | Description  | Notes
 
 > BudgetLimitArray ListBudgetLimitByBudget(ctx, id).Start(start).End(end).Execute()
 
-Get all limits
+Get all limits for a budget.
 
 
 
@@ -510,7 +586,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -591,7 +667,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -600,7 +676,7 @@ Name | Type | Description  | Notes
 
 ## ListTransactionByBudgetLimit
 
-> TransactionArray ListTransactionByBudgetLimit(ctx, id).Page(page).Type_(type_).Execute()
+> TransactionArray ListTransactionByBudgetLimit(ctx, id, limitId).Page(page).Type_(type_).Execute()
 
 List all transactions by a budget limit ID.
 
@@ -619,13 +695,14 @@ import (
 )
 
 func main() {
-    id := int32(1) // int32 | The ID of the requested budget limit.
+    id := int32(1) // int32 | The ID of the budget. The budget limit MUST be associated to the budget ID.
+    limitId := int32(1) // int32 | The ID of the budget limit. The budget limit MUST be associated to the budget ID.
     page := int32(1) // int32 | Page number. The default pagination is 50. (optional)
     type_ := openapiclient.TransactionTypeFilter("all") // TransactionTypeFilter | Optional filter on the transaction type(s) returned (optional)
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.ListTransactionByBudgetLimit(context.Background(), id).Page(page).Type_(type_).Execute()
+    resp, r, err := api_client.BudgetsApi.ListTransactionByBudgetLimit(context.Background(), id, limitId).Page(page).Type_(type_).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.ListTransactionByBudgetLimit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -641,7 +718,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | The ID of the requested budget limit. | 
+**id** | **int32** | The ID of the budget. The budget limit MUST be associated to the budget ID. | 
+**limitId** | **int32** | The ID of the budget limit. The budget limit MUST be associated to the budget ID. | 
 
 ### Other Parameters
 
@@ -650,6 +728,7 @@ Other parameters are passed through a pointer to a apiListTransactionByBudgetLim
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
 
  **page** | **int32** | Page number. The default pagination is 50. | 
  **type_** | [**TransactionTypeFilter**](TransactionTypeFilter.md) | Optional filter on the transaction type(s) returned | 
@@ -665,7 +744,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -674,7 +753,7 @@ Name | Type | Description  | Notes
 
 ## StoreBudget
 
-> BudgetSingle StoreBudget(ctx).Budget(budget).Execute()
+> BudgetSingle StoreBudget(ctx).BudgetStore(budgetStore).Execute()
 
 Store a new budget
 
@@ -693,11 +772,11 @@ import (
 )
 
 func main() {
-    budget := *openapiclient.NewBudget("Bills") // Budget | JSON array or key=value pairs with the necessary budget information. See the model for the exact specifications.
+    budgetStore := *openapiclient.NewBudgetStore("Bills") // BudgetStore | JSON array or key=value pairs with the necessary budget information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.StoreBudget(context.Background()).Budget(budget).Execute()
+    resp, r, err := api_client.BudgetsApi.StoreBudget(context.Background()).BudgetStore(budgetStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.StoreBudget``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -718,7 +797,7 @@ Other parameters are passed through a pointer to a apiStoreBudgetRequest struct 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **budget** | [**Budget**](Budget.md) | JSON array or key&#x3D;value pairs with the necessary budget information. See the model for the exact specifications. | 
+ **budgetStore** | [**BudgetStore**](BudgetStore.md) | JSON array or key&#x3D;value pairs with the necessary budget information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -731,7 +810,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -740,7 +819,7 @@ Name | Type | Description  | Notes
 
 ## StoreBudgetLimit
 
-> BudgetLimitSingle StoreBudgetLimit(ctx, id).BudgetLimit(budgetLimit).Execute()
+> BudgetLimitSingle StoreBudgetLimit(ctx, id).BudgetLimitStore(budgetLimitStore).Execute()
 
 Store new budget limit.
 
@@ -761,11 +840,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the budget.
-    budgetLimit := *openapiclient.NewBudgetLimit(int32(23), time.Now(), time.Now(), "123.45") // BudgetLimit | JSON array or key=value pairs with the necessary budget information. See the model for the exact specifications.
+    budgetLimitStore := *openapiclient.NewBudgetLimitStore("23", time.Now(), time.Now(), "123.45") // BudgetLimitStore | JSON array or key=value pairs with the necessary budget information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.StoreBudgetLimit(context.Background(), id).BudgetLimit(budgetLimit).Execute()
+    resp, r, err := api_client.BudgetsApi.StoreBudgetLimit(context.Background(), id).BudgetLimitStore(budgetLimitStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.StoreBudgetLimit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -791,7 +870,7 @@ Other parameters are passed through a pointer to a apiStoreBudgetLimitRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **budgetLimit** | [**BudgetLimit**](BudgetLimit.md) | JSON array or key&#x3D;value pairs with the necessary budget information. See the model for the exact specifications. | 
+ **budgetLimitStore** | [**BudgetLimitStore**](BudgetLimitStore.md) | JSON array or key&#x3D;value pairs with the necessary budget information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -804,7 +883,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -813,7 +892,7 @@ Name | Type | Description  | Notes
 
 ## UpdateBudget
 
-> BudgetSingle UpdateBudget(ctx, id).Budget(budget).Execute()
+> BudgetSingle UpdateBudget(ctx, id).BudgetUpdate(budgetUpdate).Execute()
 
 Update existing budget.
 
@@ -833,11 +912,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the budget.
-    budget := *openapiclient.NewBudget("Bills") // Budget | JSON array with updated budget information. See the model for the exact specifications.
+    budgetUpdate := *openapiclient.NewBudgetUpdate() // BudgetUpdate | JSON array with updated budget information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.UpdateBudget(context.Background(), id).Budget(budget).Execute()
+    resp, r, err := api_client.BudgetsApi.UpdateBudget(context.Background(), id).BudgetUpdate(budgetUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.UpdateBudget``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -863,7 +942,7 @@ Other parameters are passed through a pointer to a apiUpdateBudgetRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **budget** | [**Budget**](Budget.md) | JSON array with updated budget information. See the model for the exact specifications. | 
+ **budgetUpdate** | [**BudgetUpdate**](BudgetUpdate.md) | JSON array with updated budget information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -876,7 +955,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -885,7 +964,7 @@ Name | Type | Description  | Notes
 
 ## UpdateBudgetLimit
 
-> BudgetLimitSingle UpdateBudgetLimit(ctx, id).BudgetLimit(budgetLimit).Execute()
+> BudgetLimitSingle UpdateBudgetLimit(ctx, id, limitId).BudgetLimit(budgetLimit).Execute()
 
 Update existing budget limit.
 
@@ -905,12 +984,13 @@ import (
 )
 
 func main() {
-    id := int32(1) // int32 | The ID of the requested budget limit. The budget limit MUST be associated to the budget ID.
-    budgetLimit := *openapiclient.NewBudgetLimit(int32(23), time.Now(), time.Now(), "123.45") // BudgetLimit | JSON array with updated budget limit information. See the model for the exact specifications.
+    id := int32(1) // int32 | The ID of the budget. The budget limit MUST be associated to the budget ID.
+    limitId := int32(1) // int32 | The ID of the budget limit. The budget limit MUST be associated to the budget ID.
+    budgetLimit := *openapiclient.NewBudgetLimit("23", time.Now(), time.Now(), "123.45") // BudgetLimit | JSON array with updated budget limit information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BudgetsApi.UpdateBudgetLimit(context.Background(), id).BudgetLimit(budgetLimit).Execute()
+    resp, r, err := api_client.BudgetsApi.UpdateBudgetLimit(context.Background(), id, limitId).BudgetLimit(budgetLimit).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BudgetsApi.UpdateBudgetLimit``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -926,7 +1006,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | The ID of the requested budget limit. The budget limit MUST be associated to the budget ID. | 
+**id** | **int32** | The ID of the budget. The budget limit MUST be associated to the budget ID. | 
+**limitId** | **int32** | The ID of the budget limit. The budget limit MUST be associated to the budget ID. | 
 
 ### Other Parameters
 
@@ -935,6 +1016,7 @@ Other parameters are passed through a pointer to a apiUpdateBudgetLimitRequest s
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+
 
  **budgetLimit** | [**BudgetLimit**](BudgetLimit.md) | JSON array with updated budget limit information. See the model for the exact specifications. | 
 
@@ -949,7 +1031,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

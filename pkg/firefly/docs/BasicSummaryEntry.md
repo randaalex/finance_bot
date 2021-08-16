@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Key** | Pointer to **string** | This is a reference to the type of info shared, not influenced by translations or user preferences. | [optional] 
+**Key** | Pointer to **string** | This is a reference to the type of info shared, not influenced by translations or user preferences. The EUR value is a reference to the currency code. Possibilities are: balance-in-ABC, spent-in-ABC, earned-in-ABC, bills-paid-in-ABC, bills-unpaid-in-ABC, left-to-spend-in-ABC and net-worth-in-ABC. | [optional] 
 **Title** | Pointer to **string** | A translated title for the information shared. | [optional] 
 **MonetaryValue** | Pointer to **float64** | The amount as a float. | [optional] 
-**CurrencyId** | Pointer to **int32** | The currency ID of the associated currency. | [optional] 
+**CurrencyId** | Pointer to **string** | The currency ID of the associated currency. | [optional] 
 **CurrencyCode** | Pointer to **string** |  | [optional] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals for the associated currency. | [optional] 
@@ -111,20 +111,20 @@ HasMonetaryValue returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *BasicSummaryEntry) GetCurrencyId() int32`
+`func (o *BasicSummaryEntry) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *BasicSummaryEntry) GetCurrencyIdOk() (*int32, bool)`
+`func (o *BasicSummaryEntry) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *BasicSummaryEntry) SetCurrencyId(v int32)`
+`func (o *BasicSummaryEntry) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 

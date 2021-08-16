@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -17,6 +17,7 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
+	"strings"
 )
 
 // Linger please
@@ -40,6 +41,24 @@ type AboutApi interface {
 	 * @return SystemInfo
 	 */
 	GetAboutExecute(r ApiGetAboutRequest) (SystemInfo, *_nethttp.Response, error)
+
+	/*
+	 * GetCron Cron job endpoint
+	 * Firefly III has one endpoint for its various cron related tasks. Send a GET to this endpoint
+to run the cron. The cron requires the CLI token to be present. The cron job will fire for all
+users.
+
+	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	 * @param cliToken The CLI token of any user in Firefly III, required to run the cron job.
+	 * @return ApiGetCronRequest
+	 */
+	GetCron(ctx _context.Context, cliToken string) ApiGetCronRequest
+
+	/*
+	 * GetCronExecute executes the request
+	 * @return CronResult
+	 */
+	GetCronExecute(r ApiGetCronRequest) (CronResult, *_nethttp.Response, error)
 
 	/*
 	 * GetCurrentUser Currently authenticated user endpoint.
@@ -109,6 +128,131 @@ func (a *AboutApiService) GetAboutExecute(r ApiGetAboutRequest) (SystemInfo, *_n
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetCronRequest struct {
+	ctx _context.Context
+	ApiService AboutApi
+	cliToken string
+	date *string
+	force *bool
+}
+
+func (r ApiGetCronRequest) Date(date string) ApiGetCronRequest {
+	r.date = &date
+	return r
+}
+func (r ApiGetCronRequest) Force(force bool) ApiGetCronRequest {
+	r.force = &force
+	return r
+}
+
+func (r ApiGetCronRequest) Execute() (CronResult, *_nethttp.Response, error) {
+	return r.ApiService.GetCronExecute(r)
+}
+
+/*
+ * GetCron Cron job endpoint
+ * Firefly III has one endpoint for its various cron related tasks. Send a GET to this endpoint
+to run the cron. The cron requires the CLI token to be present. The cron job will fire for all
+users.
+
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param cliToken The CLI token of any user in Firefly III, required to run the cron job.
+ * @return ApiGetCronRequest
+ */
+func (a *AboutApiService) GetCron(ctx _context.Context, cliToken string) ApiGetCronRequest {
+	return ApiGetCronRequest{
+		ApiService: a,
+		ctx: ctx,
+		cliToken: cliToken,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return CronResult
+ */
+func (a *AboutApiService) GetCronExecute(r ApiGetCronRequest) (CronResult, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  CronResult
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AboutApiService.GetCron")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/cron/{cliToken}"
+	localVarPath = strings.Replace(localVarPath, "{"+"cliToken"+"}", _neturl.PathEscape(parameterToString(r.cliToken, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if r.date != nil {
+		localVarQueryParams.Add("date", parameterToString(*r.date, ""))
+	}
+	if r.force != nil {
+		localVarQueryParams.Add("force", parameterToString(*r.force, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -222,7 +366,7 @@ func (a *AboutApiService) GetCurrentUserExecute(r ApiGetCurrentUserRequest) (Use
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

@@ -46,26 +46,41 @@ func (t *Transaction) GetHash() string {
 	return fmt.Sprintf("%x", hash)
 }
 
-func ConvertTransactionToFireflyTransaction(transaction *Transaction) *firefly.Transaction {
+func ConvertTransactionToFireflyTransactionStore(transaction *Transaction) *firefly.TransactionStore {
 	errorIfDuplicateHash := true
 
-	hash := transaction.GetHash()
+	//hash := transaction.GetHash()
 	internalReference := transaction.IssuedAt.Format(FireflyTransactionDateTimeFormat)
 
-	fireflySplit := firefly.TransactionSplit{
-		Date:                transaction.IssuedAt.Format(FireflyTransactionDateFormat),
-		Type:                transaction.Type,
-		Description:         transaction.Description,
-		Amount:              fmt.Sprintf(FireflyTransactionAmountFormat, transaction.Amount),
-		CategoryId:          *NewNullableInt32(&transaction.CategoryId),
-		SourceId:            *NewNullableInt32(&transaction.SourceId),
-		SourceName:          *NewNullableString(&transaction.SourceName),
-		DestinationId:       *NewNullableInt32(&transaction.DestinationId),
-		DestinationName:     *NewNullableString(&transaction.DestinationName),
-		ExternalId:          *NewNullableString(&transaction.Recipient),
-		ImportHashV2:        *NewNullableString(&hash),
-		InternalReference:   *NewNullableString(&internalReference),
-		Notes:               *NewNullableString(&transaction.Notes),
+	fireflySplit := firefly.TransactionSplitStore{
+		Date:              transaction.IssuedAt,
+		Type:              transaction.Type,
+		Description:       transaction.Description,
+		Amount:            fmt.Sprintf(FireflyTransactionAmountFormat, transaction.Amount),
+		//CategoryId:        *NewNullableString(&categoryId),
+		//SourceId:          *NewNullableString(&sourceId),
+		SourceName:        *NewNullableString(&transaction.SourceName),
+		//DestinationId:     *NewNullableString(&destinationId),
+		DestinationName:   *NewNullableString(&transaction.DestinationName),
+		ExternalId:        *NewNullableString(&transaction.Recipient),
+		//ImportHashV2:      *NewNullableString(&hash),
+		InternalReference: *NewNullableString(&internalReference),
+		Notes:             *NewNullableString(&transaction.Notes),
+	}
+
+	if transaction.CategoryId != 0 {
+		categoryId := strconv.Itoa(transaction.CategoryId)
+		fireflySplit.CategoryId = *NewNullableString(&categoryId)
+	}
+
+	if transaction.SourceId != 0 {
+		sourceId := strconv.Itoa(transaction.SourceId)
+		fireflySplit.SourceId = *NewNullableString(&sourceId)
+	}
+
+	if transaction.DestinationId != 0 {
+		destinationId := strconv.Itoa(transaction.DestinationId)
+		fireflySplit.DestinationId = *NewNullableString(&destinationId)
 	}
 
 	if transaction.ForeignAmount > 0 {
@@ -73,9 +88,43 @@ func ConvertTransactionToFireflyTransaction(transaction *Transaction) *firefly.T
 		fireflySplit.SetForeignCurrencyCode(transaction.ForeignCurrencyCode)
 	}
 
-	fireflyTransaction := firefly.Transaction{
+	fireflyTransaction := firefly.TransactionStore{
 		ErrorIfDuplicateHash: &errorIfDuplicateHash,
-		Transactions: []firefly.TransactionSplit{fireflySplit},
+		Transactions:         []firefly.TransactionSplitStore{fireflySplit},
+	}
+
+	return &fireflyTransaction
+}
+
+func ConvertTransactionToFireflyTransactionUpdate(transaction *Transaction) *firefly.TransactionUpdate {
+	categoryId := strconv.Itoa(transaction.CategoryId)
+	sourceId := strconv.Itoa(transaction.SourceId)
+	destinationId := strconv.Itoa(transaction.DestinationId)
+	internalReference := transaction.IssuedAt.Format(FireflyTransactionDateTimeFormat)
+
+	amount := fmt.Sprintf(FireflyTransactionAmountFormat, transaction.Amount)
+
+	fireflySplit := firefly.TransactionSplitUpdate{
+		Date:              &transaction.IssuedAt,
+		Description:       &transaction.Description,
+		Amount:            &amount,
+		CategoryId:        *NewNullableString(&categoryId),
+		SourceId:          *NewNullableString(&sourceId),
+		SourceName:        *NewNullableString(&transaction.SourceName),
+		DestinationId:     *NewNullableString(&destinationId),
+		DestinationName:   *NewNullableString(&transaction.DestinationName),
+		ExternalId:        *NewNullableString(&transaction.Recipient),
+		InternalReference: *NewNullableString(&internalReference),
+		Notes:             *NewNullableString(&transaction.Notes),
+	}
+
+	if transaction.ForeignAmount > 0 {
+		fireflySplit.SetForeignAmount(fmt.Sprintf(FireflyTransactionAmountFormat, transaction.ForeignAmount))
+		fireflySplit.SetForeignCurrencyCode(transaction.ForeignCurrencyCode)
+	}
+
+	fireflyTransaction := firefly.TransactionUpdate{
+		Transactions: &[]firefly.TransactionSplitUpdate{fireflySplit},
 	}
 
 	return &fireflyTransaction
@@ -102,6 +151,10 @@ func ConvertFireflyTransactionToTransaction(fireflyTransactionSingle *firefly.Tr
 		issuedAt = time.Time{}
 	}
 
+	categoryId, _ := strconv.Atoi(fireflySplit.GetCategoryId())
+	sourceId, _ := strconv.Atoi(fireflySplit.GetSourceId())
+	destinationId, _ := strconv.Atoi(fireflySplit.GetDestinationId())
+
 	transaction := Transaction{
 		Id:                  transactionId,
 		IssuedAt:            issuedAt,
@@ -111,11 +164,11 @@ func ConvertFireflyTransactionToTransaction(fireflyTransactionSingle *firefly.Tr
 		CurrencyCode:        fireflySplit.GetCurrencyCode(),
 		ForeignAmount:       foreignAmount,
 		ForeignCurrencyCode: fireflySplit.GetForeignCurrencyCode(),
-		CategoryId:          int(fireflySplit.GetCategoryId()),
+		CategoryId:          categoryId,
 		CategoryName:        fireflySplit.GetCategoryName(),
-		SourceId:            int(fireflySplit.GetSourceId()),
+		SourceId:            sourceId,
 		SourceName:          fireflySplit.GetSourceName(),
-		DestinationId:       int(fireflySplit.GetDestinationId()),
+		DestinationId:       destinationId,
 		DestinationName:     fireflySplit.GetDestinationName(),
 		Recipient:           fireflySplit.GetExternalId(),
 		Notes:               fireflySplit.GetNotes(),

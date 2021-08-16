@@ -3,6 +3,7 @@ module github.com/randaalex/finance_bot
 go 1.14
 
 require (
+	github.com/antihax/optional v1.0.0
 	github.com/emersion/go-imap v1.1.0
 	github.com/emersion/go-message v0.14.1
 	github.com/fsnotify/fsnotify v1.4.9 // indirect

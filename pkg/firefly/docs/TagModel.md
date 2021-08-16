@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Tag** | **string** | The tag | 
-**Date** | Pointer to **NullableString** | The date to which the tag is applicable. | [optional] 
-**Description** | Pointer to **string** |  | [optional] 
+**Date** | Pointer to **NullableTime** | The date to which the tag is applicable. | [optional] 
+**Description** | Pointer to **NullableString** |  | [optional] 
 **Latitude** | Pointer to **NullableFloat64** | Latitude of the tag&#39;s location, if applicable. Can be used to draw a map. | [optional] 
 **Longitude** | Pointer to **NullableFloat64** | Latitude of the tag&#39;s location, if applicable. Can be used to draw a map. | [optional] 
 **ZoomLevel** | Pointer to **NullableInt32** | Zoom level for the map, if drawn. This to set the box right. Unfortunately this is a proprietary value because each map provider has different zoom levels. | [optional] 
@@ -104,20 +104,20 @@ SetTag sets Tag field to given value.
 
 ### GetDate
 
-`func (o *TagModel) GetDate() string`
+`func (o *TagModel) GetDate() time.Time`
 
 GetDate returns the Date field if non-nil, zero value otherwise.
 
 ### GetDateOk
 
-`func (o *TagModel) GetDateOk() (*string, bool)`
+`func (o *TagModel) GetDateOk() (*time.Time, bool)`
 
 GetDateOk returns a tuple with the Date field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDate
 
-`func (o *TagModel) SetDate(v string)`
+`func (o *TagModel) SetDate(v time.Time)`
 
 SetDate sets Date field to given value.
 
@@ -162,6 +162,16 @@ SetDescription sets Description field to given value.
 
 HasDescription returns a boolean if a field has been set.
 
+### SetDescriptionNil
+
+`func (o *TagModel) SetDescriptionNil(b bool)`
+
+ SetDescriptionNil sets the value for Description to be an explicit nil
+
+### UnsetDescription
+`func (o *TagModel) UnsetDescription()`
+
+UnsetDescription ensures that no value is present for Description, not even an explicit nil
 ### GetLatitude
 
 `func (o *TagModel) GetLatitude() float64`

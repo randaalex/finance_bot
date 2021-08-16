@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Name of the tag found by an auto-complete search. | [readonly] 
-**Tag** | **string** | Name of the tag found by an auto-complete search. | [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Name of the tag found by an auto-complete search. | 
+**Tag** | **string** | Name of the tag found by an auto-complete search. | 
 
 ## Methods
 

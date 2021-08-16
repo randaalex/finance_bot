@@ -6,17 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
-**LinkTypeId** | **int32** | The link type ID to use. You can also use the link_type_name field. | 
+**LinkTypeId** | **string** | The link type ID to use. You can also use the link_type_name field. | 
 **LinkTypeName** | Pointer to **string** | The link type name to use. You can also use the link_type_id field. | [optional] 
-**InwardId** | **int32** | The inward transaction transaction_journal_id for the link. This becomes the &#39;is paid by&#39; transaction of the set. | 
-**OutwardId** | **int32** | The outward transaction transaction_journal_id for the link. This becomes the &#39;pays for&#39; transaction of the set. | 
-**Notes** | Pointer to **string** | Optional. Some notes. | [optional] 
+**InwardId** | **string** | The inward transaction transaction_journal_id for the link. This becomes the &#39;is paid by&#39; transaction of the set. | 
+**OutwardId** | **string** | The outward transaction transaction_journal_id for the link. This becomes the &#39;pays for&#39; transaction of the set. | 
+**Notes** | Pointer to **NullableString** | Optional. Some notes. | [optional] 
 
 ## Methods
 
 ### NewTransactionLink
 
-`func NewTransactionLink(linkTypeId int32, inwardId int32, outwardId int32, ) *TransactionLink`
+`func NewTransactionLink(linkTypeId string, inwardId string, outwardId string, ) *TransactionLink`
 
 NewTransactionLink instantiates a new TransactionLink object
 This constructor will assign default values to properties that have it defined,
@@ -83,20 +83,20 @@ HasUpdatedAt returns a boolean if a field has been set.
 
 ### GetLinkTypeId
 
-`func (o *TransactionLink) GetLinkTypeId() int32`
+`func (o *TransactionLink) GetLinkTypeId() string`
 
 GetLinkTypeId returns the LinkTypeId field if non-nil, zero value otherwise.
 
 ### GetLinkTypeIdOk
 
-`func (o *TransactionLink) GetLinkTypeIdOk() (*int32, bool)`
+`func (o *TransactionLink) GetLinkTypeIdOk() (*string, bool)`
 
 GetLinkTypeIdOk returns a tuple with the LinkTypeId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLinkTypeId
 
-`func (o *TransactionLink) SetLinkTypeId(v int32)`
+`func (o *TransactionLink) SetLinkTypeId(v string)`
 
 SetLinkTypeId sets LinkTypeId field to given value.
 
@@ -128,40 +128,40 @@ HasLinkTypeName returns a boolean if a field has been set.
 
 ### GetInwardId
 
-`func (o *TransactionLink) GetInwardId() int32`
+`func (o *TransactionLink) GetInwardId() string`
 
 GetInwardId returns the InwardId field if non-nil, zero value otherwise.
 
 ### GetInwardIdOk
 
-`func (o *TransactionLink) GetInwardIdOk() (*int32, bool)`
+`func (o *TransactionLink) GetInwardIdOk() (*string, bool)`
 
 GetInwardIdOk returns a tuple with the InwardId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInwardId
 
-`func (o *TransactionLink) SetInwardId(v int32)`
+`func (o *TransactionLink) SetInwardId(v string)`
 
 SetInwardId sets InwardId field to given value.
 
 
 ### GetOutwardId
 
-`func (o *TransactionLink) GetOutwardId() int32`
+`func (o *TransactionLink) GetOutwardId() string`
 
 GetOutwardId returns the OutwardId field if non-nil, zero value otherwise.
 
 ### GetOutwardIdOk
 
-`func (o *TransactionLink) GetOutwardIdOk() (*int32, bool)`
+`func (o *TransactionLink) GetOutwardIdOk() (*string, bool)`
 
 GetOutwardIdOk returns a tuple with the OutwardId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOutwardId
 
-`func (o *TransactionLink) SetOutwardId(v int32)`
+`func (o *TransactionLink) SetOutwardId(v string)`
 
 SetOutwardId sets OutwardId field to given value.
 
@@ -191,6 +191,16 @@ SetNotes sets Notes field to given value.
 
 HasNotes returns a boolean if a field has been set.
 
+### SetNotesNil
+
+`func (o *TransactionLink) SetNotesNil(b bool)`
+
+ SetNotesNil sets the value for Notes to be an explicit nil
+
+### UnsetNotes
+`func (o *TransactionLink) UnsetNotes()`
+
+UnsetNotes ensures that no value is present for Notes, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

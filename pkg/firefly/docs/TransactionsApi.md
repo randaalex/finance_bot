@@ -5,10 +5,12 @@ All URIs are relative to *https://demo.firefly-iii.org*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteTransaction**](TransactionsApi.md#DeleteTransaction) | **Delete** /api/v1/transactions/{id} | Delete a transaction.
+[**DeleteTransactionJournal**](TransactionsApi.md#DeleteTransactionJournal) | **Delete** /api/v1/transaction-journals/{id} | Delete split from transaction
 [**GetTransaction**](TransactionsApi.md#GetTransaction) | **Get** /api/v1/transactions/{id} | Get a single transaction.
-[**GetTransactionByJournal**](TransactionsApi.md#GetTransactionByJournal) | **Get** /api/v1/transaction-journals/{id} | Get a single transaction, based on one of the underlying transaction journals.
+[**GetTransactionByJournal**](TransactionsApi.md#GetTransactionByJournal) | **Get** /api/v1/transaction-journals/{id} | Get a single transaction, based on one of the underlying transaction journals (transaction splits).
 [**ListAttachmentByTransaction**](TransactionsApi.md#ListAttachmentByTransaction) | **Get** /api/v1/transactions/{id}/attachments | Lists all attachments.
 [**ListEventByTransaction**](TransactionsApi.md#ListEventByTransaction) | **Get** /api/v1/transactions/{id}/piggy_bank_events | Lists all piggy bank events.
+[**ListLinksByJournal**](TransactionsApi.md#ListLinksByJournal) | **Get** /api/v1/transaction-journals/{id}/links | Lists all the transaction links for an individual journal (individual split).
 [**ListTransaction**](TransactionsApi.md#ListTransaction) | **Get** /api/v1/transactions | List all the user&#39;s transactions. 
 [**StoreTransaction**](TransactionsApi.md#StoreTransaction) | **Post** /api/v1/transactions | Store a new transaction
 [**UpdateTransaction**](TransactionsApi.md#UpdateTransaction) | **Put** /api/v1/transactions/{id} | Update existing transaction.
@@ -59,6 +61,74 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteTransactionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[firefly_iii_auth](../README.md#firefly_iii_auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteTransactionJournal
+
+> DeleteTransactionJournal(ctx, id).Execute()
+
+Delete split from transaction
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    id := int32(1) // int32 | The ID of the transaction journal (the split) you wish to delete.
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.TransactionsApi.DeleteTransactionJournal(context.Background(), id).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.DeleteTransactionJournal``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the transaction journal (the split) you wish to delete. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteTransactionJournalRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -146,7 +216,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -157,7 +227,7 @@ Name | Type | Description  | Notes
 
 > TransactionSingle GetTransactionByJournal(ctx, id).Execute()
 
-Get a single transaction, based on one of the underlying transaction journals.
+Get a single transaction, based on one of the underlying transaction journals (transaction splits).
 
 
 
@@ -174,7 +244,7 @@ import (
 )
 
 func main() {
-    id := int32(1) // int32 | The ID of the transaction journal.
+    id := int32(1) // int32 | The ID of the transaction journal (split).
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
@@ -194,7 +264,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | The ID of the transaction journal. | 
+**id** | **int32** | The ID of the transaction journal (split). | 
 
 ### Other Parameters
 
@@ -216,7 +286,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -288,7 +358,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -360,7 +430,79 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListLinksByJournal
+
+> TransactionLinkArray ListLinksByJournal(ctx, id).Page(page).Execute()
+
+Lists all the transaction links for an individual journal (individual split).
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    id := int32(1) // int32 | The ID of the transaction journal / the split.
+    page := int32(1) // int32 | Page number. The default pagination is 50. (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.TransactionsApi.ListLinksByJournal(context.Background(), id).Page(page).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.ListLinksByJournal``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ListLinksByJournal`: TransactionLinkArray
+    fmt.Fprintf(os.Stdout, "Response from `TransactionsApi.ListLinksByJournal`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the transaction journal / the split. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListLinksByJournalRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **page** | **int32** | Page number. The default pagination is 50. | 
+
+### Return type
+
+[**TransactionLinkArray**](TransactionLinkArray.md)
+
+### Authorization
+
+[firefly_iii_auth](../README.md#firefly_iii_auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -433,7 +575,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -442,7 +584,7 @@ Name | Type | Description  | Notes
 
 ## StoreTransaction
 
-> TransactionSingle StoreTransaction(ctx).Transaction(transaction).Execute()
+> TransactionSingle StoreTransaction(ctx).TransactionStore(transactionStore).Execute()
 
 Store a new transaction
 
@@ -462,11 +604,11 @@ import (
 )
 
 func main() {
-    transaction := *openapiclient.NewTransaction([]openapiclient.TransactionSplit{*openapiclient.NewTransactionSplit("withdrawal", time.Now(), "123.45", "Vegetables", NullableInt32(2), NullableInt32(2))}) // Transaction | JSON array or key=value pairs with the necessary transaction information. See the model for the exact specifications.
+    transactionStore := *openapiclient.NewTransactionStore([]openapiclient.TransactionSplitStore{*openapiclient.NewTransactionSplitStore("withdrawal", time.Now(), "123.45", "Vegetables", "2", "2")}) // TransactionStore | JSON array or key=value pairs with the necessary transaction information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.TransactionsApi.StoreTransaction(context.Background()).Transaction(transaction).Execute()
+    resp, r, err := api_client.TransactionsApi.StoreTransaction(context.Background()).TransactionStore(transactionStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.StoreTransaction``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -487,7 +629,7 @@ Other parameters are passed through a pointer to a apiStoreTransactionRequest st
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **transaction** | [**Transaction**](Transaction.md) | JSON array or key&#x3D;value pairs with the necessary transaction information. See the model for the exact specifications. | 
+ **transactionStore** | [**TransactionStore**](TransactionStore.md) | JSON array or key&#x3D;value pairs with the necessary transaction information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -500,7 +642,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -509,7 +651,7 @@ Name | Type | Description  | Notes
 
 ## UpdateTransaction
 
-> TransactionSingle UpdateTransaction(ctx, id).Transaction(transaction).Execute()
+> TransactionSingle UpdateTransaction(ctx, id).TransactionUpdate(transactionUpdate).Execute()
 
 Update existing transaction.
 
@@ -524,17 +666,16 @@ import (
     "context"
     "fmt"
     "os"
-    "time"
     openapiclient "./openapi"
 )
 
 func main() {
     id := int32(1) // int32 | The ID of the transaction.
-    transaction := *openapiclient.NewTransaction([]openapiclient.TransactionSplit{*openapiclient.NewTransactionSplit("withdrawal", time.Now(), "123.45", "Vegetables", NullableInt32(2), NullableInt32(2))}) // Transaction | JSON array with updated transaction information. See the model for the exact specifications.
+    transactionUpdate := *openapiclient.NewTransactionUpdate() // TransactionUpdate | JSON array with updated transaction information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.TransactionsApi.UpdateTransaction(context.Background(), id).Transaction(transaction).Execute()
+    resp, r, err := api_client.TransactionsApi.UpdateTransaction(context.Background(), id).TransactionUpdate(transactionUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.UpdateTransaction``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -560,7 +701,7 @@ Other parameters are passed through a pointer to a apiUpdateTransactionRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **transaction** | [**Transaction**](Transaction.md) | JSON array with updated transaction information. See the model for the exact specifications. | 
+ **transactionUpdate** | [**TransactionUpdate**](TransactionUpdate.md) | JSON array with updated transaction information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -573,7 +714,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -2,25 +2,22 @@ package telegram
 
 import (
 	"context"
-	"fmt"
 	"github.com/randaalex/finance_bot/pkg/db"
 	"github.com/randaalex/finance_bot/pkg/entities"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/tucnak/telebot.v2"
-	"os"
 	"strconv"
 	"strings"
 )
 
 func (b *Bot) updateTransactionCategoryHandler(c *telebot.Callback) {
+	b.logger.WithFields(logrus.Fields{
+		"callback": c,
+	}).Info("updateTransactionCategory btn pressed")
+
 	ctx := context.TODO()
 
-	fmt.Println(c.ID)
-	fmt.Printf("C: %+v\n",c)
-
 	res := strings.Split(c.Data, "|")
-	fmt.Printf("TE%+v\n",res)
-
-	fmt.Println("updateTransactionCategory btn pressed")
 
 	transactionId, err := strconv.Atoi(res[0])
 	if err != nil {
@@ -41,15 +38,13 @@ func (b *Bot) updateTransactionCategoryHandler(c *telebot.Callback) {
 }
 
 func (b *Bot) setTransactionCategoryHandler(c *telebot.Callback) {
-	fmt.Println("setTransactionCategory btn pressed")
+	b.logger.WithFields(logrus.Fields{
+		"callback": c,
+	}).Info("setTransactionCategory btn pressed")
 
 	ctx := context.TODO()
 
-	fmt.Println(c.ID)
-	fmt.Printf("C: %+v\n",c)
-
 	res := strings.Split(c.Data, "|")
-	fmt.Printf("TE%+v\n",res)
 
 	transactionId, err := strconv.Atoi(res[0])
 	if err != nil {
@@ -77,13 +72,14 @@ func (b *Bot) setTransactionCategoryHandler(c *telebot.Callback) {
 		panic(err) // TODO: fix panic
 	}
 
-	fireflyTransaction := entities.ConvertTransactionToFireflyTransaction(transaction)
+	fireflyTransactionUpdate := entities.ConvertTransactionToFireflyTransactionUpdate(transaction)
 
 	fireflyTransaction2, r, err :=
-		b.FireflyClient.TransactionsApi.UpdateTransaction(context.TODO(), int32(transactionId)).Transaction(*fireflyTransaction).Execute()
+		b.FireflyClient.TransactionsApi.UpdateTransaction(context.TODO(), int32(transactionId)).TransactionUpdate(*fireflyTransactionUpdate).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsApi.UpdateTransaction``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+		b.logger.WithFields(logrus.Fields{
+			"err": err, "httpResp": r,
+		}).Info("Error when calling `TransactionsApi.UpdateTransaction`")
 
 		panic(err) // TODO: fix panic
 	}
@@ -99,11 +95,12 @@ func (b *Bot) setTransactionCategoryHandler(c *telebot.Callback) {
 }
 
 func (b *Bot) deleteTransactionHandler(c *telebot.Callback) {
-	fmt.Println(c)
-	fmt.Println("deleteTransaction btn pressed")
+	b.logger.WithFields(logrus.Fields{
+		"callback": c,
+	}).Info("deleteTransaction btn pressed")
+
 	err := b.Telebot.Respond(c, &telebot.CallbackResponse{Text: "not implemented yet"})
 	if err != nil {
 		panic(err) // TODO: fix panic
 	}
 }
-

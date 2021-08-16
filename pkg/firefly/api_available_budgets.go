@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -262,7 +262,7 @@ func (a *AvailableBudgetsApiService) GetAvailableBudgetExecute(r ApiGetAvailable
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -389,7 +389,7 @@ func (a *AvailableBudgetsApiService) ListAvailableBudgetExecute(r ApiListAvailab
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -436,11 +436,11 @@ func (a *AvailableBudgetsApiService) ListAvailableBudgetExecute(r ApiListAvailab
 type ApiStoreAvailableBudgetRequest struct {
 	ctx _context.Context
 	ApiService AvailableBudgetsApi
-	availableBudget *AvailableBudget
+	availableBudgetStore *AvailableBudgetStore
 }
 
-func (r ApiStoreAvailableBudgetRequest) AvailableBudget(availableBudget AvailableBudget) ApiStoreAvailableBudgetRequest {
-	r.availableBudget = &availableBudget
+func (r ApiStoreAvailableBudgetRequest) AvailableBudgetStore(availableBudgetStore AvailableBudgetStore) ApiStoreAvailableBudgetRequest {
+	r.availableBudgetStore = &availableBudgetStore
 	return r
 }
 
@@ -486,8 +486,8 @@ func (a *AvailableBudgetsApiService) StoreAvailableBudgetExecute(r ApiStoreAvail
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.availableBudget == nil {
-		return localVarReturnValue, nil, reportError("availableBudget is required and must be specified")
+	if r.availableBudgetStore == nil {
+		return localVarReturnValue, nil, reportError("availableBudgetStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -500,7 +500,7 @@ func (a *AvailableBudgetsApiService) StoreAvailableBudgetExecute(r ApiStoreAvail
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -508,7 +508,7 @@ func (a *AvailableBudgetsApiService) StoreAvailableBudgetExecute(r ApiStoreAvail
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.availableBudget
+	localVarPostBody = r.availableBudgetStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -559,11 +559,11 @@ type ApiUpdateAvailableBudgetRequest struct {
 	ctx _context.Context
 	ApiService AvailableBudgetsApi
 	id int32
-	availableBudget *AvailableBudget
+	availableBudgetUpdate *AvailableBudgetUpdate
 }
 
-func (r ApiUpdateAvailableBudgetRequest) AvailableBudget(availableBudget AvailableBudget) ApiUpdateAvailableBudgetRequest {
-	r.availableBudget = &availableBudget
+func (r ApiUpdateAvailableBudgetRequest) AvailableBudgetUpdate(availableBudgetUpdate AvailableBudgetUpdate) ApiUpdateAvailableBudgetRequest {
+	r.availableBudgetUpdate = &availableBudgetUpdate
 	return r
 }
 
@@ -611,12 +611,12 @@ func (a *AvailableBudgetsApiService) UpdateAvailableBudgetExecute(r ApiUpdateAva
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.availableBudget == nil {
-		return localVarReturnValue, nil, reportError("availableBudget is required and must be specified")
+	if r.availableBudgetUpdate == nil {
+		return localVarReturnValue, nil, reportError("availableBudgetUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
+	localVarHTTPContentTypes := []string{"application/vnd.api+json", "application/x-www-form-urlencoded"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -625,7 +625,7 @@ func (a *AvailableBudgetsApiService) UpdateAvailableBudgetExecute(r ApiUpdateAva
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -633,7 +633,7 @@ func (a *AvailableBudgetsApiService) UpdateAvailableBudgetExecute(r ApiUpdateAva
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.availableBudget
+	localVarPostBody = r.availableBudgetUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

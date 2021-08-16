@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -19,6 +19,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -41,7 +42,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Firefly III API API v1.4.0
+// APIClient manages communication with the Firefly III API v1.5.2 API v1.5.2
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -73,9 +74,11 @@ type APIClient struct {
 
 	DataApi DataApi
 
-	ImportApi ImportApi
+	InsightApi InsightApi
 
 	LinksApi LinksApi
+
+	ObjectGroupsApi ObjectGroupsApi
 
 	PiggyBanksApi PiggyBanksApi
 
@@ -96,6 +99,8 @@ type APIClient struct {
 	TransactionsApi TransactionsApi
 
 	UsersApi UsersApi
+
+	WebhooksApi WebhooksApi
 }
 
 type service struct {
@@ -126,8 +131,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ConfigurationApi = (*ConfigurationApiService)(&c.common)
 	c.CurrenciesApi = (*CurrenciesApiService)(&c.common)
 	c.DataApi = (*DataApiService)(&c.common)
-	c.ImportApi = (*ImportApiService)(&c.common)
+	c.InsightApi = (*InsightApiService)(&c.common)
 	c.LinksApi = (*LinksApiService)(&c.common)
+	c.ObjectGroupsApi = (*ObjectGroupsApiService)(&c.common)
 	c.PiggyBanksApi = (*PiggyBanksApiService)(&c.common)
 	c.PreferencesApi = (*PreferencesApiService)(&c.common)
 	c.RecurrencesApi = (*RecurrencesApiService)(&c.common)
@@ -138,6 +144,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.TagsApi = (*TagsApiService)(&c.common)
 	c.TransactionsApi = (*TransactionsApiService)(&c.common)
 	c.UsersApi = (*UsersApiService)(&c.common)
+	c.WebhooksApi = (*WebhooksApiService)(&c.common)
 
 	return c
 }
@@ -428,6 +435,15 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 	if s, ok := v.(*string); ok {
 		*s = string(b)
 		return nil
+	}
+	if f, ok := v.(**os.File); ok {
+		*f, err = ioutil.TempFile("", "HttpClientFile")
+		if err != nil {
+			return
+		}
+		_, err = (*f).Write(b)
+		_, err = (*f).Seek(0, io.SeekStart)
+		return
 	}
 	if xmlCheck.MatchString(contentType) {
 		if err = xml.Unmarshal(b, v); err != nil {

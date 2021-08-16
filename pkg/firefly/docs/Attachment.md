@@ -8,12 +8,12 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Filename** | **string** |  | 
 **AttachableType** | **string** | The object class to which the attachment must be linked. | 
-**AttachableId** | **int32** | ID of the model this attachment is linked to. | 
+**AttachableId** | **string** | ID of the model this attachment is linked to. | 
 **Md5** | Pointer to **string** | MD5 hash of the file for basic duplicate detection. | [optional] 
 **DownloadUri** | Pointer to **string** |  | [optional] 
 **UploadUri** | Pointer to **string** |  | [optional] 
 **Title** | Pointer to **string** |  | [optional] 
-**Notes** | Pointer to **string** |  | [optional] 
+**Notes** | Pointer to **NullableString** |  | [optional] 
 **Mime** | Pointer to **string** |  | [optional] [readonly] 
 **Size** | Pointer to **int32** |  | [optional] [readonly] 
 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewAttachment
 
-`func NewAttachment(filename string, attachableType string, attachableId int32, ) *Attachment`
+`func NewAttachment(filename string, attachableType string, attachableId string, ) *Attachment`
 
 NewAttachment instantiates a new Attachment object
 This constructor will assign default values to properties that have it defined,
@@ -128,20 +128,20 @@ SetAttachableType sets AttachableType field to given value.
 
 ### GetAttachableId
 
-`func (o *Attachment) GetAttachableId() int32`
+`func (o *Attachment) GetAttachableId() string`
 
 GetAttachableId returns the AttachableId field if non-nil, zero value otherwise.
 
 ### GetAttachableIdOk
 
-`func (o *Attachment) GetAttachableIdOk() (*int32, bool)`
+`func (o *Attachment) GetAttachableIdOk() (*string, bool)`
 
 GetAttachableIdOk returns a tuple with the AttachableId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAttachableId
 
-`func (o *Attachment) SetAttachableId(v int32)`
+`func (o *Attachment) SetAttachableId(v string)`
 
 SetAttachableId sets AttachableId field to given value.
 
@@ -271,6 +271,16 @@ SetNotes sets Notes field to given value.
 
 HasNotes returns a boolean if a field has been set.
 
+### SetNotesNil
+
+`func (o *Attachment) SetNotesNil(b bool)`
+
+ SetNotesNil sets the value for Notes to be an explicit nil
+
+### UnsetNotes
+`func (o *Attachment) UnsetNotes()`
+
+UnsetNotes ensures that no value is present for Notes, not even an explicit nil
 ### GetMime
 
 `func (o *Attachment) GetMime() string`

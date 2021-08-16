@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -21,22 +21,22 @@ type TransactionLink struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// The link type ID to use. You can also use the link_type_name field.
-	LinkTypeId int32 `json:"link_type_id"`
+	LinkTypeId string `json:"link_type_id"`
 	// The link type name to use. You can also use the link_type_id field.
 	LinkTypeName *string `json:"link_type_name,omitempty"`
 	// The inward transaction transaction_journal_id for the link. This becomes the 'is paid by' transaction of the set.
-	InwardId int32 `json:"inward_id"`
+	InwardId string `json:"inward_id"`
 	// The outward transaction transaction_journal_id for the link. This becomes the 'pays for' transaction of the set.
-	OutwardId int32 `json:"outward_id"`
+	OutwardId string `json:"outward_id"`
 	// Optional. Some notes.
-	Notes *string `json:"notes,omitempty"`
+	Notes NullableString `json:"notes,omitempty"`
 }
 
 // NewTransactionLink instantiates a new TransactionLink object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionLink(linkTypeId int32, inwardId int32, outwardId int32) *TransactionLink {
+func NewTransactionLink(linkTypeId string, inwardId string, outwardId string) *TransactionLink {
 	this := TransactionLink{}
 	this.LinkTypeId = linkTypeId
 	this.InwardId = inwardId
@@ -117,9 +117,9 @@ func (o *TransactionLink) SetUpdatedAt(v time.Time) {
 }
 
 // GetLinkTypeId returns the LinkTypeId field value
-func (o *TransactionLink) GetLinkTypeId() int32 {
+func (o *TransactionLink) GetLinkTypeId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -128,7 +128,7 @@ func (o *TransactionLink) GetLinkTypeId() int32 {
 
 // GetLinkTypeIdOk returns a tuple with the LinkTypeId field value
 // and a boolean to check if the value has been set.
-func (o *TransactionLink) GetLinkTypeIdOk() (*int32, bool) {
+func (o *TransactionLink) GetLinkTypeIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -136,7 +136,7 @@ func (o *TransactionLink) GetLinkTypeIdOk() (*int32, bool) {
 }
 
 // SetLinkTypeId sets field value
-func (o *TransactionLink) SetLinkTypeId(v int32) {
+func (o *TransactionLink) SetLinkTypeId(v string) {
 	o.LinkTypeId = v
 }
 
@@ -173,9 +173,9 @@ func (o *TransactionLink) SetLinkTypeName(v string) {
 }
 
 // GetInwardId returns the InwardId field value
-func (o *TransactionLink) GetInwardId() int32 {
+func (o *TransactionLink) GetInwardId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -184,7 +184,7 @@ func (o *TransactionLink) GetInwardId() int32 {
 
 // GetInwardIdOk returns a tuple with the InwardId field value
 // and a boolean to check if the value has been set.
-func (o *TransactionLink) GetInwardIdOk() (*int32, bool) {
+func (o *TransactionLink) GetInwardIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -192,14 +192,14 @@ func (o *TransactionLink) GetInwardIdOk() (*int32, bool) {
 }
 
 // SetInwardId sets field value
-func (o *TransactionLink) SetInwardId(v int32) {
+func (o *TransactionLink) SetInwardId(v string) {
 	o.InwardId = v
 }
 
 // GetOutwardId returns the OutwardId field value
-func (o *TransactionLink) GetOutwardId() int32 {
+func (o *TransactionLink) GetOutwardId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -208,7 +208,7 @@ func (o *TransactionLink) GetOutwardId() int32 {
 
 // GetOutwardIdOk returns a tuple with the OutwardId field value
 // and a boolean to check if the value has been set.
-func (o *TransactionLink) GetOutwardIdOk() (*int32, bool) {
+func (o *TransactionLink) GetOutwardIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -216,40 +216,50 @@ func (o *TransactionLink) GetOutwardIdOk() (*int32, bool) {
 }
 
 // SetOutwardId sets field value
-func (o *TransactionLink) SetOutwardId(v int32) {
+func (o *TransactionLink) SetOutwardId(v string) {
 	o.OutwardId = v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
+// GetNotes returns the Notes field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TransactionLink) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || o.Notes.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Notes
+	return *o.Notes.Get()
 }
 
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TransactionLink) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Notes, true
+	return o.Notes.Get(), o.Notes.IsSet()
 }
 
 // HasNotes returns a boolean if a field has been set.
 func (o *TransactionLink) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && o.Notes.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNotes gets a reference to the given string and assigns it to the Notes field.
+// SetNotes gets a reference to the given NullableString and assigns it to the Notes field.
 func (o *TransactionLink) SetNotes(v string) {
-	o.Notes = &v
+	o.Notes.Set(&v)
+}
+// SetNotesNil sets the value for Notes to be an explicit nil
+func (o *TransactionLink) SetNotesNil() {
+	o.Notes.Set(nil)
+}
+
+// UnsetNotes ensures that no value is present for Notes, not even an explicit nil
+func (o *TransactionLink) UnsetNotes() {
+	o.Notes.Unset()
 }
 
 func (o TransactionLink) MarshalJSON() ([]byte, error) {
@@ -272,8 +282,8 @@ func (o TransactionLink) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["outward_id"] = o.OutwardId
 	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	if o.Notes.IsSet() {
+		toSerialize["notes"] = o.Notes.Get()
 	}
 	return json.Marshal(toSerialize)
 }

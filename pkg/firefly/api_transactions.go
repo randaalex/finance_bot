@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -42,6 +42,20 @@ type TransactionsApi interface {
 	DeleteTransactionExecute(r ApiDeleteTransactionRequest) (*_nethttp.Response, error)
 
 	/*
+	 * DeleteTransactionJournal Delete split from transaction
+	 * Delete an individual journal (split) from a transaction.
+	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	 * @param id The ID of the transaction journal (the split) you wish to delete.
+	 * @return ApiDeleteTransactionJournalRequest
+	 */
+	DeleteTransactionJournal(ctx _context.Context, id int32) ApiDeleteTransactionJournalRequest
+
+	/*
+	 * DeleteTransactionJournalExecute executes the request
+	 */
+	DeleteTransactionJournalExecute(r ApiDeleteTransactionJournalRequest) (*_nethttp.Response, error)
+
+	/*
 	 * GetTransaction Get a single transaction.
 	 * Get a single transaction.
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -57,10 +71,10 @@ type TransactionsApi interface {
 	GetTransactionExecute(r ApiGetTransactionRequest) (TransactionSingle, *_nethttp.Response, error)
 
 	/*
-	 * GetTransactionByJournal Get a single transaction, based on one of the underlying transaction journals.
-	 * Get a single transaction by underlying journal.
+	 * GetTransactionByJournal Get a single transaction, based on one of the underlying transaction journals (transaction splits).
+	 * Get a single transaction by underlying journal (split).
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	 * @param id The ID of the transaction journal.
+	 * @param id The ID of the transaction journal (split).
 	 * @return ApiGetTransactionByJournalRequest
 	 */
 	GetTransactionByJournal(ctx _context.Context, id int32) ApiGetTransactionByJournalRequest
@@ -100,6 +114,21 @@ type TransactionsApi interface {
 	 * @return PiggyBankEventArray
 	 */
 	ListEventByTransactionExecute(r ApiListEventByTransactionRequest) (PiggyBankEventArray, *_nethttp.Response, error)
+
+	/*
+	 * ListLinksByJournal Lists all the transaction links for an individual journal (individual split).
+	 * Lists all the transaction links for an individual journal (a split). Don't use the group ID, you need the actual underlying journal (the split).
+	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	 * @param id The ID of the transaction journal / the split.
+	 * @return ApiListLinksByJournalRequest
+	 */
+	ListLinksByJournal(ctx _context.Context, id int32) ApiListLinksByJournalRequest
+
+	/*
+	 * ListLinksByJournalExecute executes the request
+	 * @return TransactionLinkArray
+	 */
+	ListLinksByJournalExecute(r ApiListLinksByJournalRequest) (TransactionLinkArray, *_nethttp.Response, error)
 
 	/*
 	 * ListTransaction List all the user's transactions. 
@@ -243,6 +272,101 @@ func (a *TransactionsApiService) DeleteTransactionExecute(r ApiDeleteTransaction
 	return localVarHTTPResponse, nil
 }
 
+type ApiDeleteTransactionJournalRequest struct {
+	ctx _context.Context
+	ApiService TransactionsApi
+	id int32
+}
+
+
+func (r ApiDeleteTransactionJournalRequest) Execute() (*_nethttp.Response, error) {
+	return r.ApiService.DeleteTransactionJournalExecute(r)
+}
+
+/*
+ * DeleteTransactionJournal Delete split from transaction
+ * Delete an individual journal (split) from a transaction.
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id The ID of the transaction journal (the split) you wish to delete.
+ * @return ApiDeleteTransactionJournalRequest
+ */
+func (a *TransactionsApiService) DeleteTransactionJournal(ctx _context.Context, id int32) ApiDeleteTransactionJournalRequest {
+	return ApiDeleteTransactionJournalRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+/*
+ * Execute executes the request
+ */
+func (a *TransactionsApiService) DeleteTransactionJournalExecute(r ApiDeleteTransactionJournalRequest) (*_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodDelete
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsApiService.DeleteTransactionJournal")
+	if err != nil {
+		return nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/transaction-journals/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiGetTransactionRequest struct {
 	ctx _context.Context
 	ApiService TransactionsApi
@@ -305,7 +429,7 @@ func (a *TransactionsApiService) GetTransactionExecute(r ApiGetTransactionReques
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -361,10 +485,10 @@ func (r ApiGetTransactionByJournalRequest) Execute() (TransactionSingle, *_netht
 }
 
 /*
- * GetTransactionByJournal Get a single transaction, based on one of the underlying transaction journals.
- * Get a single transaction by underlying journal.
+ * GetTransactionByJournal Get a single transaction, based on one of the underlying transaction journals (transaction splits).
+ * Get a single transaction by underlying journal (split).
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id The ID of the transaction journal.
+ * @param id The ID of the transaction journal (split).
  * @return ApiGetTransactionByJournalRequest
  */
 func (a *TransactionsApiService) GetTransactionByJournal(ctx _context.Context, id int32) ApiGetTransactionByJournalRequest {
@@ -411,7 +535,7 @@ func (a *TransactionsApiService) GetTransactionByJournalExecute(r ApiGetTransact
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -525,7 +649,7 @@ func (a *TransactionsApiService) ListAttachmentByTransactionExecute(r ApiListAtt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -639,7 +763,121 @@ func (a *TransactionsApiService) ListEventByTransactionExecute(r ApiListEventByT
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListLinksByJournalRequest struct {
+	ctx _context.Context
+	ApiService TransactionsApi
+	id int32
+	page *int32
+}
+
+func (r ApiListLinksByJournalRequest) Page(page int32) ApiListLinksByJournalRequest {
+	r.page = &page
+	return r
+}
+
+func (r ApiListLinksByJournalRequest) Execute() (TransactionLinkArray, *_nethttp.Response, error) {
+	return r.ApiService.ListLinksByJournalExecute(r)
+}
+
+/*
+ * ListLinksByJournal Lists all the transaction links for an individual journal (individual split).
+ * Lists all the transaction links for an individual journal (a split). Don't use the group ID, you need the actual underlying journal (the split).
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id The ID of the transaction journal / the split.
+ * @return ApiListLinksByJournalRequest
+ */
+func (a *TransactionsApiService) ListLinksByJournal(ctx _context.Context, id int32) ApiListLinksByJournalRequest {
+	return ApiListLinksByJournalRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return TransactionLinkArray
+ */
+func (a *TransactionsApiService) ListLinksByJournalExecute(r ApiListLinksByJournalRequest) (TransactionLinkArray, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  TransactionLinkArray
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsApiService.ListLinksByJournal")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/transaction-journals/{id}/links"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if r.page != nil {
+		localVarQueryParams.Add("page", parameterToString(*r.page, ""))
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -773,7 +1011,7 @@ func (a *TransactionsApiService) ListTransactionExecute(r ApiListTransactionRequ
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -820,11 +1058,11 @@ func (a *TransactionsApiService) ListTransactionExecute(r ApiListTransactionRequ
 type ApiStoreTransactionRequest struct {
 	ctx _context.Context
 	ApiService TransactionsApi
-	transaction *Transaction
+	transactionStore *TransactionStore
 }
 
-func (r ApiStoreTransactionRequest) Transaction(transaction Transaction) ApiStoreTransactionRequest {
-	r.transaction = &transaction
+func (r ApiStoreTransactionRequest) TransactionStore(transactionStore TransactionStore) ApiStoreTransactionRequest {
+	r.transactionStore = &transactionStore
 	return r
 }
 
@@ -869,8 +1107,8 @@ func (a *TransactionsApiService) StoreTransactionExecute(r ApiStoreTransactionRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.transaction == nil {
-		return localVarReturnValue, nil, reportError("transaction is required and must be specified")
+	if r.transactionStore == nil {
+		return localVarReturnValue, nil, reportError("transactionStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -883,7 +1121,7 @@ func (a *TransactionsApiService) StoreTransactionExecute(r ApiStoreTransactionRe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -891,7 +1129,7 @@ func (a *TransactionsApiService) StoreTransactionExecute(r ApiStoreTransactionRe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.transaction
+	localVarPostBody = r.transactionStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -942,11 +1180,11 @@ type ApiUpdateTransactionRequest struct {
 	ctx _context.Context
 	ApiService TransactionsApi
 	id int32
-	transaction *Transaction
+	transactionUpdate *TransactionUpdate
 }
 
-func (r ApiUpdateTransactionRequest) Transaction(transaction Transaction) ApiUpdateTransactionRequest {
-	r.transaction = &transaction
+func (r ApiUpdateTransactionRequest) TransactionUpdate(transactionUpdate TransactionUpdate) ApiUpdateTransactionRequest {
+	r.transactionUpdate = &transactionUpdate
 	return r
 }
 
@@ -994,8 +1232,8 @@ func (a *TransactionsApiService) UpdateTransactionExecute(r ApiUpdateTransaction
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.transaction == nil {
-		return localVarReturnValue, nil, reportError("transaction is required and must be specified")
+	if r.transactionUpdate == nil {
+		return localVarReturnValue, nil, reportError("transactionUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1008,7 +1246,7 @@ func (a *TransactionsApiService) UpdateTransactionExecute(r ApiUpdateTransaction
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1016,7 +1254,7 @@ func (a *TransactionsApiService) UpdateTransactionExecute(r ApiUpdateTransaction
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.transaction
+	localVarPostBody = r.transactionUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

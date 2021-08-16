@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -19,7 +19,7 @@ import (
 type BudgetSpent struct {
 	// The amount spent.
 	Sum *string `json:"sum,omitempty"`
-	CurrencyId *int32 `json:"currency_id,omitempty"`
+	CurrencyId *string `json:"currency_id,omitempty"`
 	CurrencyCode *string `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
 	// Number of decimals supported by the currency
@@ -76,9 +76,9 @@ func (o *BudgetSpent) SetSum(v string) {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise.
-func (o *BudgetSpent) GetCurrencyId() int32 {
+func (o *BudgetSpent) GetCurrencyId() string {
 	if o == nil || o.CurrencyId == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId
@@ -86,7 +86,7 @@ func (o *BudgetSpent) GetCurrencyId() int32 {
 
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BudgetSpent) GetCurrencyIdOk() (*int32, bool) {
+func (o *BudgetSpent) GetCurrencyIdOk() (*string, bool) {
 	if o == nil || o.CurrencyId == nil {
 		return nil, false
 	}
@@ -102,8 +102,8 @@ func (o *BudgetSpent) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given int32 and assigns it to the CurrencyId field.
-func (o *BudgetSpent) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given string and assigns it to the CurrencyId field.
+func (o *BudgetSpent) SetCurrencyId(v string) {
 	o.CurrencyId = &v
 }
 

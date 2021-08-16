@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -24,14 +24,14 @@ type Budget struct {
 	Active *bool `json:"active,omitempty"`
 	Order *int32 `json:"order,omitempty"`
 	// The type of auto-budget that Firefly III must create.
-	AutoBudgetType *string `json:"auto_budget_type,omitempty"`
+	AutoBudgetType NullableString `json:"auto_budget_type,omitempty"`
 	// Use either currency_id or currency_code. Defaults to the user's default currency.
-	AutoBudgetCurrencyId *int32 `json:"auto_budget_currency_id,omitempty"`
+	AutoBudgetCurrencyId NullableString `json:"auto_budget_currency_id,omitempty"`
 	// Use either currency_id or currency_code. Defaults to the user's default currency.
-	AutoBudgetCurrencyCode *string `json:"auto_budget_currency_code,omitempty"`
-	AutoBudgetAmount *string `json:"auto_budget_amount,omitempty"`
+	AutoBudgetCurrencyCode NullableString `json:"auto_budget_currency_code,omitempty"`
+	AutoBudgetAmount NullableString `json:"auto_budget_amount,omitempty"`
 	// Period for the auto budget
-	AutoBudgetPeriod *string `json:"auto_budget_period,omitempty"`
+	AutoBudgetPeriod NullableString `json:"auto_budget_period,omitempty"`
 	// Information on how much was spent in this budget. Is only filled in when the start and end date are submitted.
 	Spent *[]BudgetSpent `json:"spent,omitempty"`
 }
@@ -206,164 +206,214 @@ func (o *Budget) SetOrder(v int32) {
 	o.Order = &v
 }
 
-// GetAutoBudgetType returns the AutoBudgetType field value if set, zero value otherwise.
+// GetAutoBudgetType returns the AutoBudgetType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Budget) GetAutoBudgetType() string {
-	if o == nil || o.AutoBudgetType == nil {
+	if o == nil || o.AutoBudgetType.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AutoBudgetType
+	return *o.AutoBudgetType.Get()
 }
 
 // GetAutoBudgetTypeOk returns a tuple with the AutoBudgetType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Budget) GetAutoBudgetTypeOk() (*string, bool) {
-	if o == nil || o.AutoBudgetType == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.AutoBudgetType, true
+	return o.AutoBudgetType.Get(), o.AutoBudgetType.IsSet()
 }
 
 // HasAutoBudgetType returns a boolean if a field has been set.
 func (o *Budget) HasAutoBudgetType() bool {
-	if o != nil && o.AutoBudgetType != nil {
+	if o != nil && o.AutoBudgetType.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAutoBudgetType gets a reference to the given string and assigns it to the AutoBudgetType field.
+// SetAutoBudgetType gets a reference to the given NullableString and assigns it to the AutoBudgetType field.
 func (o *Budget) SetAutoBudgetType(v string) {
-	o.AutoBudgetType = &v
+	o.AutoBudgetType.Set(&v)
+}
+// SetAutoBudgetTypeNil sets the value for AutoBudgetType to be an explicit nil
+func (o *Budget) SetAutoBudgetTypeNil() {
+	o.AutoBudgetType.Set(nil)
 }
 
-// GetAutoBudgetCurrencyId returns the AutoBudgetCurrencyId field value if set, zero value otherwise.
-func (o *Budget) GetAutoBudgetCurrencyId() int32 {
-	if o == nil || o.AutoBudgetCurrencyId == nil {
-		var ret int32
+// UnsetAutoBudgetType ensures that no value is present for AutoBudgetType, not even an explicit nil
+func (o *Budget) UnsetAutoBudgetType() {
+	o.AutoBudgetType.Unset()
+}
+
+// GetAutoBudgetCurrencyId returns the AutoBudgetCurrencyId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Budget) GetAutoBudgetCurrencyId() string {
+	if o == nil || o.AutoBudgetCurrencyId.Get() == nil {
+		var ret string
 		return ret
 	}
-	return *o.AutoBudgetCurrencyId
+	return *o.AutoBudgetCurrencyId.Get()
 }
 
 // GetAutoBudgetCurrencyIdOk returns a tuple with the AutoBudgetCurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Budget) GetAutoBudgetCurrencyIdOk() (*int32, bool) {
-	if o == nil || o.AutoBudgetCurrencyId == nil {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Budget) GetAutoBudgetCurrencyIdOk() (*string, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.AutoBudgetCurrencyId, true
+	return o.AutoBudgetCurrencyId.Get(), o.AutoBudgetCurrencyId.IsSet()
 }
 
 // HasAutoBudgetCurrencyId returns a boolean if a field has been set.
 func (o *Budget) HasAutoBudgetCurrencyId() bool {
-	if o != nil && o.AutoBudgetCurrencyId != nil {
+	if o != nil && o.AutoBudgetCurrencyId.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAutoBudgetCurrencyId gets a reference to the given int32 and assigns it to the AutoBudgetCurrencyId field.
-func (o *Budget) SetAutoBudgetCurrencyId(v int32) {
-	o.AutoBudgetCurrencyId = &v
+// SetAutoBudgetCurrencyId gets a reference to the given NullableString and assigns it to the AutoBudgetCurrencyId field.
+func (o *Budget) SetAutoBudgetCurrencyId(v string) {
+	o.AutoBudgetCurrencyId.Set(&v)
+}
+// SetAutoBudgetCurrencyIdNil sets the value for AutoBudgetCurrencyId to be an explicit nil
+func (o *Budget) SetAutoBudgetCurrencyIdNil() {
+	o.AutoBudgetCurrencyId.Set(nil)
 }
 
-// GetAutoBudgetCurrencyCode returns the AutoBudgetCurrencyCode field value if set, zero value otherwise.
+// UnsetAutoBudgetCurrencyId ensures that no value is present for AutoBudgetCurrencyId, not even an explicit nil
+func (o *Budget) UnsetAutoBudgetCurrencyId() {
+	o.AutoBudgetCurrencyId.Unset()
+}
+
+// GetAutoBudgetCurrencyCode returns the AutoBudgetCurrencyCode field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Budget) GetAutoBudgetCurrencyCode() string {
-	if o == nil || o.AutoBudgetCurrencyCode == nil {
+	if o == nil || o.AutoBudgetCurrencyCode.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AutoBudgetCurrencyCode
+	return *o.AutoBudgetCurrencyCode.Get()
 }
 
 // GetAutoBudgetCurrencyCodeOk returns a tuple with the AutoBudgetCurrencyCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Budget) GetAutoBudgetCurrencyCodeOk() (*string, bool) {
-	if o == nil || o.AutoBudgetCurrencyCode == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.AutoBudgetCurrencyCode, true
+	return o.AutoBudgetCurrencyCode.Get(), o.AutoBudgetCurrencyCode.IsSet()
 }
 
 // HasAutoBudgetCurrencyCode returns a boolean if a field has been set.
 func (o *Budget) HasAutoBudgetCurrencyCode() bool {
-	if o != nil && o.AutoBudgetCurrencyCode != nil {
+	if o != nil && o.AutoBudgetCurrencyCode.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAutoBudgetCurrencyCode gets a reference to the given string and assigns it to the AutoBudgetCurrencyCode field.
+// SetAutoBudgetCurrencyCode gets a reference to the given NullableString and assigns it to the AutoBudgetCurrencyCode field.
 func (o *Budget) SetAutoBudgetCurrencyCode(v string) {
-	o.AutoBudgetCurrencyCode = &v
+	o.AutoBudgetCurrencyCode.Set(&v)
+}
+// SetAutoBudgetCurrencyCodeNil sets the value for AutoBudgetCurrencyCode to be an explicit nil
+func (o *Budget) SetAutoBudgetCurrencyCodeNil() {
+	o.AutoBudgetCurrencyCode.Set(nil)
 }
 
-// GetAutoBudgetAmount returns the AutoBudgetAmount field value if set, zero value otherwise.
+// UnsetAutoBudgetCurrencyCode ensures that no value is present for AutoBudgetCurrencyCode, not even an explicit nil
+func (o *Budget) UnsetAutoBudgetCurrencyCode() {
+	o.AutoBudgetCurrencyCode.Unset()
+}
+
+// GetAutoBudgetAmount returns the AutoBudgetAmount field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Budget) GetAutoBudgetAmount() string {
-	if o == nil || o.AutoBudgetAmount == nil {
+	if o == nil || o.AutoBudgetAmount.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AutoBudgetAmount
+	return *o.AutoBudgetAmount.Get()
 }
 
 // GetAutoBudgetAmountOk returns a tuple with the AutoBudgetAmount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Budget) GetAutoBudgetAmountOk() (*string, bool) {
-	if o == nil || o.AutoBudgetAmount == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.AutoBudgetAmount, true
+	return o.AutoBudgetAmount.Get(), o.AutoBudgetAmount.IsSet()
 }
 
 // HasAutoBudgetAmount returns a boolean if a field has been set.
 func (o *Budget) HasAutoBudgetAmount() bool {
-	if o != nil && o.AutoBudgetAmount != nil {
+	if o != nil && o.AutoBudgetAmount.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAutoBudgetAmount gets a reference to the given string and assigns it to the AutoBudgetAmount field.
+// SetAutoBudgetAmount gets a reference to the given NullableString and assigns it to the AutoBudgetAmount field.
 func (o *Budget) SetAutoBudgetAmount(v string) {
-	o.AutoBudgetAmount = &v
+	o.AutoBudgetAmount.Set(&v)
+}
+// SetAutoBudgetAmountNil sets the value for AutoBudgetAmount to be an explicit nil
+func (o *Budget) SetAutoBudgetAmountNil() {
+	o.AutoBudgetAmount.Set(nil)
 }
 
-// GetAutoBudgetPeriod returns the AutoBudgetPeriod field value if set, zero value otherwise.
+// UnsetAutoBudgetAmount ensures that no value is present for AutoBudgetAmount, not even an explicit nil
+func (o *Budget) UnsetAutoBudgetAmount() {
+	o.AutoBudgetAmount.Unset()
+}
+
+// GetAutoBudgetPeriod returns the AutoBudgetPeriod field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Budget) GetAutoBudgetPeriod() string {
-	if o == nil || o.AutoBudgetPeriod == nil {
+	if o == nil || o.AutoBudgetPeriod.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.AutoBudgetPeriod
+	return *o.AutoBudgetPeriod.Get()
 }
 
 // GetAutoBudgetPeriodOk returns a tuple with the AutoBudgetPeriod field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Budget) GetAutoBudgetPeriodOk() (*string, bool) {
-	if o == nil || o.AutoBudgetPeriod == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.AutoBudgetPeriod, true
+	return o.AutoBudgetPeriod.Get(), o.AutoBudgetPeriod.IsSet()
 }
 
 // HasAutoBudgetPeriod returns a boolean if a field has been set.
 func (o *Budget) HasAutoBudgetPeriod() bool {
-	if o != nil && o.AutoBudgetPeriod != nil {
+	if o != nil && o.AutoBudgetPeriod.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAutoBudgetPeriod gets a reference to the given string and assigns it to the AutoBudgetPeriod field.
+// SetAutoBudgetPeriod gets a reference to the given NullableString and assigns it to the AutoBudgetPeriod field.
 func (o *Budget) SetAutoBudgetPeriod(v string) {
-	o.AutoBudgetPeriod = &v
+	o.AutoBudgetPeriod.Set(&v)
+}
+// SetAutoBudgetPeriodNil sets the value for AutoBudgetPeriod to be an explicit nil
+func (o *Budget) SetAutoBudgetPeriodNil() {
+	o.AutoBudgetPeriod.Set(nil)
+}
+
+// UnsetAutoBudgetPeriod ensures that no value is present for AutoBudgetPeriod, not even an explicit nil
+func (o *Budget) UnsetAutoBudgetPeriod() {
+	o.AutoBudgetPeriod.Unset()
 }
 
 // GetSpent returns the Spent field value if set, zero value otherwise.
@@ -415,20 +465,20 @@ func (o Budget) MarshalJSON() ([]byte, error) {
 	if o.Order != nil {
 		toSerialize["order"] = o.Order
 	}
-	if o.AutoBudgetType != nil {
-		toSerialize["auto_budget_type"] = o.AutoBudgetType
+	if o.AutoBudgetType.IsSet() {
+		toSerialize["auto_budget_type"] = o.AutoBudgetType.Get()
 	}
-	if o.AutoBudgetCurrencyId != nil {
-		toSerialize["auto_budget_currency_id"] = o.AutoBudgetCurrencyId
+	if o.AutoBudgetCurrencyId.IsSet() {
+		toSerialize["auto_budget_currency_id"] = o.AutoBudgetCurrencyId.Get()
 	}
-	if o.AutoBudgetCurrencyCode != nil {
-		toSerialize["auto_budget_currency_code"] = o.AutoBudgetCurrencyCode
+	if o.AutoBudgetCurrencyCode.IsSet() {
+		toSerialize["auto_budget_currency_code"] = o.AutoBudgetCurrencyCode.Get()
 	}
-	if o.AutoBudgetAmount != nil {
-		toSerialize["auto_budget_amount"] = o.AutoBudgetAmount
+	if o.AutoBudgetAmount.IsSet() {
+		toSerialize["auto_budget_amount"] = o.AutoBudgetAmount.Get()
 	}
-	if o.AutoBudgetPeriod != nil {
-		toSerialize["auto_budget_period"] = o.AutoBudgetPeriod
+	if o.AutoBudgetPeriod.IsSet() {
+		toSerialize["auto_budget_period"] = o.AutoBudgetPeriod.Get()
 	}
 	if o.Spent != nil {
 		toSerialize["spent"] = o.Spent

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -29,7 +29,7 @@ type UsersApi interface {
 
 	/*
 	 * DeleteUser Delete a user.
-	 * Delete a user. You cannot delete the current user.
+	 * Delete a user. You cannot delete the user you're authenticated with. This cannot be undone. Be careful!
 	 * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	 * @param id The user ID.
 	 * @return ApiDeleteUserRequest
@@ -117,7 +117,7 @@ func (r ApiDeleteUserRequest) Execute() (*_nethttp.Response, error) {
 
 /*
  * DeleteUser Delete a user.
- * Delete a user. You cannot delete the current user.
+ * Delete a user. You cannot delete the user you're authenticated with. This cannot be undone. Be careful!
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param id The user ID.
  * @return ApiDeleteUserRequest
@@ -261,7 +261,7 @@ func (a *UsersApiService) GetUserExecute(r ApiGetUserRequest) (UserSingle, *_net
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -371,7 +371,7 @@ func (a *UsersApiService) ListUserExecute(r ApiListUserRequest) (UserArray, *_ne
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -482,7 +482,7 @@ func (a *UsersApiService) StoreUserExecute(r ApiStoreUserRequest) (UserSingle, *
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -607,7 +607,7 @@ func (a *UsersApiService) UpdateUserExecute(r ApiUpdateUserRequest) (UserSingle,
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

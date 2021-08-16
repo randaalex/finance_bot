@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -222,7 +222,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -288,7 +288,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -367,7 +367,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -433,7 +433,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -442,7 +442,7 @@ Name | Type | Description  | Notes
 
 ## UpdateCategory
 
-> CategorySingle UpdateCategory(ctx, id).Category(category).Execute()
+> CategorySingle UpdateCategory(ctx, id).CategoryUpdate(categoryUpdate).Execute()
 
 Update existing category.
 
@@ -462,11 +462,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the category.
-    category := *openapiclient.NewCategory("Lunch") // Category | JSON array with updated category information. See the model for the exact specifications.
+    categoryUpdate := *openapiclient.NewCategoryUpdate() // CategoryUpdate | JSON array with updated category information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.CategoriesApi.UpdateCategory(context.Background(), id).Category(category).Execute()
+    resp, r, err := api_client.CategoriesApi.UpdateCategory(context.Background(), id).CategoryUpdate(categoryUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `CategoriesApi.UpdateCategory``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -492,7 +492,7 @@ Other parameters are passed through a pointer to a apiUpdateCategoryRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **category** | [**Category**](Category.md) | JSON array with updated category information. See the model for the exact specifications. | 
+ **categoryUpdate** | [**CategoryUpdate**](CategoryUpdate.md) | JSON array with updated category information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -505,7 +505,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

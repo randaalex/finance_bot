@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Transaction description with ID | [readonly] 
-**Description** | **string** | Transaction description with ID | [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Transaction description | 
+**Description** | **string** | Transaction description | 
 
 ## Methods
 

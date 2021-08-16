@@ -1,4 +1,0 @@
-development:
-  dialect: postgres
-  datasource: postgresql://postgres:postgres@localhost:5432/finance_bot_development?sslmode=disable
-  dir: pkg/db/migrations

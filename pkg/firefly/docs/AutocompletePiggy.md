@@ -4,12 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Name of the piggy bank found by an auto-complete search. | [readonly] 
-**CurrencyId** | Pointer to **int32** | Currency ID for this piggy bank. | [optional] [readonly] 
-**CurrencyCode** | Pointer to **string** | Currency code for this piggy bank. | [optional] [readonly] 
-**CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
-**CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Name of the piggy bank found by an auto-complete search. | 
+**CurrencyId** | Pointer to **string** | Currency ID for this piggy bank. | [optional] 
+**CurrencyCode** | Pointer to **string** | Currency code for this piggy bank. | [optional] 
+**CurrencySymbol** | Pointer to **string** |  | [optional] 
+**CurrencyDecimalPlaces** | Pointer to **int32** |  | [optional] 
+**ObjectGroupId** | Pointer to **NullableString** | The group ID of the group this object is part of. NULL if no group. | [optional] 
+**ObjectGroupTitle** | Pointer to **NullableString** | The name of the group. NULL if no group. | [optional] 
 
 ## Methods
 
@@ -72,20 +74,20 @@ SetName sets Name field to given value.
 
 ### GetCurrencyId
 
-`func (o *AutocompletePiggy) GetCurrencyId() int32`
+`func (o *AutocompletePiggy) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *AutocompletePiggy) GetCurrencyIdOk() (*int32, bool)`
+`func (o *AutocompletePiggy) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *AutocompletePiggy) SetCurrencyId(v int32)`
+`func (o *AutocompletePiggy) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -170,6 +172,76 @@ SetCurrencyDecimalPlaces sets CurrencyDecimalPlaces field to given value.
 
 HasCurrencyDecimalPlaces returns a boolean if a field has been set.
 
+### GetObjectGroupId
+
+`func (o *AutocompletePiggy) GetObjectGroupId() string`
+
+GetObjectGroupId returns the ObjectGroupId field if non-nil, zero value otherwise.
+
+### GetObjectGroupIdOk
+
+`func (o *AutocompletePiggy) GetObjectGroupIdOk() (*string, bool)`
+
+GetObjectGroupIdOk returns a tuple with the ObjectGroupId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectGroupId
+
+`func (o *AutocompletePiggy) SetObjectGroupId(v string)`
+
+SetObjectGroupId sets ObjectGroupId field to given value.
+
+### HasObjectGroupId
+
+`func (o *AutocompletePiggy) HasObjectGroupId() bool`
+
+HasObjectGroupId returns a boolean if a field has been set.
+
+### SetObjectGroupIdNil
+
+`func (o *AutocompletePiggy) SetObjectGroupIdNil(b bool)`
+
+ SetObjectGroupIdNil sets the value for ObjectGroupId to be an explicit nil
+
+### UnsetObjectGroupId
+`func (o *AutocompletePiggy) UnsetObjectGroupId()`
+
+UnsetObjectGroupId ensures that no value is present for ObjectGroupId, not even an explicit nil
+### GetObjectGroupTitle
+
+`func (o *AutocompletePiggy) GetObjectGroupTitle() string`
+
+GetObjectGroupTitle returns the ObjectGroupTitle field if non-nil, zero value otherwise.
+
+### GetObjectGroupTitleOk
+
+`func (o *AutocompletePiggy) GetObjectGroupTitleOk() (*string, bool)`
+
+GetObjectGroupTitleOk returns a tuple with the ObjectGroupTitle field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectGroupTitle
+
+`func (o *AutocompletePiggy) SetObjectGroupTitle(v string)`
+
+SetObjectGroupTitle sets ObjectGroupTitle field to given value.
+
+### HasObjectGroupTitle
+
+`func (o *AutocompletePiggy) HasObjectGroupTitle() bool`
+
+HasObjectGroupTitle returns a boolean if a field has been set.
+
+### SetObjectGroupTitleNil
+
+`func (o *AutocompletePiggy) SetObjectGroupTitleNil(b bool)`
+
+ SetObjectGroupTitleNil sets the value for ObjectGroupTitle to be an explicit nil
+
+### UnsetObjectGroupTitle
+`func (o *AutocompletePiggy) UnsetObjectGroupTitle()`
+
+UnsetObjectGroupTitle ensures that no value is present for ObjectGroupTitle, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

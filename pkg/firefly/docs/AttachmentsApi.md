@@ -215,7 +215,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -281,7 +281,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -290,7 +290,7 @@ Name | Type | Description  | Notes
 
 ## StoreAttachment
 
-> AttachmentSingle StoreAttachment(ctx).Attachment(attachment).Execute()
+> AttachmentSingle StoreAttachment(ctx).AttachmentStore(attachmentStore).Execute()
 
 Store a new attachment.
 
@@ -309,11 +309,11 @@ import (
 )
 
 func main() {
-    attachment := *openapiclient.NewAttachment("file.pdf", "Bill", int32(134)) // Attachment | JSON array or key=value pairs with the necessary attachment information. See the model for the exact specifications.
+    attachmentStore := *openapiclient.NewAttachmentStore("file.pdf", "Bill", "134") // AttachmentStore | JSON array or key=value pairs with the necessary attachment information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.AttachmentsApi.StoreAttachment(context.Background()).Attachment(attachment).Execute()
+    resp, r, err := api_client.AttachmentsApi.StoreAttachment(context.Background()).AttachmentStore(attachmentStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AttachmentsApi.StoreAttachment``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -334,7 +334,7 @@ Other parameters are passed through a pointer to a apiStoreAttachmentRequest str
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **attachment** | [**Attachment**](Attachment.md) | JSON array or key&#x3D;value pairs with the necessary attachment information. See the model for the exact specifications. | 
+ **attachmentStore** | [**AttachmentStore**](AttachmentStore.md) | JSON array or key&#x3D;value pairs with the necessary attachment information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -347,7 +347,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -356,7 +356,7 @@ Name | Type | Description  | Notes
 
 ## UpdateAttachment
 
-> AttachmentSingle UpdateAttachment(ctx, id).Attachment(attachment).Execute()
+> AttachmentSingle UpdateAttachment(ctx, id).AttachmentUpdate(attachmentUpdate).Execute()
 
 Update existing attachment.
 
@@ -376,11 +376,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the attachment.
-    attachment := *openapiclient.NewAttachment("file.pdf", "Bill", int32(134)) // Attachment | JSON array with updated attachment information. See the model for the exact specifications.
+    attachmentUpdate := *openapiclient.NewAttachmentUpdate() // AttachmentUpdate | JSON array with updated attachment information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.AttachmentsApi.UpdateAttachment(context.Background(), id).Attachment(attachment).Execute()
+    resp, r, err := api_client.AttachmentsApi.UpdateAttachment(context.Background(), id).AttachmentUpdate(attachmentUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AttachmentsApi.UpdateAttachment``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -406,7 +406,7 @@ Other parameters are passed through a pointer to a apiUpdateAttachmentRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **attachment** | [**Attachment**](Attachment.md) | JSON array with updated attachment information. See the model for the exact specifications. | 
+ **attachmentUpdate** | [**AttachmentUpdate**](AttachmentUpdate.md) | JSON array with updated attachment information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -419,7 +419,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

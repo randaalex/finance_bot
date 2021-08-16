@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Title** | **string** |  | 
-**Description** | Pointer to **string** |  | [optional] 
+**Description** | Pointer to **NullableString** |  | [optional] 
 **Order** | Pointer to **int32** |  | [optional] [readonly] 
 **Active** | Pointer to **bool** |  | [optional] 
 
@@ -125,6 +125,16 @@ SetDescription sets Description field to given value.
 
 HasDescription returns a boolean if a field has been set.
 
+### SetDescriptionNil
+
+`func (o *RuleGroup) SetDescriptionNil(b bool)`
+
+ SetDescriptionNil sets the value for Description to be an explicit nil
+
+### UnsetDescription
+`func (o *RuleGroup) UnsetDescription()`
+
+UnsetDescription ensures that no value is present for Description, not even an explicit nil
 ### GetOrder
 
 `func (o *RuleGroup) GetOrder() int32`

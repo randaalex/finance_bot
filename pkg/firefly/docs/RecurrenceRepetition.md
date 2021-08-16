@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **Skip** | Pointer to **int32** | How many occurrences to skip. 0 means skip nothing. 1 means every other. | [optional] 
 **Weekend** | Pointer to **int32** | How to respond when the recurring transaction falls in the weekend. Possible values: 1. Do nothing, just create it 2. Create no transaction. 3. Skip to the previous Friday. 4. Skip to the next Monday.  | [optional] 
 **Description** | Pointer to **string** | Auto-generated repetition description. | [optional] [readonly] 
-**Occurrences** | Pointer to **[]string** | Array of future dates when the repetition will apply to. Auto generated. | [optional] [readonly] 
+**Occurrences** | Pointer to [**[]time.Time**](time.Time.md) | Array of future dates when the repetition will apply to. Auto generated. | [optional] [readonly] 
 
 ## Methods
 
@@ -225,20 +225,20 @@ HasDescription returns a boolean if a field has been set.
 
 ### GetOccurrences
 
-`func (o *RecurrenceRepetition) GetOccurrences() []string`
+`func (o *RecurrenceRepetition) GetOccurrences() []time.Time`
 
 GetOccurrences returns the Occurrences field if non-nil, zero value otherwise.
 
 ### GetOccurrencesOk
 
-`func (o *RecurrenceRepetition) GetOccurrencesOk() (*[]string, bool)`
+`func (o *RecurrenceRepetition) GetOccurrencesOk() (*[]time.Time, bool)`
 
 GetOccurrencesOk returns a tuple with the Occurrences field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOccurrences
 
-`func (o *RecurrenceRepetition) SetOccurrences(v []string)`
+`func (o *RecurrenceRepetition) SetOccurrences(v []time.Time)`
 
 SetOccurrences sets Occurrences field to given value.
 

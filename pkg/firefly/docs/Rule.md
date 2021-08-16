@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Title** | **string** |  | 
 **Description** | Pointer to **string** |  | [optional] 
-**RuleGroupId** | **int32** | ID of the rule group under which the rule must be stored. Either this field or rule_group_title is mandatory. | 
+**RuleGroupId** | **string** | ID of the rule group under which the rule must be stored. Either this field or rule_group_title is mandatory. | 
 **RuleGroupTitle** | Pointer to **string** | Title of the rule group under which the rule must be stored. Either this field or rule_group_id is mandatory. | [optional] 
 **Order** | Pointer to **int32** |  | [optional] [readonly] 
 **Trigger** | **string** | Which action is necessary for the rule to fire? Use either store-journal or update-journal. | 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewRule
 
-`func NewRule(title string, ruleGroupId int32, trigger string, triggers []RuleTrigger, actions []RuleAction, ) *Rule`
+`func NewRule(title string, ruleGroupId string, trigger string, triggers []RuleTrigger, actions []RuleAction, ) *Rule`
 
 NewRule instantiates a new Rule object
 This constructor will assign default values to properties that have it defined,
@@ -134,20 +134,20 @@ HasDescription returns a boolean if a field has been set.
 
 ### GetRuleGroupId
 
-`func (o *Rule) GetRuleGroupId() int32`
+`func (o *Rule) GetRuleGroupId() string`
 
 GetRuleGroupId returns the RuleGroupId field if non-nil, zero value otherwise.
 
 ### GetRuleGroupIdOk
 
-`func (o *Rule) GetRuleGroupIdOk() (*int32, bool)`
+`func (o *Rule) GetRuleGroupIdOk() (*string, bool)`
 
 GetRuleGroupIdOk returns a tuple with the RuleGroupId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRuleGroupId
 
-`func (o *Rule) SetRuleGroupId(v int32)`
+`func (o *Rule) SetRuleGroupId(v string)`
 
 SetRuleGroupId sets RuleGroupId field to given value.
 

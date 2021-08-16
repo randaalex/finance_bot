@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -306,7 +306,7 @@ func (a *CategoriesApiService) GetCategoryExecute(r ApiGetCategoryRequest) (Cate
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -420,7 +420,7 @@ func (a *CategoriesApiService) ListAttachmentByCategoryExecute(r ApiListAttachme
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -530,7 +530,7 @@ func (a *CategoriesApiService) ListCategoryExecute(r ApiListCategoryRequest) (Ca
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -668,7 +668,7 @@ func (a *CategoriesApiService) ListTransactionByCategoryExecute(r ApiListTransac
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -778,7 +778,7 @@ func (a *CategoriesApiService) StoreCategoryExecute(r ApiStoreCategoryRequest) (
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -837,11 +837,11 @@ type ApiUpdateCategoryRequest struct {
 	ctx _context.Context
 	ApiService CategoriesApi
 	id int32
-	category *Category
+	categoryUpdate *CategoryUpdate
 }
 
-func (r ApiUpdateCategoryRequest) Category(category Category) ApiUpdateCategoryRequest {
-	r.category = &category
+func (r ApiUpdateCategoryRequest) CategoryUpdate(categoryUpdate CategoryUpdate) ApiUpdateCategoryRequest {
+	r.categoryUpdate = &categoryUpdate
 	return r
 }
 
@@ -889,8 +889,8 @@ func (a *CategoriesApiService) UpdateCategoryExecute(r ApiUpdateCategoryRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.category == nil {
-		return localVarReturnValue, nil, reportError("category is required and must be specified")
+	if r.categoryUpdate == nil {
+		return localVarReturnValue, nil, reportError("categoryUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -903,7 +903,7 @@ func (a *CategoriesApiService) UpdateCategoryExecute(r ApiUpdateCategoryRequest)
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -911,7 +911,7 @@ func (a *CategoriesApiService) UpdateCategoryExecute(r ApiUpdateCategoryRequest)
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.category
+	localVarPostBody = r.categoryUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

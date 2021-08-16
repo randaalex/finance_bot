@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [readonly] 
-**Name** | **string** | Name of the category found by an auto-complete search. | [readonly] 
+**Id** | **string** |  | 
+**Name** | **string** | Name of the category found by an auto-complete search. | 
 
 ## Methods
 

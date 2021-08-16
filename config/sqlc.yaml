@@ -1,0 +1,12 @@
+version: "1"
+packages:
+  - name: "db"
+    path: "./../pkg/db"
+    queries: "./../pkg/db/queries/"
+    schema: "./../pkg/db/migrations/"
+    engine: "postgresql"
+    emit_prepared_queries: true
+    emit_interface: false
+    emit_exact_table_names: false
+    emit_empty_slices: false
+    emit_json_tags: true

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -32,7 +32,7 @@ type RecurrenceRepetition struct {
 	// Auto-generated repetition description.
 	Description *string `json:"description,omitempty"`
 	// Array of future dates when the repetition will apply to. Auto generated.
-	Occurrences *[]string `json:"occurrences,omitempty"`
+	Occurrences *[]time.Time `json:"occurrences,omitempty"`
 }
 
 // NewRecurrenceRepetition instantiates a new RecurrenceRepetition object
@@ -295,9 +295,9 @@ func (o *RecurrenceRepetition) SetDescription(v string) {
 }
 
 // GetOccurrences returns the Occurrences field value if set, zero value otherwise.
-func (o *RecurrenceRepetition) GetOccurrences() []string {
+func (o *RecurrenceRepetition) GetOccurrences() []time.Time {
 	if o == nil || o.Occurrences == nil {
-		var ret []string
+		var ret []time.Time
 		return ret
 	}
 	return *o.Occurrences
@@ -305,7 +305,7 @@ func (o *RecurrenceRepetition) GetOccurrences() []string {
 
 // GetOccurrencesOk returns a tuple with the Occurrences field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecurrenceRepetition) GetOccurrencesOk() (*[]string, bool) {
+func (o *RecurrenceRepetition) GetOccurrencesOk() (*[]time.Time, bool) {
 	if o == nil || o.Occurrences == nil {
 		return nil, false
 	}
@@ -321,8 +321,8 @@ func (o *RecurrenceRepetition) HasOccurrences() bool {
 	return false
 }
 
-// SetOccurrences gets a reference to the given []string and assigns it to the Occurrences field.
-func (o *RecurrenceRepetition) SetOccurrences(v []string) {
+// SetOccurrences gets a reference to the given []time.Time and assigns it to the Occurrences field.
+func (o *RecurrenceRepetition) SetOccurrences(v []time.Time) {
 	o.Occurrences = &v
 }
 

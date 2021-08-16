@@ -217,7 +217,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -287,7 +287,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -353,7 +353,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -498,7 +498,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -564,7 +564,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -573,7 +573,7 @@ Name | Type | Description  | Notes
 
 ## StoreTransactionLink
 
-> TransactionLinkSingle StoreTransactionLink(ctx).TransactionLink(transactionLink).Execute()
+> TransactionLinkSingle StoreTransactionLink(ctx).TransactionLinkStore(transactionLinkStore).Execute()
 
 Create a new link between transactions
 
@@ -592,11 +592,11 @@ import (
 )
 
 func main() {
-    transactionLink := *openapiclient.NewTransactionLink(int32(5), int32(131), int32(131)) // TransactionLink | JSON array with the necessary link type information or key=value pairs. See the model for the exact specifications.
+    transactionLinkStore := *openapiclient.NewTransactionLinkStore("5", "131", "131") // TransactionLinkStore | JSON array with the necessary link type information or key=value pairs. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.LinksApi.StoreTransactionLink(context.Background()).TransactionLink(transactionLink).Execute()
+    resp, r, err := api_client.LinksApi.StoreTransactionLink(context.Background()).TransactionLinkStore(transactionLinkStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `LinksApi.StoreTransactionLink``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -617,7 +617,7 @@ Other parameters are passed through a pointer to a apiStoreTransactionLinkReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **transactionLink** | [**TransactionLink**](TransactionLink.md) | JSON array with the necessary link type information or key&#x3D;value pairs. See the model for the exact specifications. | 
+ **transactionLinkStore** | [**TransactionLinkStore**](TransactionLinkStore.md) | JSON array with the necessary link type information or key&#x3D;value pairs. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -630,7 +630,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -639,7 +639,7 @@ Name | Type | Description  | Notes
 
 ## UpdateLinkType
 
-> LinkTypeSingle UpdateLinkType(ctx, id).LinkType(linkType).Execute()
+> LinkTypeSingle UpdateLinkType(ctx, id).LinkTypeUpdate(linkTypeUpdate).Execute()
 
 Update existing link type.
 
@@ -659,11 +659,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the link type.
-    linkType := *openapiclient.NewLinkType("Paid", "is (partially) paid for by", "(partially) pays for") // LinkType | JSON array or formdata with updated link type information. See the model for the exact specifications.
+    linkTypeUpdate := *openapiclient.NewLinkTypeUpdate() // LinkTypeUpdate | JSON array or formdata with updated link type information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.LinksApi.UpdateLinkType(context.Background(), id).LinkType(linkType).Execute()
+    resp, r, err := api_client.LinksApi.UpdateLinkType(context.Background(), id).LinkTypeUpdate(linkTypeUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `LinksApi.UpdateLinkType``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -689,7 +689,7 @@ Other parameters are passed through a pointer to a apiUpdateLinkTypeRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **linkType** | [**LinkType**](LinkType.md) | JSON array or formdata with updated link type information. See the model for the exact specifications. | 
+ **linkTypeUpdate** | [**LinkTypeUpdate**](LinkTypeUpdate.md) | JSON array or formdata with updated link type information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -702,7 +702,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -711,7 +711,7 @@ Name | Type | Description  | Notes
 
 ## UpdateTransactionLink
 
-> TransactionLinkSingle UpdateTransactionLink(ctx, id).TransactionLink(transactionLink).Execute()
+> TransactionLinkSingle UpdateTransactionLink(ctx, id).TransactionLinkUpdate(transactionLinkUpdate).Execute()
 
 Update an existing link between transactions.
 
@@ -731,11 +731,11 @@ import (
 
 func main() {
     id := int32(1) // int32 | The ID of the transaction link.
-    transactionLink := *openapiclient.NewTransactionLink(int32(5), int32(131), int32(131)) // TransactionLink | JSON array or formdata with updated link type information. See the model for the exact specifications.
+    transactionLinkUpdate := *openapiclient.NewTransactionLinkUpdate() // TransactionLinkUpdate | JSON array or formdata with updated link type information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.LinksApi.UpdateTransactionLink(context.Background(), id).TransactionLink(transactionLink).Execute()
+    resp, r, err := api_client.LinksApi.UpdateTransactionLink(context.Background(), id).TransactionLinkUpdate(transactionLinkUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `LinksApi.UpdateTransactionLink``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -761,7 +761,7 @@ Other parameters are passed through a pointer to a apiUpdateTransactionLinkReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **transactionLink** | [**TransactionLink**](TransactionLink.md) | JSON array or formdata with updated link type information. See the model for the exact specifications. | 
+ **transactionLinkUpdate** | [**TransactionLinkUpdate**](TransactionLinkUpdate.md) | JSON array or formdata with updated link type information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -774,7 +774,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -24,13 +24,13 @@ type Attachment struct {
 	// The object class to which the attachment must be linked.
 	AttachableType string `json:"attachable_type"`
 	// ID of the model this attachment is linked to.
-	AttachableId int32 `json:"attachable_id"`
+	AttachableId string `json:"attachable_id"`
 	// MD5 hash of the file for basic duplicate detection.
 	Md5 *string `json:"md5,omitempty"`
 	DownloadUri *string `json:"download_uri,omitempty"`
 	UploadUri *string `json:"upload_uri,omitempty"`
 	Title *string `json:"title,omitempty"`
-	Notes *string `json:"notes,omitempty"`
+	Notes NullableString `json:"notes,omitempty"`
 	Mime *string `json:"mime,omitempty"`
 	Size *int32 `json:"size,omitempty"`
 }
@@ -39,7 +39,7 @@ type Attachment struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAttachment(filename string, attachableType string, attachableId int32) *Attachment {
+func NewAttachment(filename string, attachableType string, attachableId string) *Attachment {
 	this := Attachment{}
 	this.Filename = filename
 	this.AttachableType = attachableType
@@ -168,9 +168,9 @@ func (o *Attachment) SetAttachableType(v string) {
 }
 
 // GetAttachableId returns the AttachableId field value
-func (o *Attachment) GetAttachableId() int32 {
+func (o *Attachment) GetAttachableId() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -179,7 +179,7 @@ func (o *Attachment) GetAttachableId() int32 {
 
 // GetAttachableIdOk returns a tuple with the AttachableId field value
 // and a boolean to check if the value has been set.
-func (o *Attachment) GetAttachableIdOk() (*int32, bool) {
+func (o *Attachment) GetAttachableIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -187,7 +187,7 @@ func (o *Attachment) GetAttachableIdOk() (*int32, bool) {
 }
 
 // SetAttachableId sets field value
-func (o *Attachment) SetAttachableId(v int32) {
+func (o *Attachment) SetAttachableId(v string) {
 	o.AttachableId = v
 }
 
@@ -319,36 +319,46 @@ func (o *Attachment) SetTitle(v string) {
 	o.Title = &v
 }
 
-// GetNotes returns the Notes field value if set, zero value otherwise.
+// GetNotes returns the Notes field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Attachment) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || o.Notes.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.Notes
+	return *o.Notes.Get()
 }
 
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Attachment) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Notes, true
+	return o.Notes.Get(), o.Notes.IsSet()
 }
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Attachment) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && o.Notes.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNotes gets a reference to the given string and assigns it to the Notes field.
+// SetNotes gets a reference to the given NullableString and assigns it to the Notes field.
 func (o *Attachment) SetNotes(v string) {
-	o.Notes = &v
+	o.Notes.Set(&v)
+}
+// SetNotesNil sets the value for Notes to be an explicit nil
+func (o *Attachment) SetNotesNil() {
+	o.Notes.Set(nil)
+}
+
+// UnsetNotes ensures that no value is present for Notes, not even an explicit nil
+func (o *Attachment) UnsetNotes() {
+	o.Notes.Unset()
 }
 
 // GetMime returns the Mime field value if set, zero value otherwise.
@@ -444,8 +454,8 @@ func (o Attachment) MarshalJSON() ([]byte, error) {
 	if o.Title != nil {
 		toSerialize["title"] = o.Title
 	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	if o.Notes.IsSet() {
+		toSerialize["notes"] = o.Notes.Get()
 	}
 	if o.Mime != nil {
 		toSerialize["mime"] = o.Mime

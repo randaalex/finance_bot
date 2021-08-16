@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -18,6 +18,7 @@ import (
 	_nethttp "net/http"
 	_neturl "net/url"
 	"strings"
+	"reflect"
 )
 
 // Linger please
@@ -233,7 +234,7 @@ type ApiFireRuleRequest struct {
 	id int32
 	start *string
 	end *string
-	accounts *string
+	accounts *[]int64
 }
 
 func (r ApiFireRuleRequest) Start(start string) ApiFireRuleRequest {
@@ -244,7 +245,7 @@ func (r ApiFireRuleRequest) End(end string) ApiFireRuleRequest {
 	r.end = &end
 	return r
 }
-func (r ApiFireRuleRequest) Accounts(accounts string) ApiFireRuleRequest {
+func (r ApiFireRuleRequest) Accounts(accounts []int64) ApiFireRuleRequest {
 	r.accounts = &accounts
 	return r
 }
@@ -299,7 +300,15 @@ func (a *RulesApiService) FireRuleExecute(r ApiFireRuleRequest) (*_nethttp.Respo
 		localVarQueryParams.Add("end", parameterToString(*r.end, ""))
 	}
 	if r.accounts != nil {
-		localVarQueryParams.Add("accounts", parameterToString(*r.accounts, ""))
+		t := *r.accounts
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				localVarQueryParams.Add("accounts[]", parameterToString(s.Index(i), "multi"))
+			}
+		} else {
+			localVarQueryParams.Add("accounts[]", parameterToString(t, "multi"))
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -408,7 +417,7 @@ func (a *RulesApiService) GetRuleExecute(r ApiGetRuleRequest) (RuleSingle, *_net
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -518,7 +527,7 @@ func (a *RulesApiService) ListRuleExecute(r ApiListRuleRequest) (RuleArray, *_ne
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -565,11 +574,11 @@ func (a *RulesApiService) ListRuleExecute(r ApiListRuleRequest) (RuleArray, *_ne
 type ApiStoreRuleRequest struct {
 	ctx _context.Context
 	ApiService RulesApi
-	rule *Rule
+	ruleStore *RuleStore
 }
 
-func (r ApiStoreRuleRequest) Rule(rule Rule) ApiStoreRuleRequest {
-	r.rule = &rule
+func (r ApiStoreRuleRequest) RuleStore(ruleStore RuleStore) ApiStoreRuleRequest {
+	r.ruleStore = &ruleStore
 	return r
 }
 
@@ -614,8 +623,8 @@ func (a *RulesApiService) StoreRuleExecute(r ApiStoreRuleRequest) (RuleSingle, *
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.rule == nil {
-		return localVarReturnValue, nil, reportError("rule is required and must be specified")
+	if r.ruleStore == nil {
+		return localVarReturnValue, nil, reportError("ruleStore is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -628,7 +637,7 @@ func (a *RulesApiService) StoreRuleExecute(r ApiStoreRuleRequest) (RuleSingle, *
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -636,7 +645,7 @@ func (a *RulesApiService) StoreRuleExecute(r ApiStoreRuleRequest) (RuleSingle, *
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.rule
+	localVarPostBody = r.ruleStore
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -689,7 +698,7 @@ type ApiTestRuleRequest struct {
 	id int32
 	start *string
 	end *string
-	accounts *string
+	accounts *[]int64
 }
 
 func (r ApiTestRuleRequest) Start(start string) ApiTestRuleRequest {
@@ -700,7 +709,7 @@ func (r ApiTestRuleRequest) End(end string) ApiTestRuleRequest {
 	r.end = &end
 	return r
 }
-func (r ApiTestRuleRequest) Accounts(accounts string) ApiTestRuleRequest {
+func (r ApiTestRuleRequest) Accounts(accounts []int64) ApiTestRuleRequest {
 	r.accounts = &accounts
 	return r
 }
@@ -757,7 +766,15 @@ func (a *RulesApiService) TestRuleExecute(r ApiTestRuleRequest) (TransactionArra
 		localVarQueryParams.Add("end", parameterToString(*r.end, ""))
 	}
 	if r.accounts != nil {
-		localVarQueryParams.Add("accounts", parameterToString(*r.accounts, ""))
+		t := *r.accounts
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				localVarQueryParams.Add("accounts[]", parameterToString(s.Index(i), "multi"))
+			}
+		} else {
+			localVarQueryParams.Add("accounts[]", parameterToString(t, "multi"))
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -769,7 +786,7 @@ func (a *RulesApiService) TestRuleExecute(r ApiTestRuleRequest) (TransactionArra
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -817,11 +834,11 @@ type ApiUpdateRuleRequest struct {
 	ctx _context.Context
 	ApiService RulesApi
 	id int32
-	rule *Rule
+	ruleUpdate *RuleUpdate
 }
 
-func (r ApiUpdateRuleRequest) Rule(rule Rule) ApiUpdateRuleRequest {
-	r.rule = &rule
+func (r ApiUpdateRuleRequest) RuleUpdate(ruleUpdate RuleUpdate) ApiUpdateRuleRequest {
+	r.ruleUpdate = &ruleUpdate
 	return r
 }
 
@@ -869,8 +886,8 @@ func (a *RulesApiService) UpdateRuleExecute(r ApiUpdateRuleRequest) (RuleSingle,
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.rule == nil {
-		return localVarReturnValue, nil, reportError("rule is required and must be specified")
+	if r.ruleUpdate == nil {
+		return localVarReturnValue, nil, reportError("ruleUpdate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -883,7 +900,7 @@ func (a *RulesApiService) UpdateRuleExecute(r ApiUpdateRuleRequest) (RuleSingle,
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/vnd.api+json", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -891,7 +908,7 @@ func (a *RulesApiService) UpdateRuleExecute(r ApiUpdateRuleRequest) (RuleSingle,
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.rule
+	localVarPostBody = r.ruleUpdate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

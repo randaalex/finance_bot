@@ -6,16 +6,16 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
-**Type** | **string** |  | 
-**Title** | **string** |  | 
+**Type** | Pointer to **string** |  | [optional] 
+**Title** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** | Not to be confused with the description of the actual transaction(s) being created. | [optional] 
-**FirstDate** | **string** | First time the recurring transaction will fire. Must be after today. | 
-**LatestDate** | Pointer to **string** | First time the recurring transaction will fire. Must be after today. | [optional] 
-**RepeatUntil** | Pointer to **string** | Date until the recurring transaction can fire. Use either this field or repetitions. | [optional] 
-**NrOfRepetitions** | Pointer to **int32** | Max number of created transactions. Use either this field or repeat_until. | [optional] 
+**FirstDate** | Pointer to **time.Time** | First time the recurring transaction will fire. Must be after today. | [optional] 
+**LatestDate** | Pointer to **NullableTime** | Last time the recurring transaction has fired. | [optional] [readonly] 
+**RepeatUntil** | Pointer to **NullableTime** | Date until the recurring transaction can fire. Use either this field or repetitions. | [optional] 
+**NrOfRepetitions** | Pointer to **NullableInt32** | Max number of created transactions. Use either this field or repeat_until. | [optional] 
 **ApplyRules** | Pointer to **bool** | Whether or not to fire the rules after the creation of a transaction. | [optional] 
 **Active** | Pointer to **bool** | If the recurrence is even active. | [optional] 
-**Notes** | Pointer to **string** |  | [optional] 
+**Notes** | Pointer to **NullableString** |  | [optional] 
 **Repetitions** | Pointer to [**[]RecurrenceRepetition**](RecurrenceRepetition.md) |  | [optional] 
 **Transactions** | Pointer to [**[]RecurrenceTransaction**](RecurrenceTransaction.md) |  | [optional] 
 
@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewRecurrence
 
-`func NewRecurrence(type_ string, title string, firstDate string, ) *Recurrence`
+`func NewRecurrence() *Recurrence`
 
 NewRecurrence instantiates a new Recurrence object
 This constructor will assign default values to properties that have it defined,
@@ -107,6 +107,11 @@ and a boolean to check if the value has been set.
 
 SetType sets Type field to given value.
 
+### HasType
+
+`func (o *Recurrence) HasType() bool`
+
+HasType returns a boolean if a field has been set.
 
 ### GetTitle
 
@@ -127,6 +132,11 @@ and a boolean to check if the value has been set.
 
 SetTitle sets Title field to given value.
 
+### HasTitle
+
+`func (o *Recurrence) HasTitle() bool`
+
+HasTitle returns a boolean if a field has been set.
 
 ### GetDescription
 
@@ -155,40 +165,45 @@ HasDescription returns a boolean if a field has been set.
 
 ### GetFirstDate
 
-`func (o *Recurrence) GetFirstDate() string`
+`func (o *Recurrence) GetFirstDate() time.Time`
 
 GetFirstDate returns the FirstDate field if non-nil, zero value otherwise.
 
 ### GetFirstDateOk
 
-`func (o *Recurrence) GetFirstDateOk() (*string, bool)`
+`func (o *Recurrence) GetFirstDateOk() (*time.Time, bool)`
 
 GetFirstDateOk returns a tuple with the FirstDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFirstDate
 
-`func (o *Recurrence) SetFirstDate(v string)`
+`func (o *Recurrence) SetFirstDate(v time.Time)`
 
 SetFirstDate sets FirstDate field to given value.
 
+### HasFirstDate
+
+`func (o *Recurrence) HasFirstDate() bool`
+
+HasFirstDate returns a boolean if a field has been set.
 
 ### GetLatestDate
 
-`func (o *Recurrence) GetLatestDate() string`
+`func (o *Recurrence) GetLatestDate() time.Time`
 
 GetLatestDate returns the LatestDate field if non-nil, zero value otherwise.
 
 ### GetLatestDateOk
 
-`func (o *Recurrence) GetLatestDateOk() (*string, bool)`
+`func (o *Recurrence) GetLatestDateOk() (*time.Time, bool)`
 
 GetLatestDateOk returns a tuple with the LatestDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLatestDate
 
-`func (o *Recurrence) SetLatestDate(v string)`
+`func (o *Recurrence) SetLatestDate(v time.Time)`
 
 SetLatestDate sets LatestDate field to given value.
 
@@ -198,22 +213,32 @@ SetLatestDate sets LatestDate field to given value.
 
 HasLatestDate returns a boolean if a field has been set.
 
+### SetLatestDateNil
+
+`func (o *Recurrence) SetLatestDateNil(b bool)`
+
+ SetLatestDateNil sets the value for LatestDate to be an explicit nil
+
+### UnsetLatestDate
+`func (o *Recurrence) UnsetLatestDate()`
+
+UnsetLatestDate ensures that no value is present for LatestDate, not even an explicit nil
 ### GetRepeatUntil
 
-`func (o *Recurrence) GetRepeatUntil() string`
+`func (o *Recurrence) GetRepeatUntil() time.Time`
 
 GetRepeatUntil returns the RepeatUntil field if non-nil, zero value otherwise.
 
 ### GetRepeatUntilOk
 
-`func (o *Recurrence) GetRepeatUntilOk() (*string, bool)`
+`func (o *Recurrence) GetRepeatUntilOk() (*time.Time, bool)`
 
 GetRepeatUntilOk returns a tuple with the RepeatUntil field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRepeatUntil
 
-`func (o *Recurrence) SetRepeatUntil(v string)`
+`func (o *Recurrence) SetRepeatUntil(v time.Time)`
 
 SetRepeatUntil sets RepeatUntil field to given value.
 
@@ -223,6 +248,16 @@ SetRepeatUntil sets RepeatUntil field to given value.
 
 HasRepeatUntil returns a boolean if a field has been set.
 
+### SetRepeatUntilNil
+
+`func (o *Recurrence) SetRepeatUntilNil(b bool)`
+
+ SetRepeatUntilNil sets the value for RepeatUntil to be an explicit nil
+
+### UnsetRepeatUntil
+`func (o *Recurrence) UnsetRepeatUntil()`
+
+UnsetRepeatUntil ensures that no value is present for RepeatUntil, not even an explicit nil
 ### GetNrOfRepetitions
 
 `func (o *Recurrence) GetNrOfRepetitions() int32`
@@ -248,6 +283,16 @@ SetNrOfRepetitions sets NrOfRepetitions field to given value.
 
 HasNrOfRepetitions returns a boolean if a field has been set.
 
+### SetNrOfRepetitionsNil
+
+`func (o *Recurrence) SetNrOfRepetitionsNil(b bool)`
+
+ SetNrOfRepetitionsNil sets the value for NrOfRepetitions to be an explicit nil
+
+### UnsetNrOfRepetitions
+`func (o *Recurrence) UnsetNrOfRepetitions()`
+
+UnsetNrOfRepetitions ensures that no value is present for NrOfRepetitions, not even an explicit nil
 ### GetApplyRules
 
 `func (o *Recurrence) GetApplyRules() bool`
@@ -323,6 +368,16 @@ SetNotes sets Notes field to given value.
 
 HasNotes returns a boolean if a field has been set.
 
+### SetNotesNil
+
+`func (o *Recurrence) SetNotesNil(b bool)`
+
+ SetNotesNil sets the value for Notes to be an explicit nil
+
+### UnsetNotes
+`func (o *Recurrence) UnsetNotes()`
+
+UnsetNotes ensures that no value is present for Notes, not even an explicit nil
 ### GetRepetitions
 
 `func (o *Recurrence) GetRepetitions() []RecurrenceRepetition`

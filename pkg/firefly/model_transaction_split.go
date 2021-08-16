@@ -1,9 +1,9 @@
 /*
- * Firefly III API
+ * Firefly III API v1.5.2
  *
- * This is the official documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. This version of the API is live from version v4.7.9 and onwards. You may use the \"Authorize\" button to try the API below. 
+ * This is the documentation of the Firefly III API. You can find accompanying documentation on the website of Firefly III itself (see below). Please report any bugs or issues. You may use the \"Authorize\" button to try the API below. This file was last generated on 2021-05-14T15:49:56+00:00 
  *
- * API version: 1.4.0
+ * API version: 1.5.2
  * Contact: james@firefly-iii.org
  */
 
@@ -13,18 +13,19 @@ package firefly
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // TransactionSplit struct for TransactionSplit
 type TransactionSplit struct {
 	// User ID
-	User *int32 `json:"user,omitempty"`
+	User *string `json:"user,omitempty"`
 	// ID of the underlying transaction journal. Each transaction consists of a transaction group (see the top ID) and one or more journals making up the splits of the transaction. 
 	TransactionJournalId *int32 `json:"transaction_journal_id,omitempty"`
 	// Type of transaction.
 	Type string `json:"type"`
 	// Date of the transaction
-	Date string `json:"date"`
+	Date time.Time `json:"date"`
 	// Amount of the transaction.
 	Amount string `json:"amount"`
 	// Description of the transaction.
@@ -32,7 +33,7 @@ type TransactionSplit struct {
 	// Order of this entry in the list of transactions.
 	Order NullableInt32 `json:"order,omitempty"`
 	// Currency ID. Default is the source account's currency, or the user's default currency. Can be used instead of currency_code.
-	CurrencyId NullableInt32 `json:"currency_id,omitempty"`
+	CurrencyId NullableString `json:"currency_id,omitempty"`
 	// Currency code. Default is the source account's currency, or the user's default currency. Can be used instead of currency_id.
 	CurrencyCode NullableString `json:"currency_code,omitempty"`
 	CurrencySymbol *string `json:"currency_symbol,omitempty"`
@@ -42,28 +43,28 @@ type TransactionSplit struct {
 	// The amount in a foreign currency.
 	ForeignAmount NullableString `json:"foreign_amount,omitempty"`
 	// Currency ID of the foreign currency. Default is null. Is required when you submit a foreign amount.
-	ForeignCurrencyId NullableInt32 `json:"foreign_currency_id,omitempty"`
+	ForeignCurrencyId NullableString `json:"foreign_currency_id,omitempty"`
 	// Currency code of the foreign currency. Default is NULL. Can be used instead of the foreign_currency_id, but this or the ID is required when submitting a foreign amount.
 	ForeignCurrencyCode NullableString `json:"foreign_currency_code,omitempty"`
 	ForeignCurrencySymbol NullableString `json:"foreign_currency_symbol,omitempty"`
 	// Number of decimals in the currency
 	ForeignCurrencyDecimalPlaces NullableInt32 `json:"foreign_currency_decimal_places,omitempty"`
 	// The budget ID for this transaction.
-	BudgetId NullableInt32 `json:"budget_id,omitempty"`
+	BudgetId NullableString `json:"budget_id,omitempty"`
 	// The name of the budget to be used. If the budget name is unknown, the ID will be used or the value will be ignored.
 	BudgetName NullableString `json:"budget_name,omitempty"`
 	// The category ID for this transaction.
-	CategoryId NullableInt32 `json:"category_id,omitempty"`
+	CategoryId NullableString `json:"category_id,omitempty"`
 	// The name of the category to be used. If the category is unknown, it will be created. If the ID and the name point to different categories, the ID overrules the name.
-	CategoryName *string `json:"category_name,omitempty"`
+	CategoryName NullableString `json:"category_name,omitempty"`
 	// ID of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account.
-	SourceId NullableInt32 `json:"source_id"`
+	SourceId NullableString `json:"source_id"`
 	// Name of the source account. For a withdrawal or a transfer, this must always be an asset account. For deposits, this must be a revenue account. Can be used instead of the source_id. If the transaction is a deposit, the source_name can be filled in freely: the account will be created based on the name.
 	SourceName NullableString `json:"source_name,omitempty"`
 	SourceIban NullableString `json:"source_iban,omitempty"`
 	SourceType *AccountTypeProperty `json:"source_type,omitempty"`
 	// ID of the destination account. For a deposit or a transfer, this must always be an asset account. For withdrawals this must be an expense account.
-	DestinationId NullableInt32 `json:"destination_id"`
+	DestinationId NullableString `json:"destination_id"`
 	// Name of the destination account. You can submit the name instead of the ID. For everything except transfers, the account will be auto-generated if unknown, so submitting a name is enough.
 	DestinationName NullableString `json:"destination_name,omitempty"`
 	DestinationIban NullableString `json:"destination_iban,omitempty"`
@@ -75,7 +76,7 @@ type TransactionSplit struct {
 	// Optional. Use either this or the piggy_bank_id
 	PiggyBankName *string `json:"piggy_bank_name,omitempty"`
 	// Optional. Use either this or the bill_name
-	BillId NullableInt32 `json:"bill_id,omitempty"`
+	BillId NullableString `json:"bill_id,omitempty"`
 	// Optional. Use either this or the bill_id
 	BillName NullableString `json:"bill_name,omitempty"`
 	// Array of tags.
@@ -90,9 +91,9 @@ type TransactionSplit struct {
 	// Reference to recurrence that made the transaction.
 	RecurrenceId NullableInt32 `json:"recurrence_id,omitempty"`
 	// Total number of transactions expected to be created by this recurrence repetition. Will be 0 if infinite.
-	RecurrenceTotal *int32 `json:"recurrence_total,omitempty"`
+	RecurrenceTotal NullableInt32 `json:"recurrence_total,omitempty"`
 	// The # of the current transaction created under this recurrence.
-	RecurrenceCount *int32 `json:"recurrence_count,omitempty"`
+	RecurrenceCount NullableInt32 `json:"recurrence_count,omitempty"`
 	// Internal ID of bunq transaction.
 	BunqPaymentId NullableString `json:"bunq_payment_id,omitempty"`
 	// Hash value of original import transaction (for duplicate detection).
@@ -100,7 +101,7 @@ type TransactionSplit struct {
 	// SEPA Clearing Code
 	SepaCc NullableString `json:"sepa_cc,omitempty"`
 	// SEPA Opposing Account Identifier
-	SepaCtOp *string `json:"sepa_ct_op,omitempty"`
+	SepaCtOp NullableString `json:"sepa_ct_op,omitempty"`
 	// SEPA end-to-end Identifier
 	SepaCtId NullableString `json:"sepa_ct_id,omitempty"`
 	// SEPA mandate identifier
@@ -113,19 +114,19 @@ type TransactionSplit struct {
 	SepaCi NullableString `json:"sepa_ci,omitempty"`
 	// SEPA Batch ID
 	SepaBatchId NullableString `json:"sepa_batch_id,omitempty"`
-	InterestDate NullableString `json:"interest_date,omitempty"`
-	BookDate NullableString `json:"book_date,omitempty"`
-	ProcessDate NullableString `json:"process_date,omitempty"`
-	DueDate NullableString `json:"due_date,omitempty"`
-	PaymentDate NullableString `json:"payment_date,omitempty"`
-	InvoiceDate NullableString `json:"invoice_date,omitempty"`
+	InterestDate NullableTime `json:"interest_date,omitempty"`
+	BookDate NullableTime `json:"book_date,omitempty"`
+	ProcessDate NullableTime `json:"process_date,omitempty"`
+	DueDate NullableTime `json:"due_date,omitempty"`
+	PaymentDate NullableTime `json:"payment_date,omitempty"`
+	InvoiceDate NullableTime `json:"invoice_date,omitempty"`
 }
 
 // NewTransactionSplit instantiates a new TransactionSplit object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionSplit(type_ string, date string, amount string, description string, sourceId NullableInt32, destinationId NullableInt32) *TransactionSplit {
+func NewTransactionSplit(type_ string, date time.Time, amount string, description string, sourceId NullableString, destinationId NullableString) *TransactionSplit {
 	this := TransactionSplit{}
 	this.Type = type_
 	this.Date = date
@@ -145,9 +146,9 @@ func NewTransactionSplitWithDefaults() *TransactionSplit {
 }
 
 // GetUser returns the User field value if set, zero value otherwise.
-func (o *TransactionSplit) GetUser() int32 {
+func (o *TransactionSplit) GetUser() string {
 	if o == nil || o.User == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.User
@@ -155,7 +156,7 @@ func (o *TransactionSplit) GetUser() int32 {
 
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionSplit) GetUserOk() (*int32, bool) {
+func (o *TransactionSplit) GetUserOk() (*string, bool) {
 	if o == nil || o.User == nil {
 		return nil, false
 	}
@@ -171,8 +172,8 @@ func (o *TransactionSplit) HasUser() bool {
 	return false
 }
 
-// SetUser gets a reference to the given int32 and assigns it to the User field.
-func (o *TransactionSplit) SetUser(v int32) {
+// SetUser gets a reference to the given string and assigns it to the User field.
+func (o *TransactionSplit) SetUser(v string) {
 	o.User = &v
 }
 
@@ -233,9 +234,9 @@ func (o *TransactionSplit) SetType(v string) {
 }
 
 // GetDate returns the Date field value
-func (o *TransactionSplit) GetDate() string {
+func (o *TransactionSplit) GetDate() time.Time {
 	if o == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 
@@ -244,7 +245,7 @@ func (o *TransactionSplit) GetDate() string {
 
 // GetDateOk returns a tuple with the Date field value
 // and a boolean to check if the value has been set.
-func (o *TransactionSplit) GetDateOk() (*string, bool) {
+func (o *TransactionSplit) GetDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -252,7 +253,7 @@ func (o *TransactionSplit) GetDateOk() (*string, bool) {
 }
 
 // SetDate sets field value
-func (o *TransactionSplit) SetDate(v string) {
+func (o *TransactionSplit) SetDate(v time.Time) {
 	o.Date = v
 }
 
@@ -347,9 +348,9 @@ func (o *TransactionSplit) UnsetOrder() {
 }
 
 // GetCurrencyId returns the CurrencyId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetCurrencyId() int32 {
+func (o *TransactionSplit) GetCurrencyId() string {
 	if o == nil || o.CurrencyId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CurrencyId.Get()
@@ -358,7 +359,7 @@ func (o *TransactionSplit) GetCurrencyId() int32 {
 // GetCurrencyIdOk returns a tuple with the CurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetCurrencyIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetCurrencyIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -374,8 +375,8 @@ func (o *TransactionSplit) HasCurrencyId() bool {
 	return false
 }
 
-// SetCurrencyId gets a reference to the given NullableInt32 and assigns it to the CurrencyId field.
-func (o *TransactionSplit) SetCurrencyId(v int32) {
+// SetCurrencyId gets a reference to the given NullableString and assigns it to the CurrencyId field.
+func (o *TransactionSplit) SetCurrencyId(v string) {
 	o.CurrencyId.Set(&v)
 }
 // SetCurrencyIdNil sets the value for CurrencyId to be an explicit nil
@@ -569,9 +570,9 @@ func (o *TransactionSplit) UnsetForeignAmount() {
 }
 
 // GetForeignCurrencyId returns the ForeignCurrencyId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetForeignCurrencyId() int32 {
+func (o *TransactionSplit) GetForeignCurrencyId() string {
 	if o == nil || o.ForeignCurrencyId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.ForeignCurrencyId.Get()
@@ -580,7 +581,7 @@ func (o *TransactionSplit) GetForeignCurrencyId() int32 {
 // GetForeignCurrencyIdOk returns a tuple with the ForeignCurrencyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetForeignCurrencyIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetForeignCurrencyIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -596,8 +597,8 @@ func (o *TransactionSplit) HasForeignCurrencyId() bool {
 	return false
 }
 
-// SetForeignCurrencyId gets a reference to the given NullableInt32 and assigns it to the ForeignCurrencyId field.
-func (o *TransactionSplit) SetForeignCurrencyId(v int32) {
+// SetForeignCurrencyId gets a reference to the given NullableString and assigns it to the ForeignCurrencyId field.
+func (o *TransactionSplit) SetForeignCurrencyId(v string) {
 	o.ForeignCurrencyId.Set(&v)
 }
 // SetForeignCurrencyIdNil sets the value for ForeignCurrencyId to be an explicit nil
@@ -737,9 +738,9 @@ func (o *TransactionSplit) UnsetForeignCurrencyDecimalPlaces() {
 }
 
 // GetBudgetId returns the BudgetId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetBudgetId() int32 {
+func (o *TransactionSplit) GetBudgetId() string {
 	if o == nil || o.BudgetId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.BudgetId.Get()
@@ -748,7 +749,7 @@ func (o *TransactionSplit) GetBudgetId() int32 {
 // GetBudgetIdOk returns a tuple with the BudgetId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetBudgetIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetBudgetIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -764,8 +765,8 @@ func (o *TransactionSplit) HasBudgetId() bool {
 	return false
 }
 
-// SetBudgetId gets a reference to the given NullableInt32 and assigns it to the BudgetId field.
-func (o *TransactionSplit) SetBudgetId(v int32) {
+// SetBudgetId gets a reference to the given NullableString and assigns it to the BudgetId field.
+func (o *TransactionSplit) SetBudgetId(v string) {
 	o.BudgetId.Set(&v)
 }
 // SetBudgetIdNil sets the value for BudgetId to be an explicit nil
@@ -821,9 +822,9 @@ func (o *TransactionSplit) UnsetBudgetName() {
 }
 
 // GetCategoryId returns the CategoryId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetCategoryId() int32 {
+func (o *TransactionSplit) GetCategoryId() string {
 	if o == nil || o.CategoryId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.CategoryId.Get()
@@ -832,7 +833,7 @@ func (o *TransactionSplit) GetCategoryId() int32 {
 // GetCategoryIdOk returns a tuple with the CategoryId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetCategoryIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetCategoryIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -848,8 +849,8 @@ func (o *TransactionSplit) HasCategoryId() bool {
 	return false
 }
 
-// SetCategoryId gets a reference to the given NullableInt32 and assigns it to the CategoryId field.
-func (o *TransactionSplit) SetCategoryId(v int32) {
+// SetCategoryId gets a reference to the given NullableString and assigns it to the CategoryId field.
+func (o *TransactionSplit) SetCategoryId(v string) {
 	o.CategoryId.Set(&v)
 }
 // SetCategoryIdNil sets the value for CategoryId to be an explicit nil
@@ -862,43 +863,53 @@ func (o *TransactionSplit) UnsetCategoryId() {
 	o.CategoryId.Unset()
 }
 
-// GetCategoryName returns the CategoryName field value if set, zero value otherwise.
+// GetCategoryName returns the CategoryName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TransactionSplit) GetCategoryName() string {
-	if o == nil || o.CategoryName == nil {
+	if o == nil || o.CategoryName.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.CategoryName
+	return *o.CategoryName.Get()
 }
 
 // GetCategoryNameOk returns a tuple with the CategoryName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TransactionSplit) GetCategoryNameOk() (*string, bool) {
-	if o == nil || o.CategoryName == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.CategoryName, true
+	return o.CategoryName.Get(), o.CategoryName.IsSet()
 }
 
 // HasCategoryName returns a boolean if a field has been set.
 func (o *TransactionSplit) HasCategoryName() bool {
-	if o != nil && o.CategoryName != nil {
+	if o != nil && o.CategoryName.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCategoryName gets a reference to the given string and assigns it to the CategoryName field.
+// SetCategoryName gets a reference to the given NullableString and assigns it to the CategoryName field.
 func (o *TransactionSplit) SetCategoryName(v string) {
-	o.CategoryName = &v
+	o.CategoryName.Set(&v)
+}
+// SetCategoryNameNil sets the value for CategoryName to be an explicit nil
+func (o *TransactionSplit) SetCategoryNameNil() {
+	o.CategoryName.Set(nil)
+}
+
+// UnsetCategoryName ensures that no value is present for CategoryName, not even an explicit nil
+func (o *TransactionSplit) UnsetCategoryName() {
+	o.CategoryName.Unset()
 }
 
 // GetSourceId returns the SourceId field value
-// If the value is explicit nil, the zero value for int32 will be returned
-func (o *TransactionSplit) GetSourceId() int32 {
+// If the value is explicit nil, the zero value for string will be returned
+func (o *TransactionSplit) GetSourceId() string {
 	if o == nil || o.SourceId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -908,7 +919,7 @@ func (o *TransactionSplit) GetSourceId() int32 {
 // GetSourceIdOk returns a tuple with the SourceId field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetSourceIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetSourceIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -916,7 +927,7 @@ func (o *TransactionSplit) GetSourceIdOk() (*int32, bool) {
 }
 
 // SetSourceId sets field value
-func (o *TransactionSplit) SetSourceId(v int32) {
+func (o *TransactionSplit) SetSourceId(v string) {
 	o.SourceId.Set(&v)
 }
 
@@ -1037,10 +1048,10 @@ func (o *TransactionSplit) SetSourceType(v AccountTypeProperty) {
 }
 
 // GetDestinationId returns the DestinationId field value
-// If the value is explicit nil, the zero value for int32 will be returned
-func (o *TransactionSplit) GetDestinationId() int32 {
+// If the value is explicit nil, the zero value for string will be returned
+func (o *TransactionSplit) GetDestinationId() string {
 	if o == nil || o.DestinationId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -1050,7 +1061,7 @@ func (o *TransactionSplit) GetDestinationId() int32 {
 // GetDestinationIdOk returns a tuple with the DestinationId field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetDestinationIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetDestinationIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -1058,7 +1069,7 @@ func (o *TransactionSplit) GetDestinationIdOk() (*int32, bool) {
 }
 
 // SetDestinationId sets field value
-func (o *TransactionSplit) SetDestinationId(v int32) {
+func (o *TransactionSplit) SetDestinationId(v string) {
 	o.DestinationId.Set(&v)
 }
 
@@ -1275,9 +1286,9 @@ func (o *TransactionSplit) SetPiggyBankName(v string) {
 }
 
 // GetBillId returns the BillId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetBillId() int32 {
+func (o *TransactionSplit) GetBillId() string {
 	if o == nil || o.BillId.Get() == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.BillId.Get()
@@ -1286,7 +1297,7 @@ func (o *TransactionSplit) GetBillId() int32 {
 // GetBillIdOk returns a tuple with the BillId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetBillIdOk() (*int32, bool) {
+func (o *TransactionSplit) GetBillIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -1302,8 +1313,8 @@ func (o *TransactionSplit) HasBillId() bool {
 	return false
 }
 
-// SetBillId gets a reference to the given NullableInt32 and assigns it to the BillId field.
-func (o *TransactionSplit) SetBillId(v int32) {
+// SetBillId gets a reference to the given NullableString and assigns it to the BillId field.
+func (o *TransactionSplit) SetBillId(v string) {
 	o.BillId.Set(&v)
 }
 // SetBillIdNil sets the value for BillId to be an explicit nil
@@ -1601,68 +1612,88 @@ func (o *TransactionSplit) UnsetRecurrenceId() {
 	o.RecurrenceId.Unset()
 }
 
-// GetRecurrenceTotal returns the RecurrenceTotal field value if set, zero value otherwise.
+// GetRecurrenceTotal returns the RecurrenceTotal field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TransactionSplit) GetRecurrenceTotal() int32 {
-	if o == nil || o.RecurrenceTotal == nil {
+	if o == nil || o.RecurrenceTotal.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.RecurrenceTotal
+	return *o.RecurrenceTotal.Get()
 }
 
 // GetRecurrenceTotalOk returns a tuple with the RecurrenceTotal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TransactionSplit) GetRecurrenceTotalOk() (*int32, bool) {
-	if o == nil || o.RecurrenceTotal == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.RecurrenceTotal, true
+	return o.RecurrenceTotal.Get(), o.RecurrenceTotal.IsSet()
 }
 
 // HasRecurrenceTotal returns a boolean if a field has been set.
 func (o *TransactionSplit) HasRecurrenceTotal() bool {
-	if o != nil && o.RecurrenceTotal != nil {
+	if o != nil && o.RecurrenceTotal.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRecurrenceTotal gets a reference to the given int32 and assigns it to the RecurrenceTotal field.
+// SetRecurrenceTotal gets a reference to the given NullableInt32 and assigns it to the RecurrenceTotal field.
 func (o *TransactionSplit) SetRecurrenceTotal(v int32) {
-	o.RecurrenceTotal = &v
+	o.RecurrenceTotal.Set(&v)
+}
+// SetRecurrenceTotalNil sets the value for RecurrenceTotal to be an explicit nil
+func (o *TransactionSplit) SetRecurrenceTotalNil() {
+	o.RecurrenceTotal.Set(nil)
 }
 
-// GetRecurrenceCount returns the RecurrenceCount field value if set, zero value otherwise.
+// UnsetRecurrenceTotal ensures that no value is present for RecurrenceTotal, not even an explicit nil
+func (o *TransactionSplit) UnsetRecurrenceTotal() {
+	o.RecurrenceTotal.Unset()
+}
+
+// GetRecurrenceCount returns the RecurrenceCount field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TransactionSplit) GetRecurrenceCount() int32 {
-	if o == nil || o.RecurrenceCount == nil {
+	if o == nil || o.RecurrenceCount.Get() == nil {
 		var ret int32
 		return ret
 	}
-	return *o.RecurrenceCount
+	return *o.RecurrenceCount.Get()
 }
 
 // GetRecurrenceCountOk returns a tuple with the RecurrenceCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TransactionSplit) GetRecurrenceCountOk() (*int32, bool) {
-	if o == nil || o.RecurrenceCount == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.RecurrenceCount, true
+	return o.RecurrenceCount.Get(), o.RecurrenceCount.IsSet()
 }
 
 // HasRecurrenceCount returns a boolean if a field has been set.
 func (o *TransactionSplit) HasRecurrenceCount() bool {
-	if o != nil && o.RecurrenceCount != nil {
+	if o != nil && o.RecurrenceCount.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetRecurrenceCount gets a reference to the given int32 and assigns it to the RecurrenceCount field.
+// SetRecurrenceCount gets a reference to the given NullableInt32 and assigns it to the RecurrenceCount field.
 func (o *TransactionSplit) SetRecurrenceCount(v int32) {
-	o.RecurrenceCount = &v
+	o.RecurrenceCount.Set(&v)
+}
+// SetRecurrenceCountNil sets the value for RecurrenceCount to be an explicit nil
+func (o *TransactionSplit) SetRecurrenceCountNil() {
+	o.RecurrenceCount.Set(nil)
+}
+
+// UnsetRecurrenceCount ensures that no value is present for RecurrenceCount, not even an explicit nil
+func (o *TransactionSplit) UnsetRecurrenceCount() {
+	o.RecurrenceCount.Unset()
 }
 
 // GetBunqPaymentId returns the BunqPaymentId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1791,36 +1822,46 @@ func (o *TransactionSplit) UnsetSepaCc() {
 	o.SepaCc.Unset()
 }
 
-// GetSepaCtOp returns the SepaCtOp field value if set, zero value otherwise.
+// GetSepaCtOp returns the SepaCtOp field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TransactionSplit) GetSepaCtOp() string {
-	if o == nil || o.SepaCtOp == nil {
+	if o == nil || o.SepaCtOp.Get() == nil {
 		var ret string
 		return ret
 	}
-	return *o.SepaCtOp
+	return *o.SepaCtOp.Get()
 }
 
 // GetSepaCtOpOk returns a tuple with the SepaCtOp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TransactionSplit) GetSepaCtOpOk() (*string, bool) {
-	if o == nil || o.SepaCtOp == nil {
+	if o == nil  {
 		return nil, false
 	}
-	return o.SepaCtOp, true
+	return o.SepaCtOp.Get(), o.SepaCtOp.IsSet()
 }
 
 // HasSepaCtOp returns a boolean if a field has been set.
 func (o *TransactionSplit) HasSepaCtOp() bool {
-	if o != nil && o.SepaCtOp != nil {
+	if o != nil && o.SepaCtOp.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetSepaCtOp gets a reference to the given string and assigns it to the SepaCtOp field.
+// SetSepaCtOp gets a reference to the given NullableString and assigns it to the SepaCtOp field.
 func (o *TransactionSplit) SetSepaCtOp(v string) {
-	o.SepaCtOp = &v
+	o.SepaCtOp.Set(&v)
+}
+// SetSepaCtOpNil sets the value for SepaCtOp to be an explicit nil
+func (o *TransactionSplit) SetSepaCtOpNil() {
+	o.SepaCtOp.Set(nil)
+}
+
+// UnsetSepaCtOp ensures that no value is present for SepaCtOp, not even an explicit nil
+func (o *TransactionSplit) UnsetSepaCtOp() {
+	o.SepaCtOp.Unset()
 }
 
 // GetSepaCtId returns the SepaCtId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2076,9 +2117,9 @@ func (o *TransactionSplit) UnsetSepaBatchId() {
 }
 
 // GetInterestDate returns the InterestDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetInterestDate() string {
+func (o *TransactionSplit) GetInterestDate() time.Time {
 	if o == nil || o.InterestDate.Get() == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.InterestDate.Get()
@@ -2087,7 +2128,7 @@ func (o *TransactionSplit) GetInterestDate() string {
 // GetInterestDateOk returns a tuple with the InterestDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetInterestDateOk() (*string, bool) {
+func (o *TransactionSplit) GetInterestDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -2103,8 +2144,8 @@ func (o *TransactionSplit) HasInterestDate() bool {
 	return false
 }
 
-// SetInterestDate gets a reference to the given NullableString and assigns it to the InterestDate field.
-func (o *TransactionSplit) SetInterestDate(v string) {
+// SetInterestDate gets a reference to the given NullableTime and assigns it to the InterestDate field.
+func (o *TransactionSplit) SetInterestDate(v time.Time) {
 	o.InterestDate.Set(&v)
 }
 // SetInterestDateNil sets the value for InterestDate to be an explicit nil
@@ -2118,9 +2159,9 @@ func (o *TransactionSplit) UnsetInterestDate() {
 }
 
 // GetBookDate returns the BookDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetBookDate() string {
+func (o *TransactionSplit) GetBookDate() time.Time {
 	if o == nil || o.BookDate.Get() == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.BookDate.Get()
@@ -2129,7 +2170,7 @@ func (o *TransactionSplit) GetBookDate() string {
 // GetBookDateOk returns a tuple with the BookDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetBookDateOk() (*string, bool) {
+func (o *TransactionSplit) GetBookDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -2145,8 +2186,8 @@ func (o *TransactionSplit) HasBookDate() bool {
 	return false
 }
 
-// SetBookDate gets a reference to the given NullableString and assigns it to the BookDate field.
-func (o *TransactionSplit) SetBookDate(v string) {
+// SetBookDate gets a reference to the given NullableTime and assigns it to the BookDate field.
+func (o *TransactionSplit) SetBookDate(v time.Time) {
 	o.BookDate.Set(&v)
 }
 // SetBookDateNil sets the value for BookDate to be an explicit nil
@@ -2160,9 +2201,9 @@ func (o *TransactionSplit) UnsetBookDate() {
 }
 
 // GetProcessDate returns the ProcessDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetProcessDate() string {
+func (o *TransactionSplit) GetProcessDate() time.Time {
 	if o == nil || o.ProcessDate.Get() == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.ProcessDate.Get()
@@ -2171,7 +2212,7 @@ func (o *TransactionSplit) GetProcessDate() string {
 // GetProcessDateOk returns a tuple with the ProcessDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetProcessDateOk() (*string, bool) {
+func (o *TransactionSplit) GetProcessDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -2187,8 +2228,8 @@ func (o *TransactionSplit) HasProcessDate() bool {
 	return false
 }
 
-// SetProcessDate gets a reference to the given NullableString and assigns it to the ProcessDate field.
-func (o *TransactionSplit) SetProcessDate(v string) {
+// SetProcessDate gets a reference to the given NullableTime and assigns it to the ProcessDate field.
+func (o *TransactionSplit) SetProcessDate(v time.Time) {
 	o.ProcessDate.Set(&v)
 }
 // SetProcessDateNil sets the value for ProcessDate to be an explicit nil
@@ -2202,9 +2243,9 @@ func (o *TransactionSplit) UnsetProcessDate() {
 }
 
 // GetDueDate returns the DueDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetDueDate() string {
+func (o *TransactionSplit) GetDueDate() time.Time {
 	if o == nil || o.DueDate.Get() == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.DueDate.Get()
@@ -2213,7 +2254,7 @@ func (o *TransactionSplit) GetDueDate() string {
 // GetDueDateOk returns a tuple with the DueDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetDueDateOk() (*string, bool) {
+func (o *TransactionSplit) GetDueDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -2229,8 +2270,8 @@ func (o *TransactionSplit) HasDueDate() bool {
 	return false
 }
 
-// SetDueDate gets a reference to the given NullableString and assigns it to the DueDate field.
-func (o *TransactionSplit) SetDueDate(v string) {
+// SetDueDate gets a reference to the given NullableTime and assigns it to the DueDate field.
+func (o *TransactionSplit) SetDueDate(v time.Time) {
 	o.DueDate.Set(&v)
 }
 // SetDueDateNil sets the value for DueDate to be an explicit nil
@@ -2244,9 +2285,9 @@ func (o *TransactionSplit) UnsetDueDate() {
 }
 
 // GetPaymentDate returns the PaymentDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetPaymentDate() string {
+func (o *TransactionSplit) GetPaymentDate() time.Time {
 	if o == nil || o.PaymentDate.Get() == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.PaymentDate.Get()
@@ -2255,7 +2296,7 @@ func (o *TransactionSplit) GetPaymentDate() string {
 // GetPaymentDateOk returns a tuple with the PaymentDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetPaymentDateOk() (*string, bool) {
+func (o *TransactionSplit) GetPaymentDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -2271,8 +2312,8 @@ func (o *TransactionSplit) HasPaymentDate() bool {
 	return false
 }
 
-// SetPaymentDate gets a reference to the given NullableString and assigns it to the PaymentDate field.
-func (o *TransactionSplit) SetPaymentDate(v string) {
+// SetPaymentDate gets a reference to the given NullableTime and assigns it to the PaymentDate field.
+func (o *TransactionSplit) SetPaymentDate(v time.Time) {
 	o.PaymentDate.Set(&v)
 }
 // SetPaymentDateNil sets the value for PaymentDate to be an explicit nil
@@ -2286,9 +2327,9 @@ func (o *TransactionSplit) UnsetPaymentDate() {
 }
 
 // GetInvoiceDate returns the InvoiceDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TransactionSplit) GetInvoiceDate() string {
+func (o *TransactionSplit) GetInvoiceDate() time.Time {
 	if o == nil || o.InvoiceDate.Get() == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.InvoiceDate.Get()
@@ -2297,7 +2338,7 @@ func (o *TransactionSplit) GetInvoiceDate() string {
 // GetInvoiceDateOk returns a tuple with the InvoiceDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TransactionSplit) GetInvoiceDateOk() (*string, bool) {
+func (o *TransactionSplit) GetInvoiceDateOk() (*time.Time, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -2313,8 +2354,8 @@ func (o *TransactionSplit) HasInvoiceDate() bool {
 	return false
 }
 
-// SetInvoiceDate gets a reference to the given NullableString and assigns it to the InvoiceDate field.
-func (o *TransactionSplit) SetInvoiceDate(v string) {
+// SetInvoiceDate gets a reference to the given NullableTime and assigns it to the InvoiceDate field.
+func (o *TransactionSplit) SetInvoiceDate(v time.Time) {
 	o.InvoiceDate.Set(&v)
 }
 // SetInvoiceDateNil sets the value for InvoiceDate to be an explicit nil
@@ -2389,8 +2430,8 @@ func (o TransactionSplit) MarshalJSON() ([]byte, error) {
 	if o.CategoryId.IsSet() {
 		toSerialize["category_id"] = o.CategoryId.Get()
 	}
-	if o.CategoryName != nil {
-		toSerialize["category_name"] = o.CategoryName
+	if o.CategoryName.IsSet() {
+		toSerialize["category_name"] = o.CategoryName.Get()
 	}
 	if true {
 		toSerialize["source_id"] = o.SourceId.Get()
@@ -2449,11 +2490,11 @@ func (o TransactionSplit) MarshalJSON() ([]byte, error) {
 	if o.RecurrenceId.IsSet() {
 		toSerialize["recurrence_id"] = o.RecurrenceId.Get()
 	}
-	if o.RecurrenceTotal != nil {
-		toSerialize["recurrence_total"] = o.RecurrenceTotal
+	if o.RecurrenceTotal.IsSet() {
+		toSerialize["recurrence_total"] = o.RecurrenceTotal.Get()
 	}
-	if o.RecurrenceCount != nil {
-		toSerialize["recurrence_count"] = o.RecurrenceCount
+	if o.RecurrenceCount.IsSet() {
+		toSerialize["recurrence_count"] = o.RecurrenceCount.Get()
 	}
 	if o.BunqPaymentId.IsSet() {
 		toSerialize["bunq_payment_id"] = o.BunqPaymentId.Get()
@@ -2464,8 +2505,8 @@ func (o TransactionSplit) MarshalJSON() ([]byte, error) {
 	if o.SepaCc.IsSet() {
 		toSerialize["sepa_cc"] = o.SepaCc.Get()
 	}
-	if o.SepaCtOp != nil {
-		toSerialize["sepa_ct_op"] = o.SepaCtOp
+	if o.SepaCtOp.IsSet() {
+		toSerialize["sepa_ct_op"] = o.SepaCtOp.Get()
 	}
 	if o.SepaCtId.IsSet() {
 		toSerialize["sepa_ct_id"] = o.SepaCtId.Get()

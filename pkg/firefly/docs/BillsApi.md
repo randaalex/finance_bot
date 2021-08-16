@@ -151,7 +151,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -294,7 +294,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -364,7 +364,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -441,7 +441,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -450,7 +450,7 @@ Name | Type | Description  | Notes
 
 ## StoreBill
 
-> BillSingle StoreBill(ctx).Bill(bill).Execute()
+> BillSingle StoreBill(ctx).BillStore(billStore).Execute()
 
 Store a new bill
 
@@ -470,11 +470,11 @@ import (
 )
 
 func main() {
-    bill := *openapiclient.NewBill("Rent", "123.45", "123.45", time.Now(), "monthly") // Bill | JSON array or key=value pairs with the necessary bill information. See the model for the exact specifications.
+    billStore := *openapiclient.NewBillStore("Rent", "123.45", "123.45", time.Now(), "monthly") // BillStore | JSON array or key=value pairs with the necessary bill information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BillsApi.StoreBill(context.Background()).Bill(bill).Execute()
+    resp, r, err := api_client.BillsApi.StoreBill(context.Background()).BillStore(billStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BillsApi.StoreBill``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -495,7 +495,7 @@ Other parameters are passed through a pointer to a apiStoreBillRequest struct vi
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bill** | [**Bill**](Bill.md) | JSON array or key&#x3D;value pairs with the necessary bill information. See the model for the exact specifications. | 
+ **billStore** | [**BillStore**](BillStore.md) | JSON array or key&#x3D;value pairs with the necessary bill information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -508,7 +508,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -517,7 +517,7 @@ Name | Type | Description  | Notes
 
 ## UpdateBill
 
-> BillSingle UpdateBill(ctx, id).Bill(bill).Execute()
+> BillSingle UpdateBill(ctx, id).BillUpdate(billUpdate).Execute()
 
 Update existing bill.
 
@@ -532,17 +532,16 @@ import (
     "context"
     "fmt"
     "os"
-    "time"
     openapiclient "./openapi"
 )
 
 func main() {
     id := int32(1) // int32 | The ID of the bill.
-    bill := *openapiclient.NewBill("Rent", "123.45", "123.45", time.Now(), "monthly") // Bill | JSON array or key=value pairs with updated bill information. See the model for the exact specifications.
+    billUpdate := *openapiclient.NewBillUpdate() // BillUpdate | JSON array or key=value pairs with updated bill information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BillsApi.UpdateBill(context.Background(), id).Bill(bill).Execute()
+    resp, r, err := api_client.BillsApi.UpdateBill(context.Background(), id).BillUpdate(billUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BillsApi.UpdateBill``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -568,7 +567,7 @@ Other parameters are passed through a pointer to a apiUpdateBillRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **bill** | [**Bill**](Bill.md) | JSON array or key&#x3D;value pairs with updated bill information. See the model for the exact specifications. | 
+ **billUpdate** | [**BillUpdate**](BillUpdate.md) | JSON array or key&#x3D;value pairs with updated bill information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -581,7 +580,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

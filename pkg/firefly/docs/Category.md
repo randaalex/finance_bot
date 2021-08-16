@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Name** | **string** |  | 
-**Notes** | Pointer to **string** |  | [optional] 
+**Notes** | Pointer to **NullableString** |  | [optional] 
 **Spent** | Pointer to [**[]CategorySpent**](CategorySpent.md) |  | [optional] [readonly] 
 **Earned** | Pointer to [**[]CategoryEarned**](CategoryEarned.md) |  | [optional] [readonly] 
 
@@ -125,6 +125,16 @@ SetNotes sets Notes field to given value.
 
 HasNotes returns a boolean if a field has been set.
 
+### SetNotesNil
+
+`func (o *Category) SetNotesNil(b bool)`
+
+ SetNotesNil sets the value for Notes to be an explicit nil
+
+### UnsetNotes
+`func (o *Category) UnsetNotes()`
+
+UnsetNotes ensures that no value is present for Notes, not even an explicit nil
 ### GetSpent
 
 `func (o *Category) GetSpent() []CategorySpent`

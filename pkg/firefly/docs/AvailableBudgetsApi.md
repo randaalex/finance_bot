@@ -143,7 +143,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -214,7 +214,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 
 ## StoreAvailableBudget
 
-> AvailableBudgetSingle StoreAvailableBudget(ctx).AvailableBudget(availableBudget).Execute()
+> AvailableBudgetSingle StoreAvailableBudget(ctx).AvailableBudgetStore(availableBudgetStore).Execute()
 
 Store a new available budget
 
@@ -243,11 +243,11 @@ import (
 )
 
 func main() {
-    availableBudget := *openapiclient.NewAvailableBudget("123.45", time.Now(), time.Now()) // AvailableBudget | JSON array or key=value pairs with the necessary available budget information. See the model for the exact specifications.
+    availableBudgetStore := *openapiclient.NewAvailableBudgetStore("123.45", time.Now(), time.Now()) // AvailableBudgetStore | JSON array or key=value pairs with the necessary available budget information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.AvailableBudgetsApi.StoreAvailableBudget(context.Background()).AvailableBudget(availableBudget).Execute()
+    resp, r, err := api_client.AvailableBudgetsApi.StoreAvailableBudget(context.Background()).AvailableBudgetStore(availableBudgetStore).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AvailableBudgetsApi.StoreAvailableBudget``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -268,7 +268,7 @@ Other parameters are passed through a pointer to a apiStoreAvailableBudgetReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **availableBudget** | [**AvailableBudget**](AvailableBudget.md) | JSON array or key&#x3D;value pairs with the necessary available budget information. See the model for the exact specifications. | 
+ **availableBudgetStore** | [**AvailableBudgetStore**](AvailableBudgetStore.md) | JSON array or key&#x3D;value pairs with the necessary available budget information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -281,7 +281,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -290,7 +290,7 @@ Name | Type | Description  | Notes
 
 ## UpdateAvailableBudget
 
-> AvailableBudgetSingle UpdateAvailableBudget(ctx, id).AvailableBudget(availableBudget).Execute()
+> AvailableBudgetSingle UpdateAvailableBudget(ctx, id).AvailableBudgetUpdate(availableBudgetUpdate).Execute()
 
 Update existing available budget, to change for example the date range of the amount or the amount itself.
 
@@ -305,17 +305,16 @@ import (
     "context"
     "fmt"
     "os"
-    "time"
     openapiclient "./openapi"
 )
 
 func main() {
     id := int32(1) // int32 | The ID of the object.X
-    availableBudget := *openapiclient.NewAvailableBudget("123.45", time.Now(), time.Now()) // AvailableBudget | JSON array or form value with updated available budget information. See the model for the exact specifications.
+    availableBudgetUpdate := *openapiclient.NewAvailableBudgetUpdate() // AvailableBudgetUpdate | JSON array or form value with updated available budget information. See the model for the exact specifications.
 
     configuration := openapiclient.NewConfiguration()
     api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.AvailableBudgetsApi.UpdateAvailableBudget(context.Background(), id).AvailableBudget(availableBudget).Execute()
+    resp, r, err := api_client.AvailableBudgetsApi.UpdateAvailableBudget(context.Background(), id).AvailableBudgetUpdate(availableBudgetUpdate).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AvailableBudgetsApi.UpdateAvailableBudget``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -341,7 +340,7 @@ Other parameters are passed through a pointer to a apiUpdateAvailableBudgetReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **availableBudget** | [**AvailableBudget**](AvailableBudget.md) | JSON array or form value with updated available budget information. See the model for the exact specifications. | 
+ **availableBudgetUpdate** | [**AvailableBudgetUpdate**](AvailableBudgetUpdate.md) | JSON array or form value with updated available budget information. See the model for the exact specifications. | 
 
 ### Return type
 
@@ -353,8 +352,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json, application/x-www-form-urlencoded
-- **Accept**: application/json
+- **Content-Type**: application/vnd.api+json, application/x-www-form-urlencoded
+- **Accept**: application/vnd.api+json, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

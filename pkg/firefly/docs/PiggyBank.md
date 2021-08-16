@@ -7,31 +7,31 @@ Name | Type | Description | Notes
 **CreatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] [readonly] 
 **Name** | **string** |  | 
-**AccountId** | **int32** | The ID of the asset account this piggy bank is connected to. | 
+**AccountId** | **string** | The ID of the asset account this piggy bank is connected to. | 
 **AccountName** | Pointer to **string** | The name of the asset account this piggy bank is connected to. | [optional] [readonly] 
-**CurrencyId** | Pointer to **int32** |  | [optional] [readonly] 
+**CurrencyId** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyCode** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencySymbol** | Pointer to **string** |  | [optional] [readonly] 
 **CurrencyDecimalPlaces** | Pointer to **int32** | Number of decimals supported by the currency | [optional] [readonly] 
 **TargetAmount** | **string** |  | 
 **Percentage** | Pointer to **float32** |  | [optional] [readonly] 
 **CurrentAmount** | Pointer to **string** |  | [optional] 
-**LeftToSave** | Pointer to **float64** |  | [optional] [readonly] 
-**SavePerMonth** | Pointer to **float64** |  | [optional] [readonly] 
-**StartDate** | Pointer to **string** | The date you started with this piggy bank. | [optional] 
-**TargetDate** | Pointer to **string** | The date you intend to finish saving money. | [optional] 
+**LeftToSave** | Pointer to **string** |  | [optional] [readonly] 
+**SavePerMonth** | Pointer to **string** |  | [optional] [readonly] 
+**StartDate** | Pointer to **time.Time** | The date you started with this piggy bank. | [optional] 
+**TargetDate** | Pointer to **NullableTime** | The date you intend to finish saving money. | [optional] 
 **Order** | Pointer to **int32** |  | [optional] 
 **Active** | Pointer to **bool** |  | [optional] [readonly] 
-**Notes** | Pointer to **string** |  | [optional] 
-**ObjectGroupId** | Pointer to **int32** | The group ID of the group this object is part of. NULL if no group. | [optional] 
-**ObjectGroupOrder** | Pointer to **int32** | The order of the group. At least 1, for the highest sorting. | [optional] 
-**ObjectGroupTitle** | Pointer to **string** | The name of the group. NULL if no group. | [optional] 
+**Notes** | Pointer to **NullableString** |  | [optional] 
+**ObjectGroupId** | Pointer to **NullableString** | The group ID of the group this object is part of. NULL if no group. | [optional] 
+**ObjectGroupOrder** | Pointer to **NullableInt32** | The order of the group. At least 1, for the highest sorting. | [optional] [readonly] 
+**ObjectGroupTitle** | Pointer to **NullableString** | The name of the group. NULL if no group. | [optional] 
 
 ## Methods
 
 ### NewPiggyBank
 
-`func NewPiggyBank(name string, accountId int32, targetAmount string, ) *PiggyBank`
+`func NewPiggyBank(name string, accountId string, targetAmount string, ) *PiggyBank`
 
 NewPiggyBank instantiates a new PiggyBank object
 This constructor will assign default values to properties that have it defined,
@@ -118,20 +118,20 @@ SetName sets Name field to given value.
 
 ### GetAccountId
 
-`func (o *PiggyBank) GetAccountId() int32`
+`func (o *PiggyBank) GetAccountId() string`
 
 GetAccountId returns the AccountId field if non-nil, zero value otherwise.
 
 ### GetAccountIdOk
 
-`func (o *PiggyBank) GetAccountIdOk() (*int32, bool)`
+`func (o *PiggyBank) GetAccountIdOk() (*string, bool)`
 
 GetAccountIdOk returns a tuple with the AccountId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccountId
 
-`func (o *PiggyBank) SetAccountId(v int32)`
+`func (o *PiggyBank) SetAccountId(v string)`
 
 SetAccountId sets AccountId field to given value.
 
@@ -163,20 +163,20 @@ HasAccountName returns a boolean if a field has been set.
 
 ### GetCurrencyId
 
-`func (o *PiggyBank) GetCurrencyId() int32`
+`func (o *PiggyBank) GetCurrencyId() string`
 
 GetCurrencyId returns the CurrencyId field if non-nil, zero value otherwise.
 
 ### GetCurrencyIdOk
 
-`func (o *PiggyBank) GetCurrencyIdOk() (*int32, bool)`
+`func (o *PiggyBank) GetCurrencyIdOk() (*string, bool)`
 
 GetCurrencyIdOk returns a tuple with the CurrencyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrencyId
 
-`func (o *PiggyBank) SetCurrencyId(v int32)`
+`func (o *PiggyBank) SetCurrencyId(v string)`
 
 SetCurrencyId sets CurrencyId field to given value.
 
@@ -333,20 +333,20 @@ HasCurrentAmount returns a boolean if a field has been set.
 
 ### GetLeftToSave
 
-`func (o *PiggyBank) GetLeftToSave() float64`
+`func (o *PiggyBank) GetLeftToSave() string`
 
 GetLeftToSave returns the LeftToSave field if non-nil, zero value otherwise.
 
 ### GetLeftToSaveOk
 
-`func (o *PiggyBank) GetLeftToSaveOk() (*float64, bool)`
+`func (o *PiggyBank) GetLeftToSaveOk() (*string, bool)`
 
 GetLeftToSaveOk returns a tuple with the LeftToSave field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLeftToSave
 
-`func (o *PiggyBank) SetLeftToSave(v float64)`
+`func (o *PiggyBank) SetLeftToSave(v string)`
 
 SetLeftToSave sets LeftToSave field to given value.
 
@@ -358,20 +358,20 @@ HasLeftToSave returns a boolean if a field has been set.
 
 ### GetSavePerMonth
 
-`func (o *PiggyBank) GetSavePerMonth() float64`
+`func (o *PiggyBank) GetSavePerMonth() string`
 
 GetSavePerMonth returns the SavePerMonth field if non-nil, zero value otherwise.
 
 ### GetSavePerMonthOk
 
-`func (o *PiggyBank) GetSavePerMonthOk() (*float64, bool)`
+`func (o *PiggyBank) GetSavePerMonthOk() (*string, bool)`
 
 GetSavePerMonthOk returns a tuple with the SavePerMonth field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSavePerMonth
 
-`func (o *PiggyBank) SetSavePerMonth(v float64)`
+`func (o *PiggyBank) SetSavePerMonth(v string)`
 
 SetSavePerMonth sets SavePerMonth field to given value.
 
@@ -383,20 +383,20 @@ HasSavePerMonth returns a boolean if a field has been set.
 
 ### GetStartDate
 
-`func (o *PiggyBank) GetStartDate() string`
+`func (o *PiggyBank) GetStartDate() time.Time`
 
 GetStartDate returns the StartDate field if non-nil, zero value otherwise.
 
 ### GetStartDateOk
 
-`func (o *PiggyBank) GetStartDateOk() (*string, bool)`
+`func (o *PiggyBank) GetStartDateOk() (*time.Time, bool)`
 
 GetStartDateOk returns a tuple with the StartDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStartDate
 
-`func (o *PiggyBank) SetStartDate(v string)`
+`func (o *PiggyBank) SetStartDate(v time.Time)`
 
 SetStartDate sets StartDate field to given value.
 
@@ -408,20 +408,20 @@ HasStartDate returns a boolean if a field has been set.
 
 ### GetTargetDate
 
-`func (o *PiggyBank) GetTargetDate() string`
+`func (o *PiggyBank) GetTargetDate() time.Time`
 
 GetTargetDate returns the TargetDate field if non-nil, zero value otherwise.
 
 ### GetTargetDateOk
 
-`func (o *PiggyBank) GetTargetDateOk() (*string, bool)`
+`func (o *PiggyBank) GetTargetDateOk() (*time.Time, bool)`
 
 GetTargetDateOk returns a tuple with the TargetDate field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTargetDate
 
-`func (o *PiggyBank) SetTargetDate(v string)`
+`func (o *PiggyBank) SetTargetDate(v time.Time)`
 
 SetTargetDate sets TargetDate field to given value.
 
@@ -431,6 +431,16 @@ SetTargetDate sets TargetDate field to given value.
 
 HasTargetDate returns a boolean if a field has been set.
 
+### SetTargetDateNil
+
+`func (o *PiggyBank) SetTargetDateNil(b bool)`
+
+ SetTargetDateNil sets the value for TargetDate to be an explicit nil
+
+### UnsetTargetDate
+`func (o *PiggyBank) UnsetTargetDate()`
+
+UnsetTargetDate ensures that no value is present for TargetDate, not even an explicit nil
 ### GetOrder
 
 `func (o *PiggyBank) GetOrder() int32`
@@ -506,22 +516,32 @@ SetNotes sets Notes field to given value.
 
 HasNotes returns a boolean if a field has been set.
 
+### SetNotesNil
+
+`func (o *PiggyBank) SetNotesNil(b bool)`
+
+ SetNotesNil sets the value for Notes to be an explicit nil
+
+### UnsetNotes
+`func (o *PiggyBank) UnsetNotes()`
+
+UnsetNotes ensures that no value is present for Notes, not even an explicit nil
 ### GetObjectGroupId
 
-`func (o *PiggyBank) GetObjectGroupId() int32`
+`func (o *PiggyBank) GetObjectGroupId() string`
 
 GetObjectGroupId returns the ObjectGroupId field if non-nil, zero value otherwise.
 
 ### GetObjectGroupIdOk
 
-`func (o *PiggyBank) GetObjectGroupIdOk() (*int32, bool)`
+`func (o *PiggyBank) GetObjectGroupIdOk() (*string, bool)`
 
 GetObjectGroupIdOk returns a tuple with the ObjectGroupId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetObjectGroupId
 
-`func (o *PiggyBank) SetObjectGroupId(v int32)`
+`func (o *PiggyBank) SetObjectGroupId(v string)`
 
 SetObjectGroupId sets ObjectGroupId field to given value.
 
@@ -531,6 +551,16 @@ SetObjectGroupId sets ObjectGroupId field to given value.
 
 HasObjectGroupId returns a boolean if a field has been set.
 
+### SetObjectGroupIdNil
+
+`func (o *PiggyBank) SetObjectGroupIdNil(b bool)`
+
+ SetObjectGroupIdNil sets the value for ObjectGroupId to be an explicit nil
+
+### UnsetObjectGroupId
+`func (o *PiggyBank) UnsetObjectGroupId()`
+
+UnsetObjectGroupId ensures that no value is present for ObjectGroupId, not even an explicit nil
 ### GetObjectGroupOrder
 
 `func (o *PiggyBank) GetObjectGroupOrder() int32`
@@ -556,6 +586,16 @@ SetObjectGroupOrder sets ObjectGroupOrder field to given value.
 
 HasObjectGroupOrder returns a boolean if a field has been set.
 
+### SetObjectGroupOrderNil
+
+`func (o *PiggyBank) SetObjectGroupOrderNil(b bool)`
+
+ SetObjectGroupOrderNil sets the value for ObjectGroupOrder to be an explicit nil
+
+### UnsetObjectGroupOrder
+`func (o *PiggyBank) UnsetObjectGroupOrder()`
+
+UnsetObjectGroupOrder ensures that no value is present for ObjectGroupOrder, not even an explicit nil
 ### GetObjectGroupTitle
 
 `func (o *PiggyBank) GetObjectGroupTitle() string`
@@ -581,6 +621,16 @@ SetObjectGroupTitle sets ObjectGroupTitle field to given value.
 
 HasObjectGroupTitle returns a boolean if a field has been set.
 
+### SetObjectGroupTitleNil
+
+`func (o *PiggyBank) SetObjectGroupTitleNil(b bool)`
+
+ SetObjectGroupTitleNil sets the value for ObjectGroupTitle to be an explicit nil
+
+### UnsetObjectGroupTitle
+`func (o *PiggyBank) UnsetObjectGroupTitle()`
+
+UnsetObjectGroupTitle ensures that no value is present for ObjectGroupTitle, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
