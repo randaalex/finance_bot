@@ -73,43 +73,43 @@ func getAccounts() *[]entities.Account {
 	// TODO: load from API
 	return &[]entities.Account{
 		{
-			Id: 7,
-			Name: "AlfaBank N1 (BYN)",
-			CurrencyCode: "BYN",
+			Id:            7,
+			Name:          "AlfaBank N1 (BYN)",
+			CurrencyCode:  "BYN",
 			AccountNumber: "7858",
 		},
 		{
-			Id: 8,
-			Name: "AlfaBank N1 (USD)",
-			CurrencyCode: "USD",
+			Id:            8,
+			Name:          "AlfaBank N1 (USD)",
+			CurrencyCode:  "USD",
 			AccountNumber: "6185",
 		},
 	}
 }
 
 func getCategories() *[]entities.Category {
-	// TODO: load from API
 	return &[]entities.Category{
-		{ Id: 14, Name: "⛽️ Car Fuel" },
-		{ Id: 15, Name: "🛠 Car Maintenance" },
-		{ Id: 4, Name:  "🛒 Food Groceries" },
-		{ Id: 5, Name:  "🍔 Food Restaurants" },
-		{ Id: 1, Name:  "🏠 House Bills" },
-		{ Id: 6, Name:  "🏠 House Purchases" },
-		{ Id: 7, Name:  "🐈 House Pets" },
-		{ Id: 8, Name:  "🏦 House Credit" },
-		{ Id: 9, Name:  "🏝 Leisure General" },
-		{ Id: 2, Name:  "✈️ Leisure Tourism" },
-		{ Id: 10, Name: "⚽️ Leisure Hobby" },
-		{ Id: 11, Name: "🎁 Leisure Presents" },
-		{ Id: 12, Name: "📽 Leisure Entertainment" },
-		{ Id: 16, Name: "👕 Clothing" },
-		{ Id: 19, Name: "🚑 Health" },
-		{ Id: 17, Name: "🪣 Other" },
-		{ Id: 13, Name: "🏆 Personal" },
-		{ Id: 3, Name:  "👨‍💻 Work" },
-		{ Id: 18, Name: "🧹 Corrections" },
-		{ Id: 20, Name: "❔ Unknown" },
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "⛽️ Car Fuel", Id: 14},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🛠 Car Maintenance", Id: 15},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "👕 Clothing", Id: 16},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "📽 Entertainment", Id: 12},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🍔 Food / Restaurants", Id: 5},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🛒 Groceries", Id: 4},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🚑 Health", Id: 19},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "⚽️ Hobby", Id: 10},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🏠 House Bills", Id: 1},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🏠 House Purchases", Id: 6},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🪣 Other", Id: 17},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🏆 Personal", Id: 13},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🐈 Pets", Id: 7},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🎁 Presents", Id: 11},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "✈️ Tourism", Id: 2},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🚕 Transport", Id: 24},
+
+		{Type: entities.TransactionSplitTypeDeposit, Name: "💰 Cashback", Id: 23},
+		{Type: entities.TransactionSplitTypeDeposit, Name: "👨‍💻 Work", Id: 3},
+
+		{Type: "other", Name: "🧹 Corrections", Id: 18},
 	}
 }
 

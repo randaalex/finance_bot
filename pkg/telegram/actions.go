@@ -73,6 +73,10 @@ func (b *Bot) UpdateTransactionWithCategoriesKeyboard(ctx context.Context, messa
 	var inline []telebot.Row
 
 	for _, category := range *b.categories {
+		if category.Type != entities.TransactionSplitTypeWithdrawal {
+			continue
+		}
+
 		categoryId := category.Id
 		categoryName := category.Name
 
