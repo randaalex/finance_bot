@@ -122,7 +122,7 @@ func (p *Parser) getType(mail string) (*string, error) {
 	switch mailRows[2] {
 	case "Оплата товаров/услуг", "Перевод (Списание)":
 		return &withdrawal, nil
-	case "Поступление", "Поступление успешно":
+	case "Поступление", "Поступление успешно", "Перевод (Поступление)":
 		return &deposit, nil
 	case "Списание", "Выдача наличных":
 		return &transfer, nil
