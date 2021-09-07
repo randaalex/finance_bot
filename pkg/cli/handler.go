@@ -105,9 +105,11 @@ func getCategories() *[]entities.Category {
 		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🎁 Presents", Id: 11},
 		{Type: entities.TransactionSplitTypeWithdrawal, Name: "✈️ Tourism", Id: 2},
 		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🚕 Transport", Id: 24},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "🔀 Transfers", Id: 25},
+		{Type: entities.TransactionSplitTypeWithdrawal, Name: "❌ Delete", Id: 26},
 
 		{Type: entities.TransactionSplitTypeDeposit, Name: "💰 Cashback", Id: 23},
-		{Type: entities.TransactionSplitTypeDeposit, Name: "👨‍💻 Work", Id: 3},
+		{Type: entities.TransactionSplitTypeDeposit, Name: "👨‍💻 Salary", Id: 3},
 
 		{Type: "other", Name: "🧹 Corrections", Id: 18},
 	}
