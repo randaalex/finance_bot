@@ -47,20 +47,26 @@ func (b *Bot) UpdateTransaction(message telebot.Editable, transaction *entities.
 	}
 }
 
-func (b *Bot) renderTransactionBody(transaction *entities.Transaction) string {
-	categoryName := transaction.CategoryName
+func (b *Bot) renderTransactionBody(t *entities.Transaction) string {
+	categoryName := t.CategoryName
 
 	if categoryName == "" {
 		categoryName = "❔ Unknown"
 	}
 
 	buf := bytes.NewBufferString("")
-	fmt.Fprintf(buf, "Transaction #%d (%s)\n\n", transaction.Id, transaction.Type)
-	fmt.Fprintf(buf, "💳 %s\n", transaction.SourceName)
-	fmt.Fprintf(buf, "💸 %.2f %s\n", transaction.Amount, transaction.CurrencyCode)
+	fmt.Fprintf(buf, "Transaction #%d (%s)\n\n", t.Id, t.Type)
+
+	if t.ForeignAmount != 0 {
+		fmt.Fprintf(buf, "💸 %.2f %s (%.2f %s)\n", t.Amount, t.CurrencyCode, t.ForeignAmount, t.ForeignCurrencyCode)
+	} else {
+		fmt.Fprintf(buf, "💸 %.2f %s\n", t.Amount, t.CurrencyCode)
+	}
+
 	fmt.Fprintf(buf, "%s\n", categoryName)
-	fmt.Fprintf(buf, "📝 %s\n", transaction.Description)
-	fmt.Fprintf(buf, "🕓 %s", transaction.IssuedAt.Format("02.01.2006 15:04"))
+	fmt.Fprintf(buf, "💳 %s\n", t.SourceName)
+	fmt.Fprintf(buf, "📝 %s\n", t.Description)
+	fmt.Fprintf(buf, "🕓 %s", t.IssuedAt.Format("02.01.2006 15:04"))
 
 	return buf.String()
 }
